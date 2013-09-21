@@ -13,19 +13,24 @@ html
 
     #main_content_wrap.outer
       section#main_content.inner
-        h3
-          a.anchor(name='projects', href='#projects')
-            span.octicon.octicon-link
-          | Projects
-        p These are my projects that are currently <em>served</em> from GitHub:
+        h3 Recent Projects on Github
+
+        h4#music Music
         ul
           li
             a(href='/fingerboard') Fingerboard
             | &nbsp;visualizes scale patterns for fretted instruments.
           li
+            a(href='/fretboard') Fretboard
+            | &nbsp;Interactive chord diagrams.
+
+        h4 Other
+        ul
+          li
             a(href='/ffmachine') DEC Logic Module Simulator
             | &nbsp;simulates a <em>particular</em> configuration
             | of DEC Logic Modules; for purposes to be revealed.
+
         p
           | You can of course see the rest of my repositories&nbsp;
           a(href='https://github.com/osteele?tab=repositories') here
