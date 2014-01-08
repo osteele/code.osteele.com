@@ -1,45 +1,139 @@
 doctype html
 html
   head
-    meta(charset="utf-8")
-    link(rel="stylesheet", type="text/css", media="screen", href="stylesheets/stylesheet.css")
-    title Oliver Steele
+    meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Oliver Steele | Code
+    link(href='http://www.osteele.com/rss.xml', rel='alternate', title='Oliver Steele', type='application/rss+xml')
+
+    //- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    //- WARNING: Respond.js doesn't work if you view the page via file://
+    //[if lt IE 9]
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
+    link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css", rel="stylesheet")
+    link(href="/css/site.css", rel="stylesheet")
+
   body
-    #header_wrap.outer
-      header.inner
-        a#forkme_banner(href="https://github.com/osteele") View on GitHub
-        h1#project_title Oliver Steele
-        h2#project_tagline
-    #main_content_wrap.outer
-      section#main_content.inner
-        h3 Recent Projects on Github
-        h4#music Music
+    .navbar.navbar-static-top(role="navigation")
+      .container.container-narrow
+        .navbar-header
+          h1.navbar-brand.text-muted: a(href="http://www.osteele.com") Oliver Steele
+        nav.navbar-collapse.collapse.pull-right
+          ul.nav.navbar-nav
+            li: a(href="http://www.osteele.com") About
+            li: a.active(href="/") Code
+            li: a(href="http://blog.osteele.com") Blog
+
+    //- a#forkme_banner(href="https://github.com/osteele") View on GitHub
+
+    .container.container-narrow
+      p Most of my code since 2008 has been proprietary (to Nest, AOL, unlaunched startup #5, or unlaunched startup #7).
+      p These are the older projects, or the more recent ones I've been spent weekends and evenings on.
+
+      section
+        h2 (Semi-)Active
+
+        h3 Music
         ul
           li
             a(href="/fingerboard") Fingerboard
-            | visualizes scale patterns for fretted instruments&period;
+            | &nbsp;visualizes scale patterns for fretted instruments.
           li
             a(href="/fretboard") Fretboard
-            | Interactive chord diagrams&period;
-        h4 Other
-        ul
-          li
-            a(href="/ffmachine").
-              DEC Logic Module Simulator simulates a <em>particular</em> configuration
-              of DEC Logic Modules; for purposes to be revealed&period;
-        p.
-          You can of course see the rest of my repositories
-          <a ref="https://github.com/osteele?tab=repositories">here</a>,
-          and my GitHub profile page <a href="https://github.com/osteele">here</a>.
-        p Other pages:
-        ul
+            | &nbsp;Interactive chord diagrams.
           li.
-            <a href="https://github.com/osteele">Home page</a> (not updated in a while)
-          li.
-            <a href="https://github.com/osteele/blog"</a>Blog</a> (ditto)
-          li
-            a(href="www.linkedin.com/in/osteele/") LinkedIn profile page
-    #footer_wrap.outer
-      footer.inner
+            The <a href="/ffmachine">DEC Logic Module Simulator</a>
+             simulates a <em>particular</em> configuration
+             of DEC Logic Modules; for purposes to be revealed.
+
+        h3 Grunt Plugins
+        ul
+          li: <a href="https://github.com/osteele/grunt-autowatch">grunt-autowatch</a> &mdash; a Grunt task to supply default `task` and `files` to empty `watch` targets.
+          li: <a href="https://github.com/osteele/grunt-update">grunt-update</a> &mdash; a Grunt task to run only those tasks whose source files have changed
+          li: <a href="https://github.com/osteele/grunt-contextualize">grunt-contextualize</a> &mdash; a Grunt task to override configuration properties based on the current context, in order to re-use a single set of plugin targets for multiple contexts
+
+        h2 Misc Tools and Libraries
+        ul
+          li <a href="https://github.com/osteele/pyfsa">pyfsa</a> &mdash; Python FSA constructor, determinizer, and minimizer.
+          li <a href="https://github.com/osteele/html2dbk">html2dbk</a> &mdash; HTML to Docbook converter &mdash; my largest XSLT project
+          li <a href="https://github.com/osteele/dotfiles">dotfiles</a> &mdash; <a href="http://dotfiles.github.io">Why would I want my dotfiles on GitHub?</a>
+
+        h2 Sites
+        ul
+          li <a href="https://github.com/osteele/osteele.com">www.osteele.com</a> &mdash; source to <a href="http://www.osteele.com">my home page</a>, with <a href="https://github.com/osteele/osteele.com/commits/master">commit history</a> back to 2006.
+          li <a href="https://github.com/osteele/blog.osteele.com">blog.osteele.com</a> &mdash; <a href="blog.osteele.com">my blog</a>, currently in <a href="http://jaspervdj.be/hakyll/">Hakyll</a> &mdash; with <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://zespia.tw/hexo/">Hexo</a> versions in branches
+          li <a href="https://github.com/osteele/osteele.github.io">code.osteele.com</a> &mdash; this site
+
+        h2 Possibly Working
+        p I haven't used these since 2008 (or earlier). Possbily they still work.
+        ul
+          li <a href="https://github.com/osteele/QtTileDual">QtTileDual</a> &mdash; Draw a graph and its duals. I wrote this to learn Qt.
+          li <a href="https://github.com/osteele/python-utils">python-utils</a> &mdash; grab-bag from when Python was my go-to.
+          li <a href="https://github.com/osteele/javascript_fu">javascript_fu</a> &mdash; a Rails plugin to add more support for javascript files.
+          li <a href="https://github.com/osteele/jcon">jcon</a> &mdash; Conformance checking of JSON values against ECMAScript 4.0 types
+
+        h2 Deprecated / Unmaintained
         p.
-          Published with <a href="http://pages.github.com">GitHub Pages</a>
+          These are mostly from 2008 and earlier, before <a href="http://underscorejs.org">Underscore</a>, <a href="http://coffeescript.org">CoffeeScript</a>,
+          and JavaScript transpilers existed.
+
+        h3 JavaScript Libraries
+        ul
+          li <a href="https://github.com/osteele/functional-javascript">functional-javascript</a> &mdash; library for functional programming in JavaScript
+          li <a href="https://github.com/osteele/sequentially">sequentially</a> &mdash; a library of temporal and frequency adverbs for JavaScript.
+          li <a href="https://github.com/osteele/fluently">fluently</a> &mdash; Fluent programming (chained method calls) for JavaScript
+          li <a href="https://github.com/osteele/mop-js">mop-js</a> &mdash; JavaScript utilities for Metaobject Programming
+          li <a href="https://github.com/osteele/collections-js">collections-js</a> Framework-independent JavaScript collection methods.
+          li <a href="https://github.com/osteele/jquery-profile">jquery-profile</a> &mdash; Profile calls to jQuery selectors
+          li <a href="https://github.com/osteele/protodoc">protodoc</a> &mdash;JavaScript documentation generator and pydoc equivalent.
+          li <a href="https://github.com/osteele/jsspec">jsspec</a> &mdash; A clone of Alan Kang's <a href="http://code.google.com/p/jsspec/">JSSpec</a>
+
+        h3 Ruby and Rails Gems and Plugins
+        ul
+          li <a href="https://github.com/osteele/gem_recent-updates">gem_recent-updates</a> &mdash; A gem command plugin that displays the tops of the history files of recently updated gems.
+          li <a href="https://github.com/osteele/db_content">db_content</a> &mdash; Rails plugin to add sql dump and restore tasks
+
+        h3 JavaScript and Ruby Applications
+        ul
+          li <a href="https://github.com/osteele/storyboard">storyboard</a> &mdash; An ruby-processing extension for scripting storyboarded explanatory visualizations. I never finished this.
+          li <a href="https://github.com/osteele/cfdg-js">cfdg-js</a> &mdash; A JavaScript implementation of Chris Coyne's Context Free Design Grammar.
+
+        h3 OpenLaszlo-related
+        ul
+          li <a href="https://github.com/osteele/openlaszlo_plugin">openlaszlo_plugin</a>
+          li <a href="https://github.com/osteele/ropenlaszlo">ropenlaszlo</a>
+          li <a href="https://github.com/osteele/openlaszlo-rails-example">openlaszlo-rails-example</a>
+          li <a href="https://github.com/osteele/expialidocious">expialidocious</a> &mdash; Timeline tag browser for delicious, in OpenLaszlo
+          li <a href="https://github.com/osteele/lzosutils">lzosutils</a> &mdash; OpenLaszlo utilities: flash bridge, ajax, etc.
+          li <a href="https://github.com/osteele/openlaszlo-json">openlaszlo-json</a> &mdash; JSON library for OpenLaszlo
+          li <a href="https://github.com/osteele/lztestkit">lztestkit</a> &mdash; BDD for OpenLaszlo.
+
+        h3 Other
+        ul
+          li <a href="https://github.com/osteele/cl-spec">cl-spec</a> BDD for Common Lisp
+          li <a href="https://github.com/osteele/wideurl.com">wideurl.com</a> &mdash; joke site from a long time ago
+
+        h2 Related Pages
+        ul
+          li: a(href="http://www.osteele.com/sources") Historical projects page
+          li: a(href="https://github.com/osteele?tab=repositories") GitHub repositories
+          li: a(href="https://github.com/osteele") GitHub profile page
+
+    footer.footer
+      .navbar.navbar-static-bottom
+        .navbar-inner
+          .container
+            hr
+            p &copy; Oliver Steele 2003&ndash;2014.
+            p.
+              Pretty much all the code is available under some open source license (mostly MIT).
+              See each directory or repository for details; ask if you can’t find it.
+            p.
+              This site was built with <a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap</a>
+              and <a href="http://jade-lang.com" target="_blank">Jade</a>, and is
+              published on <a href='http://pages.github.com'>GitHub Pages</a>.
+
+    script(src="//code.jquery.com/jquery-1.10.1.min.js")
+    script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js")
