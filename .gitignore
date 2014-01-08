@@ -1,2 +1,5 @@
+.grunt
 .vagrant
 index.html
+node_modules
+build
