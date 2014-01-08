@@ -10,8 +10,8 @@ module.exports = (grunt) ->
 
     clean:
       dev: '<%= directories.dev %>'
-      release: '<%= directories.release %>/*'
-      target: '<%= directories.build %>/*'
+      release: '<%= directories.release %>'
+      target: '<%= directories.build %>'
 
     coffeelint:
       app: ['**/*.coffee', '!**/node_modules/**', '!Gruntfile.coffee']
@@ -30,7 +30,9 @@ module.exports = (grunt) ->
         filter: 'isFile'
 
     'gh-pages':
-      options: base: '<%= directories.build %>'
+      options:
+        base: '<%= directories.build %>'
+        cname: 'code.osteele.com'
       src: '**/*'
 
     jade:
@@ -74,7 +76,13 @@ module.exports = (grunt) ->
 
   require('load-grunt-tasks')(grunt)
 
+  grunt.registerTask 'cname', ->
+    path = require 'path'
+    cname = grunt.config('gh-pages.options.cname')
+    path = path.join grunt.config('gh-pages.options.base'), 'CNAME'
+    grunt.file.write path, cname + "\n" if cname
+
   grunt.registerTask 'build', ['clean:target', 'jade', 'sass', 'copy']
   grunt.registerTask 'build:release', ['contextualize:release', 'build']
-  grunt.registerTask 'deploy', ['build:release', 'gh-pages']
+  grunt.registerTask 'deploy', ['build:release', 'cname', 'gh-pages']
   grunt.registerTask 'default', ['build', 'connect', 'watch']
