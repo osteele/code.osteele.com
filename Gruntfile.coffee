@@ -58,6 +58,11 @@ module.exports = (grunt) ->
           sourcemap: false
           style: 'compressed'
 
+    shell:
+      rsync:
+        options: {stdout:true, stderr:true}
+        command: 'rsync -aiz build/ osteele.com:/var/www/code.osteele.com --delete --delete-excluded'
+
     watch:
       options:
         livereload: true
@@ -76,13 +81,7 @@ module.exports = (grunt) ->
 
   require('load-grunt-tasks')(grunt)
 
-  grunt.registerTask 'cname', ->
-    path = require 'path'
-    cname = grunt.config('gh-pages.options.cname')
-    path = path.join grunt.config('gh-pages.options.base'), 'CNAME'
-    grunt.file.write path, cname + "\n" if cname
-
   grunt.registerTask 'build', ['clean:target', 'jade', 'sass', 'copy']
   grunt.registerTask 'build:release', ['contextualize:release', 'build']
-  grunt.registerTask 'deploy', ['build:release', 'cname', 'gh-pages']
+  grunt.registerTask 'deploy', ['build:release', 'shell:rsync']
   grunt.registerTask 'default', ['build', 'connect', 'watch']

@@ -17,8 +17,8 @@
     "grunt-contrib-sass": "~0.4.x",
     "grunt-contrib-watch": "~0.4.x",
     "grunt-contextualize": "~0.2.1",
-    "grunt-gh-pages": "~0.7.4",
     "grunt-notify": "~0.2.x",
+    "grunt-shell": "~0.6.1",
     "load-grunt-tasks": "~0.1.x"
   }
 }
