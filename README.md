@@ -1,20 +1,20 @@
+# code.osteele.com site
+
 The source to [code.osteele.com](http://code.osteele.com).
 
 
-# Install
+## Install (Mac OS X)
 
-    brew cask install vagrant
-    npm install
-
-
-# Develop
-
-    vagrant up
-    brunch watch
-    open http://localhost:8083
+    brew install haskell-platform
+    gem install bundler jekyll rdiscount
 
 
-# Deploy
+## Develop
 
-    ./bin/deploy
+    jekyll serve
+    open http://0.0.0.0:4000/
 
+
+# Publish
+
+    git push
