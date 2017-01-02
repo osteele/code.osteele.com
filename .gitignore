@@ -1,3 +1,5 @@
 .vagrant
 node_modules
 build
+.jekyll-metadata
+.sass-cache
