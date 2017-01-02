@@ -7,122 +7,83 @@ Most of my code since 2008 has been proprietary (to Nest, AOL, unlaunched startu
 
 These are the older projects, or the more recent ones I've been spent weekends and evenings on.
 
-## Active
+## (Semi-)Active
 
 ### Music
 
-* <a href="/fingerboard">Fingerboard</a>
-visualizes scale patterns for fretted instruments.
-
-* <a href="http://osteele.github.io/fretboard">Fretboard</a>
-Interactive chord diagrams.
-(Temporarily down while DNS changes percolate through GitHub.)
-
-* The <a href="http://osteele.github.io/ffmachine">DEC Logic Module Simulator</a>
-simulates a <em>particular</em> configuration of DEC Logic Modules; for purposes to be revealed.
-(Temporarily down while DNS changes percolate through GitHub.)
+*   [Fingerboard](/fingerboard) visualizes scale patterns for fretted instruments.
+*   [Fretboard](/fretboard) Interactive chord diagrams.
+*   The [DEC Logic Module Simulator](/ffmachine) simulates a _particular_ configuration of DEC Logic Modules; for purposes to be revealed.
 
 ### Grunt Plugins
 
-* <a href="https://github.com/osteele/grunt-autowatch">grunt-autowatch</a> &mdash; a Grunt task to supply default `task` and `files` to empty `watch` targets.
+*   [grunt-autowatch](https://github.com/osteele/grunt-autowatch) — a Grunt task to supply default `task` and `files` to empty `watch` targets.
+*   [grunt-update](https://github.com/osteele/grunt-update) — a Grunt task to run only those tasks whose source files have changed
+*   [grunt-contextualize](https://github.com/osteele/grunt-contextualize) — a Grunt task to override configuration properties based on the current context, in order to re-use a single set of plugin targets for multiple contexts
 
-* <a href="https://github.com/osteele/grunt-contextualize">grunt-contextualize</a> &mdash; a Grunt task to override configuration properties based on the current context, in order to re-use a single set of plugin targets for multiple contexts
+## Misc Tools and Libraries
 
-* <a href="https://github.com/osteele/grunt-update">grunt-update</a> &mdash; a Grunt task to run only those tasks whose source files have changed
+*   [pyfsa](https://github.com/osteele/pyfsa) — Python FSA constructor, determinizer, and minimizer.
+*   [html2dbk](https://github.com/osteele/html2dbk) — HTML to Docbook converter — my largest XSLT project
+*   [dotfiles](https://github.com/osteele/dotfiles) — [Why would I want my dotfiles on GitHub?](http://dotfiles.github.io)
 
-### Sites
+## Sites
 
-* <a href="https://github.com/osteele/osteele.com">osteele.com</a> &mdash; source to <a href="http://www.osteele.com">my home page</a> &mdash; with a <a href="https://github.com/osteele/osteele.com/commits/master">commit history</a> back to 2006.
-
-* <a href="https://github.com/osteele/blog.osteele.com">blog.osteele.com</a> &mdash; source to <a href="blog.osteele.com">my blog</a>, currently in <a href="http://jaspervdj.be/hakyll/">Hakyll</a> &mdash; with <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://zespia.tw/hexo/">Hexo</a> versions in branches
-
-* <a href="https://github.com/osteele/code.osteele.com">code.osteele.com</a> &mdash; source to this page; currently in Brunch.io and Jade.
-
-### Other
-* <a href="https://github.com/osteele/dotfiles">dotfiles</a> &mdash; <a href="http://dotfiles.github.io">Why would I want my dotfiles on GitHub?</a>
+*   [www.osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](http://www.osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
+*   [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](blog.osteele.com), currently in [Hakyll](http://jaspervdj.be/hakyll/) — with [Jekyll](http://jekyllrb.com) and [Hexo](http://zespia.tw/hexo/) versions in branches
+*   [osteele.github.io](https://github.com/osteele/osteele.github.io) — this site (<tt>code.osteele.com</tt>)
 
 ## Possibly Working
 
 I haven't used these since 2008 (or earlier). Possbily they still work.
 
-## Inactive
-### Tools and Libraries
-
-* <a href="https://github.com/osteele/pyfsa">pyfsa</a> &mdash; Python FSA constructor, determinizer, and minimizer.
-
-* <a href="https://github.com/osteele/html2dbk">html2dbk</a> &mdash; HTML to Docbook converter &mdash; my largest XSLT project
-
-* <a href="https://github.com/osteele/python-utils">python-utils</a> &mdash; grab-bag from when Python was my go-to.
-
-* <a href="https://github.com/osteele/javascript_fu">javascript_fu</a> &mdash; a Rails plugin to add more support for javascript files.
-
-* <a href="https://github.com/osteele/jcon">jcon</a> &mdash; Conformance checking of JSON values against ECMAScript 4.0 types
-
-### Applications
-
-* <a href="https://github.com/osteele/QtTileDual">QtTileDual</a> &mdash; Draw a graph and its duals. I wrote this to learn Qt.
+*   [QtTileDual](https://github.com/osteele/QtTileDual) — Draw a graph and its duals. I wrote this to learn Qt.
+*   [python-utils](https://github.com/osteele/python-utils) — grab-bag from when Python was my go-to.
+*   [javascript_fu](https://github.com/osteele/javascript_fu) — a Rails plugin to add more support for javascript files.
+*   [jcon](https://github.com/osteele/jcon) — Conformance checking of JSON values against ECMAScript 4.0 types
 
 ## Deprecated / Unmaintained
 
-These are mostly from 2008 and earlier, before <a href="http://underscorejs.org">Underscore</a>, <a href="http://coffeescript.org">CoffeeScript</a>,
-and JavaScript transpilers existed.
+These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.org), [CoffeeScript](http://coffeescript.org), and JavaScript transpilers existed.
 
 ### JavaScript Libraries
 
-* <a href="https://github.com/osteele/functional-javascript">functional-javascript</a> &mdash; library for functional programming in JavaScript
-
-* <a href="https://github.com/osteele/sequentially">sequentially</a> &mdash; a library of temporal and frequency adverbs for JavaScript.
-
-* <a href="https://github.com/osteele/fluently">fluently</a> &mdash; Fluent programming (chained method calls) for JavaScript
-
-* <a href="https://github.com/osteele/mop-js">mop-js</a> &mdash; JavaScript utilities for Metaobject Programming
-
-* <a href="https://github.com/osteele/collections-js">collections-js</a> Framework-independent JavaScript collection methods.
-
-* <a href="https://github.com/osteele/jquery-profile">jquery-profile</a> &mdash; Profile calls to jQuery selectors
-
-* <a href="https://github.com/osteele/protodoc">protodoc</a> &mdash;JavaScript documentation generator and pydoc equivalent.
-
-* <a href="https://github.com/osteele/jsspec">jsspec</a> &mdash; A clone of Alan Kang's <a href="http://code.google.com/p/jsspec/">JSSpec</a>
+*   [functional-javascript](https://github.com/osteele/functional-javascript) — library for functional programming in JavaScript
+*   [sequentially](https://github.com/osteele/sequentially) — a library of temporal and frequency adverbs for JavaScript.
+*   [fluently](https://github.com/osteele/fluently) — Fluent programming (chained method calls) for JavaScript
+*   [mop-js](https://github.com/osteele/mop-js) — JavaScript utilities for Metaobject Programming
+*   [collections-js](https://github.com/osteele/collections-js) Framework-independent JavaScript collection methods.
+*   [jquery-profile](https://github.com/osteele/jquery-profile) — Profile calls to jQuery selectors
+*   [protodoc](https://github.com/osteele/protodoc) —JavaScript documentation generator and pydoc equivalent.
+*   [jsspec](https://github.com/osteele/jsspec) — A clone of Alan Kang's [JSSpec](http://code.google.com/p/jsspec/)
 
 ### Ruby and Rails Gems and Plugins
 
-* <a href="https://github.com/osteele/gem_recent-updates">gem_recent-updates</a> &mdash; A gem command plugin that displays the tops of the history files of recently updated gems.
+*   [gem_recent-updates](https://github.com/osteele/gem_recent-updates) — A gem command plugin that displays the tops of the history files of recently updated gems.
+*   [db_content](https://github.com/osteele/db_content) — Rails plugin to add sql dump and restore tasks
 
-* <a href="https://github.com/osteele/db_content">db_content</a> &mdash; Rails plugin to add sql dump and restore tasks
+### JavaScript and Ruby Applications
 
-### OpenLaszlo
+*   [storyboard](https://github.com/osteele/storyboard) — An ruby-processing extension for scripting storyboarded explanatory visualizations. I never finished this.
+*   [cfdg-js](https://github.com/osteele/cfdg-js) — A JavaScript implementation of Chris Coyne's Context Free Design Grammar.
 
-* <a href="https://github.com/osteele/openlaszlo_plugin">openlaszlo_plugin</a>
+### OpenLaszlo-related
 
-* <a href="https://github.com/osteele/ropenlaszlo">ropenlaszlo</a>
-
-* <a href="https://github.com/osteele/openlaszlo-rails-example">openlaszlo-rails-example</a>
-
-* <a href="https://github.com/osteele/expialidocious">expialidocious</a> &mdash; Timeline tag browser for delicious, in OpenLaszlo
-
-* <a href="https://github.com/osteele/lzosutils">lzosutils</a> &mdash; OpenLaszlo utilities: flash bridge, ajax, etc.
-
-* <a href="https://github.com/osteele/openlaszlo-json">openlaszlo-json</a> &mdash; JSON library for OpenLaszlo
-
-* <a href="https://github.com/osteele/lztestkit">lztestkit</a> &mdash; BDD for OpenLaszlo.
-
-### Applications
-
-* <a href="https://github.com/osteele/storyboard">storyboard</a> &mdash; An ruby-processing extension for scripting storyboarded explanatory visualizations. I never finished this.
-
-* <a href="https://github.com/osteele/cfdg-js">cfdg-js</a> &mdash; A JavaScript implementation of Chris Coyne's Context Free Design Grammar.
+*   [openlaszlo_plugin](https://github.com/osteele/openlaszlo_plugin)
+*   [ropenlaszlo](https://github.com/osteele/ropenlaszlo)
+*   [openlaszlo-rails-example](https://github.com/osteele/openlaszlo-rails-example)
+*   [expialidocious](https://github.com/osteele/expialidocious) — Timeline tag browser for delicious, in OpenLaszlo
+*   [lzosutils](https://github.com/osteele/lzosutils) — OpenLaszlo utilities: flash bridge, ajax, etc.
+*   [openlaszlo-json](https://github.com/osteele/openlaszlo-json) — JSON library for OpenLaszlo
+*   [lztestkit](https://github.com/osteele/lztestkit) — BDD for OpenLaszlo.
 
 ### Other
 
-* <a href="https://github.com/osteele/cl-spec">cl-spec</a> BDD for Common Lisp
-
-* <a href="https://github.com/osteele/wideurl.com">wideurl.com</a> &mdash; joke site from a long time ago
-
-* <a href="http://www.osteele.com/sources">Historical projects page</a>
+*   [cl-spec](https://github.com/osteele/cl-spec) BDD for Common Lisp
+*   [wideurl.com](https://github.com/osteele/wideurl.com) — joke site from a long time ago
 
 ## Related Pages
 
-* <a href="https://github.com/osteele?tab=repositories">GitHub repositories</a>
-
-* <a href="https://github.com/osteele">GitHub profile page</a>
+*   [Historical projects page](http://www.osteele.com/sources)
+*   [GitHub repositories](https://github.com/osteele?tab=repositories)
+*   [GitHub profile page](https://github.com/osteele)
