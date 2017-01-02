@@ -2,19 +2,14 @@
 
 The source to [code.osteele.com](http://code.osteele.com).
 
+## Setup
 
-## Install (Mac OS X)
-
-    brew install haskell-platform
-    gem install bundler jekyll rdiscount
-
+Install [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Develop
 
-    jekyll serve
-    open http://0.0.0.0:4000/
+    docker-compose up
 
-
-# Publish
+## Deploy
 
     git push
