@@ -11,9 +11,9 @@ These are the older projects, or the more recent ones I've been spent weekends a
 
 ### Music
 
-*   [Fingerboard](/fingerboard) visualizes scale patterns for fretted instruments.
-*   [Fretboard](/fretboard) Interactive chord diagrams.
-*   The [DEC Logic Module Simulator](/ffmachine) simulates a _particular_ configuration of DEC Logic Modules; for purposes to be revealed.
+*   [Fingerboard](http://osteele.github.io/fingerboard/) visualizes scale patterns for fretted instruments.
+*   [Fretboard](http://osteele.github.io/fretboard/) Interactive chord diagrams.
+*   The [DEC Logic Module Simulator](http://osteele.github.io/ffmachine/) simulates a _particular_ configuration of DEC Logic Modules; for purposes to be revealed.
 
 ### Grunt Plugins
 
@@ -29,9 +29,9 @@ These are the older projects, or the more recent ones I've been spent weekends a
 
 ## Sites
 
-*   [www.osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](http://www.osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
+*   [osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](http://osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
 *   [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](blog.osteele.com), currently in [Hakyll](http://jaspervdj.be/hakyll/) — with [Jekyll](http://jekyllrb.com) and [Hexo](http://zespia.tw/hexo/) versions in branches
-*   [osteele.github.io](https://github.com/osteele/osteele.github.io) — this site (<tt>code.osteele.com</tt>)
+*   [code.osteele.come](https://github.com/osteele/code.osteele.com) — this site (<tt>code.osteele.com</tt>)
 
 ## Possibly Working
 
@@ -84,6 +84,6 @@ These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.
 
 ## Related Pages
 
-*   [Historical projects page](http://www.osteele.com/sources)
-*   [GitHub repositories](https://github.com/osteele?tab=repositories)
+*   [Historical projects page](http://osteele.com/sources)
 *   [GitHub profile page](https://github.com/osteele)
+*   [GitHub repositories](https://github.com/osteele?tab=repositories)
