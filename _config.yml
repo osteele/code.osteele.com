@@ -1,9 +1,11 @@
+# Jekyll settings
+timezone: America/New_York
+
 # Site settings
 title: "Oliver Steele | Code"
 email: steele@osteele.com
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://code.osteele.com" # the base hostname & protocol for your site
-timezone: America/New_York
 twitter_username: osteele
 github_username:  osteele
 
@@ -21,3 +23,7 @@ defaults:
       type: "posts"
     values:
       layout: post
+
+exclude:
+- docker-compose.yml
+- README.md
