@@ -30,7 +30,7 @@ These are the older projects, or the more recent ones I've been spent weekends a
 ## Sites
 
 *   [osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](http://osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
-*   [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](blog.osteele.com), currently in [Hakyll](http://jaspervdj.be/hakyll/) — with [Jekyll](http://jekyllrb.com) and [Hexo](http://zespia.tw/hexo/) versions in branches
+*   [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](http://blog.osteele.com), currently in [Jekyll](http://jekyllrb.com) — with [Hakyll](http://jaspervdj.be/hakyll/) and [Hexo](https://hexo.io) versions in branches
 *   [code.osteele.come](https://github.com/osteele/code.osteele.com) — this site (<tt>code.osteele.com</tt>)
 
 ## Possibly Working
