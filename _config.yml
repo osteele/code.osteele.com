@@ -26,4 +26,6 @@ defaults:
 
 exclude:
 - docker-compose.yml
+- Gemfile
+- Gemfile.lock
 - README.md
