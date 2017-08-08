@@ -3,11 +3,13 @@ layout: default
 title: Oliver Steele | Code
 ---
 
-Most of my code since 2008 has been proprietary (to Nest, AOL, unlaunched startup #5, or unlaunched startup #7).
+## Semi-Active
 
-These are the older projects, or the more recent ones I've been spent weekends and evenings on.
+* [Gojekyll](http://github.com/osteele/gojekyll) is a Go clone of the [Jekyll](https://jekyllrb.com) static site generator. I wrote this in order to learn Go, and for a faster (20x) site development edit/view cycle.
+* [Liquid](http://github.com/osteele/liquid) is a Go clone of the Liquid template engine. I wrote this in order to write Gojekyll, after a couple of false starts with JSON-RPC and Liquid template servers.
+* [Assignment Dashboard](https://github.com/olin-computing/assignment-dashboard) is a web dashboard for viewing the forks of a Jupyter classroom assignment repo.
 
-## (Semi-)Active
+## Older
 
 ### Music
 
