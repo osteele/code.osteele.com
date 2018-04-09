@@ -5,7 +5,7 @@ timezone: America/New_York
 title: "Oliver Steele | Code"
 email: steele@osteele.com
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://code.osteele.com" # the base hostname & protocol for your site
+url: "https://code.osteele.com" # the base hostname & protocol for your site
 twitter_username: osteele
 github_username:  osteele
 description: ""

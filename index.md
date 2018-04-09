@@ -82,9 +82,9 @@ title: Oliver Steele | Code
 
 ## Sites
 
-* [osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](http://osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
-* [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](http://blog.osteele.com), currently in [Jekyll](http://jekyllrb.com) — with [Hakyll](http://jaspervdj.be/hakyll/) and [Hexo](https://hexo.io) versions in branches
-* [code.osteele.come](https://github.com/osteele/code.osteele.com) — this site <http://code.osteele.com>
+* [osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](https://osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
+* [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](https://blog.osteele.com), currently in [Jekyll](http://jekyllrb.com) — with [Hakyll](http://jaspervdj.be/hakyll/) and [Hexo](https://hexo.io) versions in branches
+* [code.osteele.come](https://github.com/osteele/code.osteele.com) — this site <https://code.osteele.com>
 
 ## Possibly Working
 
@@ -137,6 +137,6 @@ These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.
 
 ## Related Pages
 
-* [Historical projects page](http://osteele.com/sources)
+* [Historical projects page](https://osteele.com/sources)
 * [GitHub profile page](https://github.com/osteele)
 * [GitHub repositories](https://github.com/osteele?tab=repositories)
