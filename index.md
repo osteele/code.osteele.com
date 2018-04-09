@@ -5,28 +5,60 @@ title: Oliver Steele | Code
 
 ## Recent
 
-### Apps
+### Command-Line
+
+* [gojekyll](http://github.com/osteele/gojekyll) is a Go clone of the
+  [Jekyll](https://jekyllrb.com) static site generator. I wrote this in order to
+  learn Go, and for a faster (20x) site development edit/view cycle.
+* [forkmantle](https://github.com/osteele/forkmantle) displays GitHub forks and
+  their stats (star counts and recency). I use it to identify successors to
+  abandoned repos.
+* [multiclone](https://github.com/osteele/multiclone) quickly clone forks of a
+  GitHub repo, or copies of a GitHub Classroom assignment. Creates a
+  [myrepos](https://myrepos.branchable.com/) file that can be used to perform
+  bulk actions on the cloned repos, such as `git pull`ing them all.
+* [git-keychain-secrets](https://github.com/osteele/git-keychain-secrets) stores
+  some parts of a repo file in the macOS Keychain; keeps the rest un-encrypted.
+  It's intended for use with git filters.
+
+### Web Apps
 
 * [Banyan](https://banyan.osteele.com) ([source](https://github.com/osteele/banyan)) visualizes Dropbox file and folder sizes.
 * [Volality](https://volatility.oh-well-thats.life/) ([source](https://github.com/osteele/volatility)) was my hello world for Elm.
 
-### Python / IPython / Jupyter
+### Jupyter Plugins
 
-* [minimal-keys](https://github.com/osteele/minimal-keys) compute the unique minimal keys from a collection of strings or sequences.
-* [callgraph](https://github.com/osteele/callgraph) decorates Python functions to create dynamic call graphs.
-* [ipython-secrets](https://github.com/osteele/ipython-secrets) simplifies the use of secrets in a Jupyter notebook.
-* My [Advent of Code 2017 notebook](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Code%202017.ipynb). (Bonus: [Advent of Book](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Book%202017.ipynb).)
+* [callgraph](https://github.com/osteele/callgraph) decorates Python functions
+  to create dynamic call graphs.
+* [ipython-secrets](https://github.com/osteele/ipython-secrets) simplifies the
+  use of secrets in a Jupyter notebook.
+
+### Jupyter Notebooks
+
+* [Advent of Code 2017 solutions](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Code%202017.ipynb)
+* [Advent of Book solutions](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Book%202017.ipynb)
+
+### Python Packages
+
+* [minimal-keys](https://github.com/osteele/minimal-keys) computes the unique
+  minimal keys from a collection of strings or sequences. For example, The
+  minimal keys from `["assignments/alice/hw1.txt", "assignments/bob/hw1.txt"]`
+  are `["alice", "bob"]`, because the input strings share the common prefix
+  `"assignments/"` and the common suffix `".txt"`.
 
 ### Classroom Tools
 
-* [Assignment Dashboard](https://github.com/olin-computing/assignment-dashboard) is a web dashboard for viewing the forks of a Jupyter classroom assignment repo.
-* [Multiclone](https://github.com/osteele/multiclone) quickly clone forks of a GitHub repo, or copies of a GitHub Classroom assignment. Creates a [myrepos](https://myrepos.branchable.com/) file that can be used to perform bulk actions on the cloned repos, such as `git pull`ing them all.
+* [Assignment Dashboard](https://github.com/olin-computing/assignment-dashboard)
+  is a web dashboard for viewing the forks of a Jupyter classroom assignment
+  repo.
 
-### Go
+### Go Libraries
 
-* [Gojekyll](http://github.com/osteele/gojekyll) is a Go clone of the [Jekyll](https://jekyllrb.com) static site generator. I wrote this in order to learn Go, and for a faster (20x) site development edit/view cycle.
-* [Liquid](http://github.com/osteele/liquid) is a Go clone of the Liquid template engine. I wrote this in order to write Gojekyll, after a couple of false starts with JSON-RPC and Liquid template servers.
-* [Tuesday](https://github.com/osteele/tuesday) is a Go implementation of Ruby's `strftime`.
+* [Liquid](http://github.com/osteele/liquid) is a Go clone of the Liquid
+  template engine. I wrote this in order to write Gojekyll, after a couple of
+  false starts with JSON-RPC and Liquid template servers.
+* [Tuesday](https://github.com/osteele/tuesday) is a Go implementation of Ruby's
+  `strftime`.
 
 ## Older
 
