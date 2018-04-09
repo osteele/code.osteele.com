@@ -24,7 +24,7 @@ title: Oliver Steele | Code
 ### Web Apps
 
 * [Banyan](https://banyan.osteele.com) ([source](https://github.com/osteele/banyan)) visualizes Dropbox file and folder sizes.
-* [Volality](https://volatility.oh-well-thats.life/) ([source](https://github.com/osteele/volatility)) was my hello world for Elm.
+* [Volatility](https://volatility.oh-well-thats.life/) ([source](https://github.com/osteele/volatility)) was my hello world for Elm.
 
 ### Jupyter Plugins
 
@@ -88,14 +88,14 @@ title: Oliver Steele | Code
 
 ## Possibly Working
 
-I haven't used these since 2008 (or earlier). Possbily they still work.
+I haven't used these since 2008 (or earlier). Possibly they still work.
 
 * [QtTileDual](https://github.com/osteele/QtTileDual) — Draw a graph and its duals. I wrote this to learn Qt.
 * [python-utils](https://github.com/osteele/python-utils) — grab-bag from when Python was my go-to.
 * [javascript_fu](https://github.com/osteele/javascript_fu) — a Rails plugin to add more support for javascript files.
 * [jcon](https://github.com/osteele/jcon) — Conformance checking of JSON values against ECMAScript 4.0 types
 
-## Deprecated / Unmaintained
+## Deprecated / Un-maintained
 
 These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.org), [CoffeeScript](http://coffeescript.org), and JavaScript transpilers existed.
 
