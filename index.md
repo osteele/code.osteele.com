@@ -3,11 +3,30 @@ layout: default
 title: Oliver Steele | Code
 ---
 
-## Semi-Active
+## Recent
+
+### Apps
+
+* [Banyan](https://banyan.osteele.com) ([source](https://github.com/osteele/banyan)) visualizes Dropbox file and folder sizes.
+* [Volality](https://volatility.oh-well-thats.life/) ([source](https://github.com/osteele/volatility)) was my hello world for Elm.
+
+### Python / IPython / Jupyter
+
+* [minimal-keys](https://github.com/osteele/minimal-keys) compute the unique minimal keys from a collection of strings or sequences.
+* [callgraph](https://github.com/osteele/callgraph) decorates Python functions to create dynamic call graphs.
+* [ipython-secrets](https://github.com/osteele/ipython-secrets) simplifies the use of secrets in a Jupyter notebook.
+* My [Advent of Code 2017 notebook](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Code%202017.ipynb). (Bonus: [Advent of Book](https://github.com/osteele/notebooks/blob/master/Advent%20of%20Book%202017.ipynb).)
+
+### Classroom Tools
+
+* [Assignment Dashboard](https://github.com/olin-computing/assignment-dashboard) is a web dashboard for viewing the forks of a Jupyter classroom assignment repo.
+* [Multiclone](https://github.com/osteele/multiclone) quickly clone forks of a GitHub repo, or copies of a GitHub Classroom assignment. Creates a [myrepos](https://myrepos.branchable.com/) file that can be used to perform bulk actions on the cloned repos, such as `git pull`ing them all.
+
+### Go
 
 * [Gojekyll](http://github.com/osteele/gojekyll) is a Go clone of the [Jekyll](https://jekyllrb.com) static site generator. I wrote this in order to learn Go, and for a faster (20x) site development edit/view cycle.
 * [Liquid](http://github.com/osteele/liquid) is a Go clone of the Liquid template engine. I wrote this in order to write Gojekyll, after a couple of false starts with JSON-RPC and Liquid template servers.
-* [Assignment Dashboard](https://github.com/olin-computing/assignment-dashboard) is a web dashboard for viewing the forks of a Jupyter classroom assignment repo.
+* [Tuesday](https://github.com/osteele/tuesday) is a Go implementation of Ruby's `strftime`.
 
 ## Older
 
