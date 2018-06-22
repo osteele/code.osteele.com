@@ -3,6 +3,21 @@ layout: default
 title: Oliver Steele | Code
 ---
 
+Coding, like writing, is a means of self-expression and a process for
+approaching parity.
+
+Good code is beautiful. But not all code needs to be good.
+
+I currently work mostly in Ruby, Python, and JavaScript / CoffeeScript;
+previously in C, C++, Common Lisp, Java, SmallTalk, assembly, and Dylan; and
+some smaller projects in Haskell, Objective C, and bash. For server work I've
+used mostly Rails, Django, Sinatra, and Express; MySQL, Postgres, and Redis;
+Apache and nginx; and AWS (and previously DreamHost, SliceHost, and colos).
+
+* [Historical projects page](https://osteele.com/sources)
+* [GitHub profile page](https://github.com/osteele)
+* [GitHub repositories](https://github.com/osteele?tab=repositories)
+
 ## Recent
 
 ### Command-Line
@@ -80,24 +95,19 @@ title: Oliver Steele | Code
 * [html2dbk](https://github.com/osteele/html2dbk) — HTML to Docbook converter — my largest XSLT project
 * [dotfiles](https://github.com/osteele/dotfiles) — [Why would I want my dotfiles on GitHub?](http://dotfiles.github.io)
 
-## Sites
-
-* [osteele.com](https://github.com/osteele/osteele.com) — source to [my home page](https://osteele.com), with [commit history](https://github.com/osteele/osteele.com/commits/master) back to 2006.
-* [blog.osteele.com](https://github.com/osteele/blog.osteele.com) — [my blog](https://blog.osteele.com), currently in [Jekyll](http://jekyllrb.com) — with [Hakyll](http://jaspervdj.be/hakyll/) and [Hexo](https://hexo.io) versions in branches
-* [code.osteele.come](https://github.com/osteele/code.osteele.com) — this site <https://code.osteele.com>
-
 ## Possibly Working
 
 I haven't used these since 2008 (or earlier). Possibly they still work.
 
 * [QtTileDual](https://github.com/osteele/QtTileDual) — Draw a graph and its duals. I wrote this to learn Qt.
-* [python-utils](https://github.com/osteele/python-utils) — grab-bag from when Python was my go-to.
 * [javascript_fu](https://github.com/osteele/javascript_fu) — a Rails plugin to add more support for javascript files.
 * [jcon](https://github.com/osteele/jcon) — Conformance checking of JSON values against ECMAScript 4.0 types
 
 ## Deprecated / Un-maintained
 
-These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.org), [CoffeeScript](http://coffeescript.org), and JavaScript transpilers existed.
+These are mostly from 2008 and earlier — before
+[Underscore](http://underscorejs.org), [CoffeeScript](http://coffeescript.org),
+and Babel.
 
 ### JavaScript Libraries
 
@@ -110,33 +120,43 @@ These are mostly from 2008 and earlier, before [Underscore](http://underscorejs.
 * [protodoc](https://github.com/osteele/protodoc) —JavaScript documentation generator and pydoc equivalent.
 * [jsspec](https://github.com/osteele/jsspec) — A clone of Alan Kang's [JSSpec](http://code.google.com/p/jsspec/)
 
+### Python Modules
+
+* [python-utils](https://github.com/osteele/python-utils) — glue for using
+  Python with GraphViz, XML, and XSD. These days there's more feature-rich
+  libraries for this. Also, a module import grapher.
+
 ### Ruby and Rails Gems and Plugins
 
-* [gem_recent-updates](https://github.com/osteele/gem_recent-updates) — A gem command plugin that displays the tops of the history files of recently updated gems.
-* [db_content](https://github.com/osteele/db_content) — Rails plugin to add sql dump and restore tasks
+* [gem_recent-updates](https://github.com/osteele/gem_recent-updates) — A gem
+  command plugin that displays the tops of the history files of recently updated
+  gems.
+* [db_content](https://github.com/osteele/db_content) — Rails plugin to add sql
+  dump and restore tasks
 
 ### JavaScript and Ruby Applications
 
-* [storyboard](https://github.com/osteele/storyboard) — An ruby-processing extension for scripting storyboarded explanatory visualizations. I never finished this.
-* [cfdg-js](https://github.com/osteele/cfdg-js) — A JavaScript implementation of Chris Coyne's Context Free Design Grammar.
+* [storyboard](https://github.com/osteele/storyboard) — An ruby-processing
+  extension for scripting storyboarded explanatory visualizations. I never
+  finished this.
+* [cfdg-js](https://github.com/osteele/cfdg-js) — A JavaScript implementation of
+  Chris Coyne's Context Free Design Grammar.
 
 ### OpenLaszlo-related
 
 * [openlaszlo_plugin](https://github.com/osteele/openlaszlo_plugin)
 * [ropenlaszlo](https://github.com/osteele/ropenlaszlo)
 * [openlaszlo-rails-example](https://github.com/osteele/openlaszlo-rails-example)
-* [expialidocious](https://github.com/osteele/expialidocious) — Timeline tag browser for delicious, in OpenLaszlo
-* [lzosutils](https://github.com/osteele/lzosutils) — OpenLaszlo utilities: flash bridge, ajax, etc.
-* [openlaszlo-json](https://github.com/osteele/openlaszlo-json) — JSON library for OpenLaszlo
+* [expialidocious](https://github.com/osteele/expialidocious) — Timeline tag
+  browser for delicious, in OpenLaszlo
+* [lzosutils](https://github.com/osteele/lzosutils) — OpenLaszlo utilities:
+  flash bridge, ajax, etc.
+* [openlaszlo-json](https://github.com/osteele/openlaszlo-json) — JSON library
+  for OpenLaszlo
 * [lztestkit](https://github.com/osteele/lztestkit) — BDD for OpenLaszlo.
 
 ### Other
 
 * [cl-spec](https://github.com/osteele/cl-spec) BDD for Common Lisp
-* [wideurl.com](https://github.com/osteele/wideurl.com) — joke site from a long time ago
-
-## Related Pages
-
-* [Historical projects page](https://osteele.com/sources)
-* [GitHub profile page](https://github.com/osteele)
-* [GitHub repositories](https://github.com/osteele?tab=repositories)
+* [wideurl.com](https://github.com/osteele/wideurl.com) — joke site from a long
+  time ago
