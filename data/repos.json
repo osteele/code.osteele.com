@@ -1,6 +1,7 @@
 [
   {
     "name": "functional-javascript",
+    "nameWithOwner": "osteele/functional-javascript",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -24,6 +25,7 @@
   },
   {
     "name": "sequentially",
+    "nameWithOwner": "osteele/sequentially",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -39,11 +41,14 @@
       "JavaScript"
     ],
     "topics": [
-
+      "javascript-library",
+      "functional-programming",
+      "reactive-programming"
     ]
   },
   {
     "name": "pyfsa",
+    "nameWithOwner": "osteele/pyfsa",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -65,6 +70,7 @@
   },
   {
     "name": "fluently",
+    "nameWithOwner": "osteele/fluently",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -80,11 +86,13 @@
       "JavaScript"
     ],
     "topics": [
-
+      "javascript-library",
+      "functional-programming"
     ]
   },
   {
     "name": "lztestkit",
+    "nameWithOwner": "osteele/lztestkit",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -99,11 +107,15 @@
       "JavaScript"
     ],
     "topics": [
-      "testing-framework"
+      "testing-framework",
+      "open-library",
+      "bdd",
+      "add-framework"
     ]
   },
   {
     "name": "ropenlaszlo",
+    "nameWithOwner": "osteele/ropenlaszlo",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -120,11 +132,13 @@
       "HTML"
     ],
     "topics": [
-
+      "ruby-gem",
+      "open-laszlo"
     ]
   },
   {
     "name": "openlaszlo_plugin",
+    "nameWithOwner": "osteele/openlaszlo_plugin",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -140,11 +154,14 @@
       "JavaScript"
     ],
     "topics": [
-
+      "rails-plugins",
+      "open-laszlo",
+      "rails"
     ]
   },
   {
     "name": "cl-spec",
+    "nameWithOwner": "osteele/cl-spec",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -167,6 +184,7 @@
   },
   {
     "name": "cfdg-js",
+    "nameWithOwner": "osteele/cfdg-js",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -186,6 +204,7 @@
   },
   {
     "name": "html2dbk",
+    "nameWithOwner": "osteele/html2dbk",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -201,11 +220,13 @@
       "HTML"
     ],
     "topics": [
-
+      "docbook",
+      "documentation-tool"
     ]
   },
   {
     "name": "collections-js",
+    "nameWithOwner": "osteele/collections-js",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -221,11 +242,13 @@
       "JavaScript"
     ],
     "topics": [
-
+      "javascript",
+      "obsolete"
     ]
   },
   {
     "name": "openlaszlo-json",
+    "nameWithOwner": "osteele/openlaszlo-json",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -240,11 +263,13 @@
       "JavaScript"
     ],
     "topics": [
-
+      "json",
+      "open-laszlo"
     ]
   },
   {
     "name": "mop-js",
+    "nameWithOwner": "osteele/mop-js",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -265,6 +290,7 @@
   },
   {
     "name": "db_content",
+    "nameWithOwner": "osteele/db_content",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -279,11 +305,13 @@
       "Ruby"
     ],
     "topics": [
-
+      "rails-plugins",
+      "database"
     ]
   },
   {
     "name": "lzosutils",
+    "nameWithOwner": "osteele/lzosutils",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -298,11 +326,14 @@
       "JavaScript"
     ],
     "topics": [
-
+      "open-laszlo",
+      "flash",
+      "library"
     ]
   },
   {
     "name": "javascript_fu",
+    "nameWithOwner": "osteele/javascript_fu",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -322,6 +353,7 @@
   },
   {
     "name": "jsspec",
+    "nameWithOwner": "osteele/jsspec",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -342,6 +374,7 @@
   },
   {
     "name": "jcon",
+    "nameWithOwner": "osteele/jcon",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -356,11 +389,14 @@
       "Ruby"
     ],
     "topics": [
-
+      "ruby-on-rails",
+      "json",
+      "json-schema"
     ]
   },
   {
     "name": "jquery-profile",
+    "nameWithOwner": "osteele/jquery-profile",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -375,11 +411,14 @@
       "JavaScript"
     ],
     "topics": [
-
+      "jquery",
+      "jquery-plugin",
+      "profiler"
     ]
   },
   {
     "name": "expialidocious",
+    "nameWithOwner": "osteele/expialidocious",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -396,11 +435,35 @@
       "JavaScript"
     ],
     "topics": [
+      "webapp",
+      "open-laszlo"
+    ]
+  },
+  {
+    "name": "jsync",
+    "nameWithOwner": "mighdoll/jsync",
+    "owner": {
+      "__typename": "User",
+      "login": "mighdoll"
+    },
+    "createdAt": "2009-03-16T05:48:20Z",
+    "pushedAt": "2010-08-03T00:50:47Z",
+    "description": "javascript object replication",
+    "url": "https://github.com/mighdoll/jsync",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Java",
+      "Scala",
+      "JavaScript"
+    ],
+    "topics": [
 
     ]
   },
   {
     "name": "old-blog",
+    "nameWithOwner": "osteele/old-blog",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -416,11 +479,14 @@
       "Ruby"
     ],
     "topics": [
-
+      "personal",
+      "website",
+      "blog"
     ]
   },
   {
     "name": "openlaszlo-rails-example",
+    "nameWithOwner": "osteele/openlaszlo-rails-example",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -436,11 +502,14 @@
       "Ruby"
     ],
     "topics": [
-
+      "rails",
+      "example",
+      "open-laszlo"
     ]
   },
   {
     "name": "python-utils",
+    "nameWithOwner": "osteele/python-utils",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -460,6 +529,7 @@
   },
   {
     "name": "wideurl.com",
+    "nameWithOwner": "osteele/wideurl.com",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -475,11 +545,13 @@
       "PHP"
     ],
     "topics": [
-
+      "website",
+      "humor"
     ]
   },
   {
     "name": "protodoc",
+    "nameWithOwner": "osteele/protodoc",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -499,6 +571,7 @@
   },
   {
     "name": "QtTileDual",
+    "nameWithOwner": "osteele/QtTileDual",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -518,6 +591,7 @@
   },
   {
     "name": "gem_recent-updates",
+    "nameWithOwner": "osteele/gem_recent-updates",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -532,11 +606,12 @@
       "Ruby"
     ],
     "topics": [
-
+      "ruby-gem"
     ]
   },
   {
     "name": "storyboard",
+    "nameWithOwner": "osteele/storyboard",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -556,6 +631,7 @@
   },
   {
     "name": "stress_algorithms",
+    "nameWithOwner": "mlsteele/stress_algorithms",
     "owner": {
       "__typename": "User",
       "login": "mlsteele"
@@ -576,6 +652,7 @@
   },
   {
     "name": "mailgraph",
+    "nameWithOwner": "osteele/mailgraph",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -598,6 +675,7 @@
   },
   {
     "name": "backbinder",
+    "nameWithOwner": "osteele/backbinder",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -620,6 +698,7 @@
   },
   {
     "name": "fretboard",
+    "nameWithOwner": "osteele/fretboard",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -644,6 +723,7 @@
   },
   {
     "name": "auxis",
+    "nameWithOwner": "osteele/auxis",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -665,6 +745,7 @@
   },
   {
     "name": "fingerboard",
+    "nameWithOwner": "osteele/fingerboard",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -687,6 +768,7 @@
   },
   {
     "name": "ffmachine",
+    "nameWithOwner": "osteele/ffmachine",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -709,22 +791,25 @@
   },
   {
     "name": "code.osteele.com",
+    "nameWithOwner": "osteele/code.osteele.com",
     "owner": {
       "__typename": "User",
       "login": "osteele"
     },
     "createdAt": "2013-09-12T15:57:03Z",
-    "pushedAt": "2018-04-09T22:39:42Z",
+    "pushedAt": "2018-06-23T04:04:12Z",
     "description": null,
     "url": "https://github.com/osteele/code.osteele.com",
     "homepageUrl": "https://code.osteele.com",
     "isArchived": false,
-    "primaryLanguage": "CSS",
+    "primaryLanguage": "JavaScript",
     "languages": [
       "CSS",
       "HTML",
       "Ruby",
-      "Shell"
+      "Shell",
+      "Elm",
+      "JavaScript"
     ],
     "topics": [
       "personal",
@@ -733,6 +818,7 @@
   },
   {
     "name": "grunt-contextualize",
+    "nameWithOwner": "osteele/grunt-contextualize",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -752,6 +838,7 @@
   },
   {
     "name": "grunt-update",
+    "nameWithOwner": "osteele/grunt-update",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -772,6 +859,7 @@
   },
   {
     "name": "grunt-autowatch",
+    "nameWithOwner": "osteele/grunt-autowatch",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -792,6 +880,7 @@
   },
   {
     "name": "schoen",
+    "nameWithOwner": "osteele/schoen",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -813,6 +902,7 @@
   },
   {
     "name": "sitters.ios",
+    "nameWithOwner": "osteele/sitters.ios",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -837,6 +927,7 @@
   },
   {
     "name": "sitters.server",
+    "nameWithOwner": "osteele/sitters.server",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -862,6 +953,7 @@
   },
   {
     "name": "blog.osteele.com",
+    "nameWithOwner": "osteele/blog.osteele.com",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -887,6 +979,7 @@
   },
   {
     "name": "osteele.com",
+    "nameWithOwner": "osteele/osteele.com",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -921,6 +1014,7 @@
   },
   {
     "name": "dotfiles",
+    "nameWithOwner": "osteele/dotfiles",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -942,6 +1036,7 @@
   },
   {
     "name": "dart-tonic",
+    "nameWithOwner": "osteele/dart-tonic",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -961,7 +1056,124 @@
     ]
   },
   {
+    "name": "chalktalk",
+    "nameWithOwner": "kenperlin/chalktalk",
+    "owner": {
+      "__typename": "User",
+      "login": "kenperlin"
+    },
+    "createdAt": "2014-05-30T20:14:39Z",
+    "pushedAt": "2018-06-04T01:18:11Z",
+    "description": null,
+    "url": "https://github.com/kenperlin/chalktalk",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "Shell",
+      "HTML"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "dreem2",
+    "nameWithOwner": "teem2/dreem2",
+    "owner": {
+      "__typename": "Organization",
+      "login": "teem2"
+    },
+    "createdAt": "2015-04-20T10:44:32Z",
+    "pushedAt": "2016-01-24T01:03:09Z",
+    "description": "Dreem2 repo for DALi and new Dreem architecture.",
+    "url": "https://github.com/teem2/dreem2",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "HTML",
+      "Ruby",
+      "Shell"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "dreem-arduino",
+    "nameWithOwner": "teem2/dreem-arduino",
+    "owner": {
+      "__typename": "Organization",
+      "login": "teem2"
+    },
+    "createdAt": "2015-04-25T08:46:23Z",
+    "pushedAt": "2015-04-29T05:49:16Z",
+    "description": "Dreem Arduino files.",
+    "url": "https://github.com/teem2/dreem-arduino",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "C++",
+    "languages": [
+      "Arduino",
+      "C++"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "teem2.github.io",
+    "nameWithOwner": "teem2/teem2.github.io",
+    "owner": {
+      "__typename": "Organization",
+      "login": "teem2"
+    },
+    "createdAt": "2015-06-09T19:41:22Z",
+    "pushedAt": "2015-06-17T23:55:44Z",
+    "description": null,
+    "url": "https://github.com/teem2/teem2.github.io",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "CSS",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "dreemgldemo",
+    "nameWithOwner": "teem2/dreemgldemo",
+    "owner": {
+      "__typename": "Organization",
+      "login": "teem2"
+    },
+    "createdAt": "2015-07-21T21:15:50Z",
+    "pushedAt": "2015-11-12T03:02:54Z",
+    "description": null,
+    "url": "https://github.com/teem2/dreemgldemo",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "Makefile",
+      "C++",
+      "C"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
     "name": "xmas-lights",
+    "nameWithOwner": "mlsteele/xmas-lights",
     "owner": {
       "__typename": "User",
       "login": "mlsteele"
@@ -984,6 +1196,7 @@
   },
   {
     "name": "highland-cloud",
+    "nameWithOwner": "osteele/highland-cloud",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1005,7 +1218,33 @@
     ]
   },
   {
+    "name": "SoftDesSp16Prep",
+    "nameWithOwner": "paulruvolo/SoftDesSp16Prep",
+    "owner": {
+      "__typename": "User",
+      "login": "paulruvolo"
+    },
+    "createdAt": "2016-01-24T23:06:30Z",
+    "pushedAt": "2016-04-07T17:29:28Z",
+    "description": "This is for instructors to work on tools or assignments for the Software Design Spring 2016 course at Olin College.",
+    "url": "https://github.com/paulruvolo/SoftDesSp16Prep",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Jupyter Notebook",
+    "languages": [
+      "Jupyter Notebook",
+      "Ruby",
+      "CSS",
+      "HTML",
+      "Python"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
     "name": "highland-smartapp",
+    "nameWithOwner": "osteele/highland-smartapp",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1026,6 +1265,7 @@
   },
   {
     "name": "highland-hub",
+    "nameWithOwner": "osteele/highland-hub",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1047,6 +1287,7 @@
   },
   {
     "name": "docker-hugo-build",
+    "nameWithOwner": "osteele/docker-hugo-build",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1067,6 +1308,7 @@
   },
   {
     "name": "foldr.com",
+    "nameWithOwner": "osteele/foldr.com",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1082,11 +1324,14 @@
       "HTML"
     ],
     "topics": [
-
+      "website",
+      "humor",
+      "functional-programming"
     ]
   },
   {
     "name": "assignment-dashboard",
+    "nameWithOwner": "olin-computing/assignment-dashboard",
     "owner": {
       "__typename": "Organization",
       "login": "olin-computing"
@@ -1113,6 +1358,7 @@
   },
   {
     "name": "nbcollate",
+    "nameWithOwner": "osteele/nbcollate",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1138,6 +1384,7 @@
   },
   {
     "name": "project-readme-gallery",
+    "nameWithOwner": "osteele/project-readme-gallery",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1160,6 +1407,7 @@
   },
   {
     "name": "signage",
+    "nameWithOwner": "osteele/signage",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1183,6 +1431,7 @@
   },
   {
     "name": "gojekyll",
+    "nameWithOwner": "osteele/gojekyll",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1212,6 +1461,7 @@
   },
   {
     "name": "liquid-template-server",
+    "nameWithOwner": "osteele/liquid-template-server",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1234,6 +1484,7 @@
   },
   {
     "name": "liquid",
+    "nameWithOwner": "osteele/liquid",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1264,6 +1515,7 @@
   },
   {
     "name": "tuesday",
+    "nameWithOwner": "osteele/tuesday",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1288,6 +1540,7 @@
   },
   {
     "name": "multiclone",
+    "nameWithOwner": "osteele/multiclone",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1311,6 +1564,7 @@
   },
   {
     "name": "liquid-tabulator",
+    "nameWithOwner": "osteele/liquid-tabulator",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1331,6 +1585,7 @@
   },
   {
     "name": "git-keychain-secrets",
+    "nameWithOwner": "osteele/git-keychain-secrets",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1354,6 +1609,7 @@
   },
   {
     "name": "git-timelapse",
+    "nameWithOwner": "osteele/git-timelapse",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1378,6 +1634,7 @@
   },
   {
     "name": "homebrew-tap",
+    "nameWithOwner": "osteele/homebrew-tap",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1397,6 +1654,7 @@
   },
   {
     "name": "forkmantle",
+    "nameWithOwner": "osteele/forkmantle",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1417,6 +1675,7 @@
   },
   {
     "name": "notebooks",
+    "nameWithOwner": "osteele/notebooks",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1438,6 +1697,7 @@
   },
   {
     "name": "volatility",
+    "nameWithOwner": "osteele/volatility",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1460,6 +1720,7 @@
   },
   {
     "name": "aoc17.rs",
+    "nameWithOwner": "osteele/aoc17.rs",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1480,6 +1741,7 @@
   },
   {
     "name": "callgraph",
+    "nameWithOwner": "osteele/callgraph",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1503,6 +1765,7 @@
   },
   {
     "name": "minimal-keys",
+    "nameWithOwner": "osteele/minimal-keys",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1522,6 +1785,7 @@
   },
   {
     "name": "banyan",
+    "nameWithOwner": "osteele/banyan",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1551,6 +1815,7 @@
   },
   {
     "name": "ipython-secrets",
+    "nameWithOwner": "osteele/ipython-secrets",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1575,6 +1840,7 @@
   },
   {
     "name": "skillz",
+    "nameWithOwner": "olin-build/skillz",
     "owner": {
       "__typename": "Organization",
       "login": "olin-build"
@@ -1599,6 +1865,7 @@
   },
   {
     "name": "elm-extras",
+    "nameWithOwner": "osteele/elm-extras",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1619,6 +1886,7 @@
   },
   {
     "name": "abe-event-schedule",
+    "nameWithOwner": "osteele/abe-event-schedule",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1643,6 +1911,7 @@
   },
   {
     "name": "gsheet-keyring",
+    "nameWithOwner": "osteele/gsheet-keyring",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1667,6 +1936,7 @@
   },
   {
     "name": "flinx",
+    "nameWithOwner": "osteele/flinx",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1693,6 +1963,7 @@
   },
   {
     "name": "rtd-flinx-shim",
+    "nameWithOwner": "osteele/rtd-flinx-shim",
     "owner": {
       "__typename": "User",
       "login": "osteele"
@@ -1713,6 +1984,7 @@
   },
   {
     "name": "sneetches",
+    "nameWithOwner": "osteele/sneetches",
     "owner": {
       "__typename": "User",
       "login": "osteele"

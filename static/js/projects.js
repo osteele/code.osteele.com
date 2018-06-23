@@ -10011,6 +10011,18 @@ var _mgold$elm_date_format$Date_Format$format = F2(
 	});
 var _mgold$elm_date_format$Date_Format$formatISO8601 = _mgold$elm_date_format$Date_Format$format('%Y-%m-%dT%H:%M:%SZ');
 
+var _osteele$code_osteele_com$Main$emptySpan = A2(
+	_elm_lang$html$Html$span,
+	{ctor: '[]'},
+	{ctor: '[]'});
+var _osteele$code_osteele_com$Main$emptyDiv = A2(
+	_elm_lang$html$Html$div,
+	{ctor: '[]'},
+	{ctor: '[]'});
+var _osteele$code_osteele_com$Main$ifJust = F2(
+	function (test, a) {
+		return test ? _elm_lang$core$Maybe$Just(a) : _elm_lang$core$Maybe$Nothing;
+	});
 var _osteele$code_osteele_com$Main$repoHasTopic = function (name) {
 	return function (_p0) {
 		return A2(
@@ -10024,18 +10036,24 @@ var _osteele$code_osteele_com$Main$repoHasTopic = function (name) {
 			}(_p0));
 	};
 };
-var _osteele$code_osteele_com$Main$emptySpan = A2(
-	_elm_lang$html$Html$span,
-	{ctor: '[]'},
-	{ctor: '[]'});
-var _osteele$code_osteele_com$Main$emptyDiv = A2(
-	_elm_lang$html$Html$div,
-	{ctor: '[]'},
-	{ctor: '[]'});
-var _osteele$code_osteele_com$Main$ifJust = F2(
-	function (test, a) {
-		return test ? _elm_lang$core$Maybe$Just(a) : _elm_lang$core$Maybe$Nothing;
-	});
+var _osteele$code_osteele_com$Main$ownerName = 'osteele';
+var _osteele$code_osteele_com$Main$owners = {
+	ctor: '::',
+	_0: _osteele$code_osteele_com$Main$ownerName,
+	_1: {
+		ctor: '::',
+		_0: 'olin-computing',
+		_1: {
+			ctor: '::',
+			_0: 'olin-build',
+			_1: {
+				ctor: '::',
+				_0: 'mlsteele',
+				_1: {ctor: '[]'}
+			}
+		}
+	}
+};
 var _osteele$code_osteele_com$Main$dateRange = F2(
 	function (startDate, endDate) {
 		var dateString = _mgold$elm_date_format$Date_Format$format('%-m/%y');
@@ -10374,55 +10392,60 @@ var _osteele$code_osteele_com$Main$modelSorter = function (_p5) {
 	var _p7 = _p6.order;
 	switch (_p7.ctor) {
 		case 'ByName':
-			return _elm_lang$core$List$sortBy(
-				function (_) {
-					return _.name;
-				});
-		case 'ByCreation':
-			return _elm_lang$core$List$sortBy(
-				function (_p8) {
-					return _elm_lang$core$Date$toTime(
+			return function (_p8) {
+				return _elm_lang$core$List$reverse(
+					A2(
+						_elm_lang$core$List$sortBy,
 						function (_) {
-							return _.createdAt;
-						}(_p8));
-				});
-		default:
+							return _.name;
+						},
+						_p8));
+			};
+		case 'ByCreation':
 			return _elm_lang$core$List$sortBy(
 				function (_p9) {
 					return _elm_lang$core$Date$toTime(
 						function (_) {
-							return _.pushedAt;
+							return _.createdAt;
 						}(_p9));
+				});
+		default:
+			return _elm_lang$core$List$sortBy(
+				function (_p10) {
+					return _elm_lang$core$Date$toTime(
+						function (_) {
+							return _.pushedAt;
+						}(_p10));
 				});
 	}
 };
 var _osteele$code_osteele_com$Main$modelFilter = F2(
-	function (_p10, repo) {
-		var _p11 = _p10;
+	function (_p11, repo) {
+		var _p12 = _p11;
 		return A2(
 			_elm_lang$core$List$all,
-			function (_p12) {
-				var _p13 = _p12;
-				return (!_p13._0) || _p13._1(repo);
+			function (_p13) {
+				var _p14 = _p13;
+				return (!_p14._0) || _p14._1(repo);
 			},
 			{
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple2',
-					_0: !_p11.archived,
-					_1: function (_p14) {
+					_0: !_p12.archived,
+					_1: function (_p15) {
 						return !function (_) {
 							return _.isArchived;
-						}(_p14);
+						}(_p15);
 					}
 				},
 				_1: {
 					ctor: '::',
 					_0: {
 						ctor: '_Tuple2',
-						_0: !_p11.underConstruction,
-						_1: function (_p15) {
-							return !A2(_osteele$code_osteele_com$Main$repoHasTopic, 'under-construction', _p15);
+						_0: !_p12.underConstruction,
+						_1: function (_p16) {
+							return !A2(_osteele$code_osteele_com$Main$repoHasTopic, 'under-construction', _p16);
 						}
 					},
 					_1: {ctor: '[]'}
@@ -10457,11 +10480,11 @@ var _osteele$code_osteele_com$Main$checkbox = F2(
 	});
 var _osteele$code_osteele_com$Main$update = F2(
 	function (msg, model) {
-		var _p16 = msg;
-		switch (_p16.ctor) {
+		var _p17 = msg;
+		switch (_p17.ctor) {
 			case 'SetRepos':
-				if (_p16._0.ctor === 'Err') {
-					var _p17 = A2(_elm_lang$core$Debug$log, 'error decoding JSON', _p16._0._0);
+				if (_p17._0.ctor === 'Err') {
+					var _p18 = A2(_elm_lang$core$Debug$log, 'error decoding JSON', _p17._0._0);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
@@ -10471,7 +10494,7 @@ var _osteele$code_osteele_com$Main$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{repos: _p16._0._0}),
+							{repos: _p17._0._0}),
 						{ctor: '[]'});
 				}
 			case 'SetSortOrder':
@@ -10479,15 +10502,15 @@ var _osteele$code_osteele_com$Main$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{order: _p16._0}),
+						{order: _p17._0}),
 					{ctor: '[]'});
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					A2(
-						_p16._1,
+						_p17._1,
 						model,
-						!_p16._0(model)),
+						!_p17._0(model)),
 					{ctor: '[]'});
 		}
 	});
@@ -10517,7 +10540,9 @@ var _osteele$code_osteele_com$Main$Repo = function (a) {
 							return function (h) {
 								return function (i) {
 									return function (j) {
-										return {name: a, description: b, url: c, homepageUrl: d, createdAt: e, pushedAt: f, isArchived: g, primaryLanguage: h, languages: i, topics: j};
+										return function (k) {
+											return {name: a, owner: b, description: c, url: d, homepageUrl: e, createdAt: f, pushedAt: g, isArchived: h, primaryLanguage: i, languages: j, topics: k};
+										};
 									};
 								};
 							};
@@ -10576,9 +10601,13 @@ var _osteele$code_osteele_com$Main$decodeRepo = function () {
 										_elm_lang$core$Json_Decode$string,
 										A3(
 											required,
-											'name',
-											_elm_lang$core$Json_Decode$string,
-											_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_osteele$code_osteele_com$Main$Repo)))))))))));
+											'owner',
+											A2(_elm_lang$core$Json_Decode$field, 'login', _elm_lang$core$Json_Decode$string),
+											A3(
+												required,
+												'name',
+												_elm_lang$core$Json_Decode$string,
+												_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_osteele$code_osteele_com$Main$Repo))))))))))));
 }();
 var _osteele$code_osteele_com$Main$ByUpdate = {ctor: 'ByUpdate'};
 var _osteele$code_osteele_com$Main$ByCreation = {ctor: 'ByCreation'};
@@ -10634,7 +10663,18 @@ var _osteele$code_osteele_com$Main$view = function (model) {
 			A2(
 				_elm_lang$core$List$filter,
 				_osteele$code_osteele_com$Main$modelFilter(model),
-				model.repos)));
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p19) {
+						return A3(
+							_elm_lang$core$Basics$flip,
+							_elm_lang$core$List$member,
+							_osteele$code_osteele_com$Main$owners,
+							function (_) {
+								return _.owner;
+							}(_p19));
+					},
+					model.repos))));
 	return A2(
 		_elm_lang$html$Html$div,
 		{
@@ -10725,7 +10765,7 @@ var _osteele$code_osteele_com$Main$main = _elm_lang$html$Html$program(
 		init: _osteele$code_osteele_com$Main$init,
 		view: _osteele$code_osteele_com$Main$view,
 		update: _osteele$code_osteele_com$Main$update,
-		subscriptions: function (_p18) {
+		subscriptions: function (_p20) {
 			return _elm_lang$core$Platform_Sub$none;
 		}
 	})();
