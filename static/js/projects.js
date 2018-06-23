@@ -10216,7 +10216,44 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 														_1: {ctor: '[]'}
 													}
 												})),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_osteele$code_osteele_com$Main$ifJust,
+												!_elm_lang$core$List$isEmpty(repo.topics),
+												A2(
+													_elm_lang$html$Html$div,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$class('topics'),
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Topics: '),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$ul,
+																{ctor: '[]'},
+																A2(
+																	_elm_lang$core$List$map,
+																	function (s) {
+																		return A2(
+																			_elm_lang$html$Html$li,
+																			{ctor: '[]'},
+																			{
+																				ctor: '::',
+																				_0: _elm_lang$html$Html$text(s),
+																				_1: {ctor: '[]'}
+																			});
+																	},
+																	repo.topics)),
+															_1: {ctor: '[]'}
+														}
+													})),
+											_1: {ctor: '[]'}
+										}
 									}
 								}
 							}

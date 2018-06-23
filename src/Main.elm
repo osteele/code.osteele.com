@@ -11,6 +11,9 @@ import Json.Decode.Extra as Decode
 import Json.Decode.Pipeline as Pipeline
 
 
+-- MAIN
+
+
 main : Program Never Model Msg
 main =
     Html.program
@@ -99,6 +102,7 @@ view model =
     let
         repos =
             model.repos
+                |> List.filter (.owner >> flip List.member owners)
                 |> List.filter (modelFilter model)
                 |> modelSorter model
                 |> List.reverse
@@ -155,7 +159,7 @@ modelSorter : Model -> List Repo -> List Repo
 modelSorter { order } =
     case order of
         ByName ->
-            List.sortBy .name
+            List.sortBy .name >> List.reverse
 
         ByCreation ->
             List.sortBy (Date.toTime << .createdAt)
@@ -275,27 +279,26 @@ repoView repo =
                                 )
                                 repo.languages
                         ]
-
-                -- , ifJust (not <| List.isEmpty repo.topics) <| Html.div [] [ text <| "Topics: " ++ String.join ", " repo.topics ]
+                , ifJust (not <| List.isEmpty repo.topics) <|
+                    Html.div [ class "topics" ]
+                        [ text "Topics: "
+                        , Html.ul [] <| List.map (\s -> Html.li [] [ text s ]) repo.topics
+                        ]
                 ]
 
 
-ifJust : Bool -> a -> Maybe a
-ifJust test a =
-    if test then
-        Just a
-    else
-        Nothing
+
+-- CONFIGURATION
 
 
-emptyDiv : Html msg
-emptyDiv =
-    Html.div [] []
+ownerName : String
+ownerName =
+    "osteele"
 
 
-emptySpan : Html msg
-emptySpan =
-    Html.span [] []
+owners : List String
+owners =
+    [ ownerName, "olin-computing", "olin-build", "mlsteele" ]
 
 
 
@@ -304,6 +307,7 @@ emptySpan =
 
 type alias Repo =
     { name : String
+    , owner : String
     , description : Maybe String
     , url : String
     , homepageUrl : Maybe String
@@ -327,6 +331,7 @@ decodeRepo =
     in
         Pipeline.decode Repo
             |> required "name" Decode.string
+            |> required "owner" (Decode.field "login" Decode.string)
             |> optional "description" Decode.string
             |> required "url" Decode.string
             |> optional "homepageUrl" Decode.string
@@ -341,3 +346,25 @@ decodeRepo =
 repoHasTopic : String -> Repo -> Bool
 repoHasTopic name =
     List.any ((==) name) << .topics
+
+
+
+-- UTILS
+
+
+ifJust : Bool -> a -> Maybe a
+ifJust test a =
+    if test then
+        Just a
+    else
+        Nothing
+
+
+emptyDiv : Html msg
+emptyDiv =
+    Html.div [] []
+
+
+emptySpan : Html msg
+emptySpan =
+    Html.span [] []
