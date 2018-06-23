@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+
+    <div class="page-content">
+      <div class="wrapper">
+        {{ content }}
+        <div id="projects"/>
+      </div>
+    </div>
+
+    {% include footer.html %}
+
+  </body>
+  <script src="./static/js/projects.js"></script>
+  <script type="text/javascript">Elm.Main.embed(document.getElementById('projects'))</script>
+
+</html>

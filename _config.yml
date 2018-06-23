@@ -17,3 +17,4 @@ exclude:
   - Gemfile.lock
   - README.md
   - scripts
+  - node_modules
