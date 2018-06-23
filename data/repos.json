@@ -20,7 +20,8 @@
       "CSS"
     ],
     "topics": [
-
+      "javascript-library",
+      "functional-programming"
     ]
   },
   {
@@ -108,9 +109,9 @@
     ],
     "topics": [
       "testing-framework",
-      "open-library",
       "bdd",
-      "add-framework"
+      "open-laszlo",
+      "bdd-framework"
     ]
   },
   {
@@ -285,7 +286,9 @@
       "JavaScript"
     ],
     "topics": [
-
+      "javascript-library",
+      "obsolete",
+      "functional-programming"
     ]
   },
   {
@@ -389,9 +392,9 @@
       "Ruby"
     ],
     "topics": [
-      "ruby-on-rails",
       "json",
-      "json-schema"
+      "json-schema",
+      "ruby-gems"
     ]
   },
   {
@@ -566,7 +569,9 @@
       "JavaScript"
     ],
     "topics": [
-
+      "documentation-tool",
+      "documentation-generator",
+      "obsolete"
     ]
   },
   {

@@ -10065,7 +10065,7 @@ var _osteele$code_osteele_com$Main$dateRange = F2(
 			A2(_elm_lang$core$Basics_ops['++'], '–', to));
 	});
 var _osteele$code_osteele_com$Main$repoView = function (repo) {
-	var status = function () {
+	var statusInfo = function () {
 		var _p1 = {
 			ctor: '_Tuple2',
 			_0: repo.isArchived,
@@ -10075,10 +10075,12 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 		do {
 			if (_p1.ctor === '_Tuple2') {
 				if (_p1._0 === true) {
-					return _elm_lang$core$Maybe$Just('archived');
+					return _elm_lang$core$Maybe$Just(
+						{ctor: '_Tuple2', _0: 'archived', _1: 'archived'});
 				} else {
 					if (_p1._1 === true) {
-						return _elm_lang$core$Maybe$Just('under construction');
+						return _elm_lang$core$Maybe$Just(
+							{ctor: '_Tuple2', _0: 'under construction', _1: 'under-construction'});
 					} else {
 						break _v0_2;
 					}
@@ -10089,12 +10091,20 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 		} while(false);
 		return _elm_lang$core$Maybe$Nothing;
 	}();
+	var status = A2(_elm_lang$core$Maybe$map, _elm_lang$core$Tuple$first, statusInfo);
+	var projectClass = A2(
+		_elm_lang$core$Basics_ops['++'],
+		'project ',
+		A2(
+			_elm_lang$core$Maybe$withDefault,
+			'',
+			A2(_elm_lang$core$Maybe$map, _elm_lang$core$Tuple$second, statusInfo)));
 	var link = A2(_elm_lang$core$Maybe$withDefault, repo.url, repo.homepageUrl);
 	return A2(
 		_elm_lang$html$Html$li,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('project'),
+			_0: _elm_lang$html$Html_Attributes$class(projectClass),
 			_1: {ctor: '[]'}
 		},
 		A2(
@@ -10405,12 +10415,50 @@ var _osteele$code_osteele_com$Main$categories = function () {
 														ctor: '::',
 														_0: {
 															ctor: '_Tuple2',
-															_0: 'Archived',
-															_1: function (_) {
-																return _.isArchived;
-															}
+															_0: 'OpenLaszlo',
+															_1: topic('open-laszlo')
 														},
-														_1: {ctor: '[]'}
+														_1: {
+															ctor: '::',
+															_0: {
+																ctor: '_Tuple2',
+																_0: 'JavaScript Libraries',
+																_1: topic('javascript-library')
+															},
+															_1: {
+																ctor: '::',
+																_0: {
+																	ctor: '_Tuple2',
+																	_0: 'Ruby Gems',
+																	_1: topic('ruby-gem')
+																},
+																_1: {
+																	ctor: '::',
+																	_0: {
+																		ctor: '_Tuple2',
+																		_0: 'Rails Plugins',
+																		_1: topic('rails-plugins')
+																	},
+																	_1: {
+																		ctor: '::',
+																		_0: {
+																			ctor: '_Tuple2',
+																			_0: 'Websites',
+																			_1: topic('website')
+																		},
+																		_1: {
+																			ctor: '::',
+																			_0: {
+																				ctor: '_Tuple2',
+																				_0: 'Personal',
+																				_1: topic('personal')
+																			},
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}
 													}
 												}
 											}

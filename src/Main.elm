@@ -195,7 +195,14 @@ categories =
         , ( "Music Theory", topic "music-theory" )
         , ( "Home Automation", topic "home-automation" )
         , ( "Grunt Plugins", startsWith "grunt-" )
-        , ( "Archived", .isArchived )
+        , ( "OpenLaszlo", topic "open-laszlo" )
+        , ( "JavaScript Libraries", topic "javascript-library" )
+        , ( "Ruby Gems", topic "ruby-gem" )
+        , ( "Rails Plugins", topic "rails-plugins" )
+        , ( "Websites", topic "website" )
+        , ( "Personal", topic "personal" )
+
+        -- , ( "Archived", .isArchived )
         ]
             |> catchAll
 
@@ -240,18 +247,24 @@ repoView repo =
         link =
             Maybe.withDefault repo.url repo.homepageUrl
 
-        status =
+        statusInfo =
             case ( repo.isArchived, repoHasTopic "under-construction" repo ) of
                 ( True, _ ) ->
-                    Just "archived"
+                    Just ( "archived", "archived" )
 
                 ( _, True ) ->
-                    Just "under construction"
+                    Just ( "under construction", "under-construction" )
 
                 _ ->
                     Nothing
+
+        status =
+            Maybe.map Tuple.first statusInfo
+
+        projectClass =
+            "project " ++ Maybe.withDefault "" (Maybe.map Tuple.second statusInfo)
     in
-        Html.li [ class "project" ] <|
+        Html.li [ class projectClass ] <|
             List.filterMap
                 identity
                 [ Just <| Html.a [ href link ] [ text repo.name ]

@@ -217,6 +217,13 @@
         border: none;
     }
     .project {
+        &.archived,
+        &.under-construction {
+            color: gray;
+        }
+        &.archived {
+            opacity: 0.5;
+        }
         .status {
             color: red;
         }
