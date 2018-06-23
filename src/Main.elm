@@ -139,22 +139,33 @@ categoriesView model =
                 |> modelSorter model
                 |> List.reverse
 
+        sortKey =
+            case model.order of
+                ByName ->
+                    always 0
+
+                ByCreation ->
+                    .createdAt >> Date.toTime >> negate
+
+                ByUpdate ->
+                    .pushedAt >> Date.toTime >> negate
+
         cats =
-            List.filter (not << List.isEmpty << flip categoryRepos repos) categories
+            categories
+                |> List.filter (not << List.isEmpty << flip categoryRepos repos)
+                |> List.sortBy (flip categoryRepos repos >> List.head >> Maybe.map sortKey >> Maybe.withDefault 0)
     in
         Html.div [] <|
             [ Html.ul [ class "toc" ]
-                (List.map
-                    (\cat ->
+                (flip List.map cats <|
+                    \cat ->
                         Html.li []
                             [ Html.a [ href <| "#" ++ categoryId cat ]
                                 [ text <| Tuple.first cat ]
                             ]
-                    )
-                    cats
                 )
             ]
-                ++ List.map (flip categoryViews repos) categories
+                ++ List.map (flip categoryViews repos) cats
 
 
 checkbox : String -> a -> Html a
@@ -198,7 +209,7 @@ modelSorter { order } =
             List.sortBy .name >> List.reverse
 
         ByCreation ->
-            List.sortBy (Date.toTime << .createdAt)
+            List.sortBy (.createdAt >> Date.toTime)
 
         ByUpdate ->
             List.sortBy (.pushedAt >> Date.toTime)
@@ -221,7 +232,7 @@ categories =
                 cats ++ [ ( "Other", \r -> not (List.any (\f -> f r) filters) ) ]
     in
         [ ( "Web Apps", topic "webapp" )
-        , ( "Command Line", topic "cli" )
+        , ( "Command Line Tools", topic "cli" )
         , ( "Chrome Extension", topic "chrome-extension" )
         , ( "Jupyter Extensions", topic "jupyter-notebook-extension" )
         , ( "Jupyter Notebooks", topic "jupyter-notebook" )
