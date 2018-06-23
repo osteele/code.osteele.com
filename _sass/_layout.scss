@@ -216,6 +216,20 @@
         display: inline-block;
         border: none;
     }
+    ul.toc {
+        list-style-type: none;
+        font-size: small;
+        li {
+            display: inline;
+            padding-right: 15px;
+            a {
+                color: gray;
+                &:hover {
+                    color: blue;
+                }
+            }
+        }
+    }
     .project {
         &.archived,
         &.under-construction {

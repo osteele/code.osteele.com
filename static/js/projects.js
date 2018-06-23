@@ -10272,32 +10272,10 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 				}
 			}));
 };
-var _osteele$code_osteele_com$Main$categoryViews = F2(
+var _osteele$code_osteele_com$Main$categoryRepos = F2(
 	function (_p2, repos) {
 		var _p3 = _p2;
-		var filtered = A2(_elm_lang$core$List$filter, _p3._1, repos);
-		return _elm_lang$core$List$isEmpty(filtered) ? _osteele$code_osteele_com$Main$emptyDiv : A2(
-			_elm_lang$html$Html$div,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$h2,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text(_p3._0),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$ul,
-						{ctor: '[]'},
-						A2(_elm_lang$core$List$map, _osteele$code_osteele_com$Main$repoView, filtered)),
-					_1: {ctor: '[]'}
-				}
-			});
+		return A2(_elm_lang$core$List$filter, _p3._1, repos);
 	});
 var _osteele$code_osteele_com$Main$categories = function () {
 	var catchAll = function (cats) {
@@ -10563,13 +10541,145 @@ var _osteele$code_osteele_com$Main$checkbox = F2(
 				}
 			});
 	});
+var _osteele$code_osteele_com$Main$slugify = function (_p17) {
+	return A4(
+		_elm_lang$core$Regex$replace,
+		_elm_lang$core$Regex$All,
+		_elm_lang$core$Regex$regex('[^a-zA-Z0-9]+'),
+		function (_p18) {
+			return '-';
+		},
+		_elm_lang$core$String$toLower(_p17));
+};
+var _osteele$code_osteele_com$Main$categoryId = function (_p19) {
+	var _p20 = _p19;
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'category-',
+		_osteele$code_osteele_com$Main$slugify(_p20._0));
+};
+var _osteele$code_osteele_com$Main$categoryViews = F2(
+	function (_p21, repos) {
+		var _p22 = _p21;
+		var _p24 = _p22._0;
+		var _p23 = _p22._1;
+		var filtered = A2(_elm_lang$core$List$filter, _p23, repos);
+		return _elm_lang$core$List$isEmpty(filtered) ? _osteele$code_osteele_com$Main$emptyDiv : A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$id(
+					_osteele$code_osteele_com$Main$categoryId(
+						{ctor: '_Tuple2', _0: _p24, _1: _p23})),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$h2,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(_p24),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$ul,
+						{ctor: '[]'},
+						A2(_elm_lang$core$List$map, _osteele$code_osteele_com$Main$repoView, filtered)),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _osteele$code_osteele_com$Main$categoriesView = function (model) {
+	var repos = _elm_lang$core$List$reverse(
+		A2(
+			_osteele$code_osteele_com$Main$modelSorter,
+			model,
+			A2(
+				_elm_lang$core$List$filter,
+				_osteele$code_osteele_com$Main$modelFilter(model),
+				A2(
+					_elm_lang$core$List$filter,
+					function (_p25) {
+						return A3(
+							_elm_lang$core$Basics$flip,
+							_elm_lang$core$List$member,
+							_osteele$code_osteele_com$Main$owners,
+							function (_) {
+								return _.owner;
+							}(_p25));
+					},
+					A2(
+						_elm_lang$core$Maybe$withDefault,
+						{ctor: '[]'},
+						model.repos)))));
+	var cats = A2(
+		_elm_lang$core$List$filter,
+		function (_p26) {
+			return !_elm_lang$core$List$isEmpty(
+				A3(_elm_lang$core$Basics$flip, _osteele$code_osteele_com$Main$categoryRepos, repos, _p26));
+		},
+		_osteele$code_osteele_com$Main$categories);
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$ul,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('toc'),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$List$map,
+						function (cat) {
+							return A2(
+								_elm_lang$html$Html$li,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'#',
+													_osteele$code_osteele_com$Main$categoryId(cat))),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												_elm_lang$core$Tuple$first(cat)),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								});
+						},
+						cats)),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				A2(_elm_lang$core$Basics$flip, _osteele$code_osteele_com$Main$categoryViews, repos),
+				_osteele$code_osteele_com$Main$categories)));
+};
 var _osteele$code_osteele_com$Main$update = F2(
 	function (msg, model) {
-		var _p17 = msg;
-		switch (_p17.ctor) {
+		var _p27 = msg;
+		switch (_p27.ctor) {
 			case 'SetRepos':
-				if (_p17._0.ctor === 'Err') {
-					var _p18 = A2(_elm_lang$core$Debug$log, 'error decoding JSON', _p17._0._0);
+				if (_p27._0.ctor === 'Err') {
+					var _p28 = A2(_elm_lang$core$Debug$log, 'error decoding JSON', _p27._0._0);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						model,
@@ -10579,7 +10689,9 @@ var _osteele$code_osteele_com$Main$update = F2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{repos: _p17._0._0}),
+							{
+								repos: _elm_lang$core$Maybe$Just(_p27._0._0)
+							}),
 						{ctor: '[]'});
 				}
 			case 'SetSortOrder':
@@ -10587,15 +10699,15 @@ var _osteele$code_osteele_com$Main$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{order: _p17._0}),
+						{order: _p27._0}),
 					{ctor: '[]'});
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					A2(
-						_p17._1,
+						_p27._1,
 						model,
-						!_p17._0(model)),
+						!_p27._0(model)),
 					{ctor: '[]'});
 		}
 	});
@@ -10741,25 +10853,6 @@ var _osteele$code_osteele_com$Main$radio = F3(
 			});
 	});
 var _osteele$code_osteele_com$Main$view = function (model) {
-	var repos = _elm_lang$core$List$reverse(
-		A2(
-			_osteele$code_osteele_com$Main$modelSorter,
-			model,
-			A2(
-				_elm_lang$core$List$filter,
-				_osteele$code_osteele_com$Main$modelFilter(model),
-				A2(
-					_elm_lang$core$List$filter,
-					function (_p19) {
-						return A3(
-							_elm_lang$core$Basics$flip,
-							_elm_lang$core$List$member,
-							_osteele$code_osteele_com$Main$owners,
-							function (_) {
-								return _.owner;
-							}(_p19));
-					},
-					model.repos))));
 	return A2(
 		_elm_lang$html$Html$div,
 		{
@@ -10767,76 +10860,87 @@ var _osteele$code_osteele_com$Main$view = function (model) {
 			_0: _elm_lang$html$Html_Attributes$class('projects'),
 			_1: {ctor: '[]'}
 		},
-		A2(
-			_elm_lang$core$Basics_ops['++'],
-			{
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text('Include:'),
+			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html$text('Include:'),
+				_0: A2(
+					_osteele$code_osteele_com$Main$checkbox,
+					'Archived',
+					A2(
+						_osteele$code_osteele_com$Main$Toggle,
+						function (_) {
+							return _.archived;
+						},
+						_osteele$code_osteele_com$Main$setArchived)),
 				_1: {
 					ctor: '::',
 					_0: A2(
 						_osteele$code_osteele_com$Main$checkbox,
-						'Archived',
+						'Under Construction',
 						A2(
 							_osteele$code_osteele_com$Main$Toggle,
 							function (_) {
-								return _.archived;
+								return _.underConstruction;
 							},
-							_osteele$code_osteele_com$Main$setArchived)),
+							_osteele$code_osteele_com$Main$setUnderConstruction)),
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_osteele$code_osteele_com$Main$checkbox,
-							'Under Construction',
-							A2(
-								_osteele$code_osteele_com$Main$Toggle,
-								function (_) {
-									return _.underConstruction;
-								},
-								_osteele$code_osteele_com$Main$setUnderConstruction)),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$fieldset,
-								{ctor: '[]'},
-								{
+							_elm_lang$html$Html$fieldset,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Sort:'),
+								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('Sort:'),
+									_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Name', _osteele$code_osteele_com$Main$ByName),
 									_1: {
 										ctor: '::',
-										_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Name', _osteele$code_osteele_com$Main$ByName),
+										_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Created', _osteele$code_osteele_com$Main$ByCreation),
 										_1: {
 											ctor: '::',
-											_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Created', _osteele$code_osteele_com$Main$ByCreation),
-											_1: {
-												ctor: '::',
-												_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Updated', _osteele$code_osteele_com$Main$ByUpdate),
-												_1: {ctor: '[]'}
-											}
+											_0: A3(_osteele$code_osteele_com$Main$radio, model, 'Updated', _osteele$code_osteele_com$Main$ByUpdate),
+											_1: {ctor: '[]'}
 										}
 									}
-								}),
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: function () {
+								var _p29 = model.repos;
+								if (_p29.ctor === 'Just') {
+									return _osteele$code_osteele_com$Main$categoriesView(model);
+								} else {
+									return A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('loading'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Loading…'),
+											_1: {ctor: '[]'}
+										});
+								}
+							}(),
 							_1: {ctor: '[]'}
 						}
 					}
 				}
-			},
-			A2(
-				_elm_lang$core$List$map,
-				A2(_elm_lang$core$Basics$flip, _osteele$code_osteele_com$Main$categoryViews, repos),
-				_osteele$code_osteele_com$Main$categories)));
+			}
+		});
 };
 var _osteele$code_osteele_com$Main$SetRepos = function (a) {
 	return {ctor: 'SetRepos', _0: a};
 };
 var _osteele$code_osteele_com$Main$init = {
 	ctor: '_Tuple2',
-	_0: {
-		repos: {ctor: '[]'},
-		order: _osteele$code_osteele_com$Main$ByName,
-		archived: false,
-		underConstruction: false
-	},
+	_0: {repos: _elm_lang$core$Maybe$Nothing, order: _osteele$code_osteele_com$Main$ByName, archived: false, underConstruction: false},
 	_1: A2(
 		_elm_lang$http$Http$send,
 		_osteele$code_osteele_com$Main$SetRepos,
@@ -10850,7 +10954,7 @@ var _osteele$code_osteele_com$Main$main = _elm_lang$html$Html$program(
 		init: _osteele$code_osteele_com$Main$init,
 		view: _osteele$code_osteele_com$Main$view,
 		update: _osteele$code_osteele_com$Main$update,
-		subscriptions: function (_p20) {
+		subscriptions: function (_p30) {
 			return _elm_lang$core$Platform_Sub$none;
 		}
 	})();

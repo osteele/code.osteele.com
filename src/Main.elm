@@ -9,6 +9,7 @@ import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
 import Json.Decode.Pipeline as Pipeline
+import Regex
 
 
 -- MAIN
@@ -29,7 +30,7 @@ main =
 
 
 type alias Model =
-    { repos : List Repo
+    { repos : Maybe (List Repo)
     , order : SortOrder
     , archived : Bool
     , underConstruction : Bool
@@ -44,7 +45,7 @@ type SortOrder
 
 init : ( Model, Cmd Msg )
 init =
-    ( { repos = []
+    ( { repos = Nothing
       , order = ByName
       , archived = False
       , underConstruction = False
@@ -84,7 +85,7 @@ update msg model =
                 model ! []
 
         SetRepos (Result.Ok repos) ->
-            { model | repos = repos } ! []
+            { model | repos = Just repos } ! []
 
         SetSortOrder order ->
             { model | order = order } ! []
@@ -99,24 +100,59 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
+    Html.div [ class "projects" ] <|
+        [ text "Include:"
+        , checkbox "Archived" (Toggle .archived setArchived)
+        , checkbox "Under Construction" (Toggle .underConstruction setUnderConstruction)
+        , Html.fieldset []
+            [ text "Sort:"
+            , radio model "Name" ByName
+            , radio model "Created" ByCreation
+            , radio model "Updated" ByUpdate
+            ]
+        , case model.repos of
+            Just repos ->
+                categoriesView model
+
+            Nothing ->
+                Html.div [ class "loading" ] [ text "Loading…" ]
+        ]
+
+
+slugify : String -> String
+slugify =
+    String.toLower >> Regex.replace Regex.All (Regex.regex "[^a-zA-Z0-9]+") (\_ -> "-")
+
+
+categoryId : ( String, a ) -> String
+categoryId ( title, _ ) =
+    "category-" ++ slugify title
+
+
+categoriesView : Model -> Html Msg
+categoriesView model =
     let
         repos =
-            model.repos
+            Maybe.withDefault [] model.repos
                 |> List.filter (.owner >> flip List.member owners)
                 |> List.filter (modelFilter model)
                 |> modelSorter model
                 |> List.reverse
+
+        cats =
+            List.filter (not << List.isEmpty << flip categoryRepos repos) categories
     in
-        Html.div [ class "projects" ] <|
-            [ text "Include:"
-            , checkbox "Archived" (Toggle .archived setArchived)
-            , checkbox "Under Construction" (Toggle .underConstruction setUnderConstruction)
-            , Html.fieldset []
-                [ text "Sort:"
-                , radio model "Name" ByName
-                , radio model "Created" ByCreation
-                , radio model "Updated" ByUpdate
-                ]
+        Html.div [] <|
+            [ Html.ul [ class "toc" ]
+                (List.map
+                    (\cat ->
+                        Html.li []
+                            [ Html.a [ href <| "#" ++ categoryId cat ]
+                                [ text <| Tuple.first cat ]
+                            ]
+                    )
+                    cats
+                )
             ]
                 ++ List.map (flip categoryViews repos) categories
 
@@ -201,10 +237,13 @@ categories =
         , ( "Rails Plugins", topic "rails-plugins" )
         , ( "Websites", topic "website" )
         , ( "Personal", topic "personal" )
-
-        -- , ( "Archived", .isArchived )
         ]
             |> catchAll
+
+
+categoryRepos : ( String, Repo -> Bool ) -> List Repo -> List Repo
+categoryRepos ( _, filter ) repos =
+    List.filter filter repos
 
 
 categoryViews : ( String, Repo -> Bool ) -> List Repo -> Html msg
@@ -216,7 +255,7 @@ categoryViews ( name, filter ) repos =
         if List.isEmpty filtered then
             emptyDiv
         else
-            Html.div []
+            Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
                 [ Html.h2 [] [ text name ]
                 , Html.ul [] <|
                     List.map repoView filtered
