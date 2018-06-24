@@ -165,7 +165,7 @@ categoriesView model =
                             ]
                 )
             ]
-                ++ List.map (flip categoryViews repos) cats
+                ++ List.map (flip categoryView repos) cats
 
 
 checkbox : String -> a -> Html a
@@ -257,8 +257,8 @@ categoryRepos ( _, filter ) repos =
     List.filter filter repos
 
 
-categoryViews : ( String, Repo -> Bool ) -> List Repo -> Html msg
-categoryViews ( name, filter ) repos =
+categoryView : ( String, Repo -> Bool ) -> List Repo -> Html msg
+categoryView ( name, filter ) repos =
     let
         filtered =
             List.filter filter repos
@@ -268,7 +268,7 @@ categoryViews ( name, filter ) repos =
         else
             Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
                 [ Html.h2 [] [ text name ]
-                , Html.ul [] <|
+                , Html.div [ class "ui three stackable cards" ] <|
                     List.map repoView filtered
                 ]
 
@@ -312,42 +312,56 @@ repoView repo =
             Maybe.map Tuple.first statusInfo
 
         projectClass =
-            "project " ++ Maybe.withDefault "" (Maybe.map Tuple.second statusInfo)
-    in
-        Html.li [ class projectClass ] <|
-            List.filterMap
-                identity
-                [ Just <| Html.a [ href link ] [ text repo.name ]
-                , Just <| text " "
-                , ifJust (link /= repo.url) <| Html.a [ href repo.url ] [ text "(source)" ]
-                , Just <| text <| " " ++ dateRange repo.createdAt repo.pushedAt
-                , (flip Maybe.map repo.description) <| \d -> text <| " — " ++ d
-                , (flip Maybe.map status) <|
-                    \s ->
-                        Html.div [ class "status" ] [ text <| "Status: " ++ s ]
-                , Just <|
-                    Html.div [ class "languages" ] <|
-                        [ text "Languages: "
-                        , Html.ul [] <|
-                            List.map
-                                (\s ->
-                                    Html.li
-                                        [ class <|
-                                            if Just s == repo.primaryLanguage then
-                                                "primary"
-                                            else
-                                                "secondary"
-                                        ]
-                                        [ text s ]
-                                )
-                                repo.languages
-                        ]
-                , ifJust (not <| List.isEmpty repo.topics) <|
-                    Html.div [ class "topics" ]
-                        [ text "Topics: "
-                        , Html.ul [] <| List.map (\s -> Html.li [] [ text s ]) repo.topics
-                        ]
+            "project ui card " ++ Maybe.withDefault "" (Maybe.map Tuple.second statusInfo)
+
+        card header meta description extraContent =
+            Html.div [ class projectClass ]
+                [ Html.div [ class "content" ]
+                    [ Html.div [ class "header" ] [ header ]
+                    , Html.div [ class "meta" ] [ meta ]
+                    , Html.div [ class "description" ] [ description ]
+                    ]
+                , Html.div [ class "extra content" ] [ extraContent ]
                 ]
+    in
+        card (Html.a [ href link ] [ text repo.name ])
+            (Html.div [] <|
+                List.filterMap identity
+                    [ Just <| text " "
+                    , ifJust (link /= repo.url) <| Html.a [ href repo.url ] [ text "(source)" ]
+                    , Just <| text <| " " ++ dateRange repo.createdAt repo.pushedAt
+                    ]
+            )
+            (Html.div [] [ text <| Maybe.withDefault "" repo.description ])
+            (Html.div [] <|
+                List.filterMap identity
+                    [ (flip Maybe.map status) <|
+                        \s ->
+                            Html.div [ class "status" ] [ text <| "Status: " ++ s ]
+                    , Just <|
+                        Html.div [ class "languages" ] <|
+                            [ text "Languages: "
+                            , Html.ul [] <|
+                                List.map
+                                    (\s ->
+                                        Html.li
+                                            [ class <|
+                                                if Just s == repo.primaryLanguage then
+                                                    "primary"
+                                                else
+                                                    "secondary"
+                                            ]
+                                            [ text s ]
+                                    )
+                                    repo.languages
+                            ]
+                    , ifJust (not <| List.isEmpty repo.topics) <|
+                        Html.div [ class "topics" ]
+                            [ text "Topics: "
+                            , Html.ul [] <| List.map (\s -> Html.li [] [ text s ]) repo.topics
+                            ]
+                    ]
+            )
 
 
 

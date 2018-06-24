@@ -10094,38 +10094,115 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 	var status = A2(_elm_lang$core$Maybe$map, _elm_lang$core$Tuple$first, statusInfo);
 	var projectClass = A2(
 		_elm_lang$core$Basics_ops['++'],
-		'project ',
+		'project ui card ',
 		A2(
 			_elm_lang$core$Maybe$withDefault,
 			'',
 			A2(_elm_lang$core$Maybe$map, _elm_lang$core$Tuple$second, statusInfo)));
-	var link = A2(_elm_lang$core$Maybe$withDefault, repo.url, repo.homepageUrl);
-	return A2(
-		_elm_lang$html$Html$li,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class(projectClass),
-			_1: {ctor: '[]'}
-		},
-		A2(
-			_elm_lang$core$List$filterMap,
-			_elm_lang$core$Basics$identity,
-			{
-				ctor: '::',
-				_0: _elm_lang$core$Maybe$Just(
-					A2(
-						_elm_lang$html$Html$a,
+	var card = F4(
+		function (header, meta, description, extraContent) {
+			return A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class(projectClass),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$href(link),
+							_0: _elm_lang$html$Html_Attributes$class('content'),
 							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(repo.name),
-							_1: {ctor: '[]'}
-						})),
-				_1: {
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('header'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: header,
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('meta'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: meta,
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('description'),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: description,
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('extra content'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: extraContent,
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				});
+		});
+	var link = A2(_elm_lang$core$Maybe$withDefault, repo.url, repo.homepageUrl);
+	return A4(
+		card,
+		A2(
+			_elm_lang$html$Html$a,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$href(link),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(repo.name),
+				_1: {ctor: '[]'}
+			}),
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				{
 					ctor: '::',
 					_0: _elm_lang$core$Maybe$Just(
 						_elm_lang$html$Html$text(' ')),
@@ -10154,123 +10231,127 @@ var _osteele$code_osteele_com$Main$repoView = function (repo) {
 										_elm_lang$core$Basics_ops['++'],
 										' ',
 										A2(_osteele$code_osteele_com$Main$dateRange, repo.createdAt, repo.pushedAt)))),
-							_1: {
-								ctor: '::',
-								_0: A3(
-									_elm_lang$core$Basics$flip,
-									_elm_lang$core$Maybe$map,
-									repo.description,
-									function (d) {
-										return _elm_lang$html$Html$text(
-											A2(_elm_lang$core$Basics_ops['++'], ' — ', d));
-									}),
-								_1: {
+							_1: {ctor: '[]'}
+						}
+					}
+				})),
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					A2(_elm_lang$core$Maybe$withDefault, '', repo.description)),
+				_1: {ctor: '[]'}
+			}),
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			A2(
+				_elm_lang$core$List$filterMap,
+				_elm_lang$core$Basics$identity,
+				{
+					ctor: '::',
+					_0: A3(
+						_elm_lang$core$Basics$flip,
+						_elm_lang$core$Maybe$map,
+						status,
+						function (s) {
+							return A2(
+								_elm_lang$html$Html$div,
+								{
 									ctor: '::',
-									_0: A3(
-										_elm_lang$core$Basics$flip,
-										_elm_lang$core$Maybe$map,
-										status,
-										function (s) {
-											return A2(
-												_elm_lang$html$Html$div,
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('status'),
-													_1: {ctor: '[]'}
-												},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text(
-														A2(_elm_lang$core$Basics_ops['++'], 'Status: ', s)),
-													_1: {ctor: '[]'}
-												});
-										}),
+									_0: _elm_lang$html$Html_Attributes$class('status'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										A2(_elm_lang$core$Basics_ops['++'], 'Status: ', s)),
+									_1: {ctor: '[]'}
+								});
+						}),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Maybe$Just(
+							A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('languages'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Languages: '),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$core$Maybe$Just(
+										_0: A2(
+											_elm_lang$html$Html$ul,
+											{ctor: '[]'},
 											A2(
-												_elm_lang$html$Html$div,
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$class('languages'),
-													_1: {ctor: '[]'}
+												_elm_lang$core$List$map,
+												function (s) {
+													return A2(
+														_elm_lang$html$Html$li,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$class(
+																_elm_lang$core$Native_Utils.eq(
+																	_elm_lang$core$Maybe$Just(s),
+																	repo.primaryLanguage) ? 'primary' : 'secondary'),
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html$text(s),
+															_1: {ctor: '[]'}
+														});
 												},
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html$text('Languages: '),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_elm_lang$html$Html$ul,
-															{ctor: '[]'},
-															A2(
-																_elm_lang$core$List$map,
-																function (s) {
-																	return A2(
-																		_elm_lang$html$Html$li,
-																		{
-																			ctor: '::',
-																			_0: _elm_lang$html$Html_Attributes$class(
-																				_elm_lang$core$Native_Utils.eq(
-																					_elm_lang$core$Maybe$Just(s),
-																					repo.primaryLanguage) ? 'primary' : 'secondary'),
-																			_1: {ctor: '[]'}
-																		},
-																		{
-																			ctor: '::',
-																			_0: _elm_lang$html$Html$text(s),
-																			_1: {ctor: '[]'}
-																		});
-																},
-																repo.languages)),
-														_1: {ctor: '[]'}
-													}
-												})),
+												repo.languages)),
+										_1: {ctor: '[]'}
+									}
+								})),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_osteele$code_osteele_com$Main$ifJust,
+								!_elm_lang$core$List$isEmpty(repo.topics),
+								A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('topics'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Topics: '),
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_osteele$code_osteele_com$Main$ifJust,
-												!_elm_lang$core$List$isEmpty(repo.topics),
+												_elm_lang$html$Html$ul,
+												{ctor: '[]'},
 												A2(
-													_elm_lang$html$Html$div,
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$class('topics'),
-														_1: {ctor: '[]'}
+													_elm_lang$core$List$map,
+													function (s) {
+														return A2(
+															_elm_lang$html$Html$li,
+															{ctor: '[]'},
+															{
+																ctor: '::',
+																_0: _elm_lang$html$Html$text(s),
+																_1: {ctor: '[]'}
+															});
 													},
-													{
-														ctor: '::',
-														_0: _elm_lang$html$Html$text('Topics: '),
-														_1: {
-															ctor: '::',
-															_0: A2(
-																_elm_lang$html$Html$ul,
-																{ctor: '[]'},
-																A2(
-																	_elm_lang$core$List$map,
-																	function (s) {
-																		return A2(
-																			_elm_lang$html$Html$li,
-																			{ctor: '[]'},
-																			{
-																				ctor: '::',
-																				_0: _elm_lang$html$Html$text(s),
-																				_1: {ctor: '[]'}
-																			});
-																	},
-																	repo.topics)),
-															_1: {ctor: '[]'}
-														}
-													})),
+													repo.topics)),
 											_1: {ctor: '[]'}
 										}
-									}
-								}
-							}
+									})),
+							_1: {ctor: '[]'}
 						}
 					}
-				}
-			}));
+				})));
 };
 var _osteele$code_osteele_com$Main$categoryRepos = F2(
 	function (_p2, repos) {
@@ -10323,7 +10404,7 @@ var _osteele$code_osteele_com$Main$categories = function () {
 				ctor: '::',
 				_0: {
 					ctor: '_Tuple2',
-					_0: 'Command Line',
+					_0: 'Command Line Tools',
 					_1: topic('cli')
 				},
 				_1: {
@@ -10558,7 +10639,7 @@ var _osteele$code_osteele_com$Main$categoryId = function (_p19) {
 		'category-',
 		_osteele$code_osteele_com$Main$slugify(_p20._0));
 };
-var _osteele$code_osteele_com$Main$categoryViews = F2(
+var _osteele$code_osteele_com$Main$categoryView = F2(
 	function (_p21, repos) {
 		var _p22 = _p21;
 		var _p24 = _p22._0;
@@ -10586,8 +10667,12 @@ var _osteele$code_osteele_com$Main$categoryViews = F2(
 				_1: {
 					ctor: '::',
 					_0: A2(
-						_elm_lang$html$Html$ul,
-						{ctor: '[]'},
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('ui three stackable cards'),
+							_1: {ctor: '[]'}
+						},
 						A2(_elm_lang$core$List$map, _osteele$code_osteele_com$Main$repoView, filtered)),
 					_1: {ctor: '[]'}
 				}
@@ -10706,7 +10791,7 @@ var _osteele$code_osteele_com$Main$categoriesView = function (model) {
 			},
 			A2(
 				_elm_lang$core$List$map,
-				A2(_elm_lang$core$Basics$flip, _osteele$code_osteele_com$Main$categoryViews, repos),
+				A2(_elm_lang$core$Basics$flip, _osteele$code_osteele_com$Main$categoryView, repos),
 				cats)));
 };
 var _osteele$code_osteele_com$Main$update = F2(
