@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Oliver Steele | Code
+permalink: /2017-index.md
 ---
 
 Coding, like writing, is a means of self-expression and a process for
