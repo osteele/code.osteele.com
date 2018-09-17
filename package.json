@@ -1,11 +1,12 @@
 {
-    "name": "code.osteele.com",
-    "version": "1.0.0",
-    "main": "index.js",
-    "repository": "https://github.com/osteele/code.osteele.com",
-    "author": "Oliver Steele <steele@osteele.com>",
-    "license": "MIT",
-    "devDependencies": {
-        "elm": "^0.18.0"
-    }
+  "name": "code.osteele.com",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/osteele/code.osteele.com",
+  "author": "Oliver Steele <steele@osteele.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "elm": "^0.19.0",
+    "elm-format": "^0.8.0"
+  }
 }

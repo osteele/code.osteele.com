@@ -13,7 +13,7 @@ The source to [code.osteele.com](https://code.osteele.com).
 1. `bundle exec jekyll serve --watch --livereload`
 2. Browse to [localhost:4000](http://localhost:4000)
 3. `ruby scripts/collect_repos.rb` to update the cached project info
-4. `elm-make src/Main.elm --output static/js/projects.js` to re-build the Elm
+4. `npx elm make src/Main.elm --output static/js/projects.js` to re-build the Elm
    app
 
 ## Docker (alternative)

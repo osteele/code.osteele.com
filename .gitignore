@@ -7,3 +7,4 @@ _site
 /tmp/
 elm-stuff/
 yarn-error.log
+*.log

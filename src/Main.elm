@@ -1,26 +1,28 @@
 module Main exposing (main)
 
-import Date exposing (Date)
-import Date.Format
+import Browser
 import Html exposing (Html, text)
 import Html.Attributes exposing (class, href)
 import Html.Events exposing (onClick)
 import Http
+import Iso8601
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
 import Json.Decode.Pipeline as Pipeline
 import Regex
+import Time exposing (Zone, toMonth, toYear, utc)
+
 
 
 -- MAIN
 
 
-main : Program Never Model Msg
+main : Program Decode.Value Model Msg
 main =
-    Html.program
-        { init = init
-        , view = view
+    Browser.element
+        { init = \_ -> init
         , update = update
+        , view = view
         , subscriptions = \_ -> Sub.none
         }
 
@@ -30,7 +32,8 @@ main =
 
 
 type alias Model =
-    { repos : Maybe (List Repo)
+    { tz: Zone
+    , repos : Maybe (List Repo)
     , order : SortOrder
     , archived : Bool
     , underConstruction : Bool
@@ -45,7 +48,8 @@ type SortOrder
 
 init : ( Model, Cmd Msg )
 init =
-    ( { repos = Nothing
+    ( { tz = utc
+      , repos = Nothing
       , order = ByName
       , archived = False
       , underConstruction = False
@@ -82,16 +86,24 @@ update msg model =
                 _ =
                     Debug.log "error decoding JSON" err
             in
-                model ! []
+            ( model
+            , Cmd.none
+            )
 
         SetRepos (Result.Ok repos) ->
-            { model | repos = Just repos } ! []
+            ( { model | repos = Just repos }
+            , Cmd.none
+            )
 
         SetSortOrder order ->
-            { model | order = order } ! []
+            ( { model | order = order }
+            , Cmd.none
+            )
 
         Toggle get set ->
-            (get model |> not |> set model) ! []
+            ( get model |> not |> set model
+            , Cmd.none
+            )
 
 
 
@@ -122,12 +134,16 @@ view model =
                     ]
         ]
 
+
 slugifyRe : Regex.Regex
-slugifyRe = Regex.regex "[^a-zA-Z0-9]+"
+slugifyRe =
+    Regex.fromString "[^a-zA-Z0-9]+"
+    |> Maybe.withDefault Regex.never
+
 
 slugify : String -> String
 slugify =
-    String.toLower >> Regex.replace Regex.All slugifyRe (\_ -> "-")
+    String.toLower >> Regex.replace slugifyRe (\_ -> "-")
 
 
 categoryId : ( String, a ) -> String
@@ -140,7 +156,7 @@ categoriesView model =
     let
         repos =
             Maybe.withDefault [] model.repos
-                |> List.filter (.owner >> flip List.member owners)
+                |> List.filter (.owner >> (\a -> List.member a owners))
                 |> List.filter (modelFilter model)
                 |> modelSorter model
                 |> List.reverse
@@ -151,27 +167,27 @@ categoriesView model =
                     always 0
 
                 ByCreation ->
-                    .createdAt >> Date.toTime >> negate
+                    .createdAt >> Time.posixToMillis  >> negate
 
                 ByUpdate ->
-                    .pushedAt >> Date.toTime >> negate
+                    .pushedAt >> Time.posixToMillis  >> negate
 
         cats =
             categories
-                |> List.filter (not << List.isEmpty << flip categoryRepos repos)
-                |> List.sortBy (flip categoryRepos repos >> List.head >> Maybe.map sortKey >> Maybe.withDefault 0)
+                |> List.filter (not << List.isEmpty << (\a -> categoryRepos a repos))
+                |> List.sortBy ((\a -> categoryRepos a repos) >> List.head >> Maybe.map sortKey >> Maybe.withDefault 0)
     in
-        Html.div [] <|
-            [ Html.ul [ class "toc" ]
-                (flip List.map cats <|
-                    \cat ->
-                        Html.li []
-                            [ Html.a [ href <| "#" ++ categoryId cat ]
-                                [ text <| Tuple.first cat ]
-                            ]
-                )
-            ]
-                ++ List.map (flip categoryView repos) cats
+    Html.div [] <|
+        [ Html.ul [ class "toc" ]
+            ((\a -> List.map a cats) <|
+                \cat ->
+                    Html.li []
+                        [ Html.a [ href <| "#" ++ categoryId cat ]
+                            [ text <| Tuple.first cat ]
+                        ]
+            )
+        ]
+            ++ List.map (\a -> categoryView model.tz a repos) cats
 
 
 checkbox : String -> a -> Html a
@@ -203,7 +219,7 @@ radio model label order =
 modelFilter : Model -> Repo -> Bool
 modelFilter { archived, underConstruction } repo =
     List.all (\( flag, f ) -> not flag || f repo) <|
-        [ ( not archived, not << .isArchived)
+        [ ( not archived, not << .isArchived )
         , ( not underConstruction, not << repoHasTopic "under-construction" )
         ]
 
@@ -215,11 +231,10 @@ modelSorter { order } =
             List.sortBy .name >> List.reverse
 
         ByCreation ->
-            List.sortBy (.createdAt >> Date.toTime)
+            List.sortBy (.createdAt >> Time.posixToMillis)
 
         ByUpdate ->
-            List.sortBy (.pushedAt >> Date.toTime)
-
+            List.sortBy (.pushedAt >> Time.posixToMillis)
 
 categories : List ( String, Repo -> Bool )
 categories =
@@ -235,27 +250,27 @@ categories =
                 filters =
                     List.map Tuple.second cats
             in
-                cats ++ [ ( "Other", \r -> not (List.any (\f -> f r) filters) ) ]
+            cats ++ [ ( "Other", \r -> not (List.any (\f -> f r) filters) ) ]
     in
-        [ ( "Web Apps", topic "webapp" )
-        , ( "Command Line Tools", topic "cli" )
-        , ( "Chrome Extension", topic "chrome-extension" )
-        , ( "Jupyter Extensions", topic "jupyter-notebook-extension" )
-        , ( "Jupyter Notebooks", topic "jupyter-notebook" )
-        , ( "Python Packages", topic "python-package" )
-        , ( "Go Packages", topic "golang-package" )
-        , ( "Education", topic "education" )
-        , ( "Music Theory", topic "music-theory" )
-        , ( "Home Automation", topic "home-automation" )
-        , ( "Grunt Plugins", startsWith "grunt-" )
-        , ( "OpenLaszlo", topic "open-laszlo" )
-        , ( "JavaScript Libraries", topic "javascript-library" )
-        , ( "Ruby Gems", topic "ruby-gem" )
-        , ( "Rails Plugins", topic "rails-plugins" )
-        , ( "Websites", topic "website" )
-        , ( "Personal", topic "personal" )
-        ]
-            |> catchAll
+    [ ( "Web Apps", topic "webapp" )
+    , ( "Command Line Tools", topic "cli" )
+    , ( "Chrome Extension", topic "chrome-extension" )
+    , ( "Jupyter Extensions", topic "jupyter-notebook-extension" )
+    , ( "Jupyter Notebooks", topic "jupyter-notebook" )
+    , ( "Python Packages", topic "python-package" )
+    , ( "Go Packages", topic "golang-package" )
+    , ( "Education", topic "education" )
+    , ( "Music Theory", topic "music-theory" )
+    , ( "Home Automation", topic "home-automation" )
+    , ( "Grunt Plugins", startsWith "grunt-" )
+    , ( "OpenLaszlo", topic "open-laszlo" )
+    , ( "JavaScript Libraries", topic "javascript-library" )
+    , ( "Ruby Gems", topic "ruby-gem" )
+    , ( "Rails Plugins", topic "rails-plugins" )
+    , ( "Websites", topic "website" )
+    , ( "Personal", topic "personal" )
+    ]
+        |> catchAll
 
 
 categoryRepos : ( String, Repo -> Bool ) -> List Repo -> List Repo
@@ -263,27 +278,44 @@ categoryRepos ( _, filter ) repos =
     List.filter filter repos
 
 
-categoryView : ( String, Repo -> Bool ) -> List Repo -> Html msg
-categoryView ( name, filter ) repos =
+categoryView : Zone ->( String, Repo -> Bool ) ->  List Repo -> Html msg
+categoryView tz ( name, filter ) repos =
     let
         filtered =
             List.filter filter repos
     in
-        if List.isEmpty filtered then
-            emptyDiv
-        else
-            Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
-                [ Html.h2 [] [ text name ]
-                , Html.div [ class "ui three stackable cards" ] <|
-                    List.map repoView filtered
-                ]
+    if List.isEmpty filtered then
+        emptyDiv
+
+    else
+        Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
+            [ Html.h2 [] [ text name ]
+            , Html.div [ class "ui three stackable cards" ] <|
+                List.map (repoView tz) filtered
+            ]
 
 
-dateRange : Date -> Date -> String
-dateRange startDate endDate =
+dateRange : Zone -> Time.Posix -> Time.Posix -> String
+dateRange tz startDate endDate =
     let
-        dateString =
-            Date.Format.format "%-m/%y"
+        dateString date =
+            -- Date.Format.format "%-m/%y"
+            (toMonth tz date |> monthNumber) ++ "/" ++ (toYear tz date |> String.fromInt)
+
+        monthNumber month =
+            case month of
+                Time.Jan -> "01"
+                Time.Feb -> "02"
+                Time.Mar -> "03"
+                Time.Apr -> "04"
+                Time.May -> "05"
+                Time.Jun -> "06"
+                Time.Jul -> "07"
+                Time.Aug -> "08"
+                Time.Sep -> "09"
+                Time.Oct -> "10"
+                Time.Nov -> "11"
+                Time.Dec -> "12"
 
         from =
             dateString startDate
@@ -291,14 +323,15 @@ dateRange startDate endDate =
         to =
             dateString endDate
     in
-        if from == to then
-            from
-        else
-            from ++ "–" ++ to
+    if from == to then
+        from
+
+    else
+        from ++ "–" ++ to
 
 
-repoView : Repo -> Html msg
-repoView repo =
+repoView : Zone -> Repo -> Html msg
+repoView tz repo =
     let
         link =
             Maybe.withDefault repo.url repo.homepageUrl
@@ -330,44 +363,45 @@ repoView repo =
                 , Html.div [ class "extra content" ] [ extraContent ]
                 ]
     in
-        card (Html.a [ href link ] [ text repo.name ])
-            (Html.div [] <|
-                List.filterMap identity
-                    [ Just <| text " "
-                    , ifJust (link /= repo.url) <| Html.a [ href repo.url ] [ text "(source)" ]
-                    , Just <| text <| " " ++ dateRange repo.createdAt repo.pushedAt
-                    ]
-            )
-            (Html.div [] [ text <| Maybe.withDefault "" repo.description ])
-            (Html.div [] <|
-                List.filterMap identity
-                    [ flip Maybe.map status <|
-                        \s ->
-                            Html.div [ class "status" ] [ text <| "Status: " ++ s ]
-                    , Just <|
-                        Html.div [ class "languages" ] <|
-                            [ text "Languages: "
-                            , Html.ul [] <|
-                                List.map
-                                    (\s ->
-                                        Html.li
-                                            [ class <|
-                                                if Just s == repo.primaryLanguage then
-                                                    "primary"
-                                                else
-                                                    "secondary"
-                                            ]
-                                            [ text s ]
-                                    )
-                                    repo.languages
-                            ]
-                    , ifJust (not <| List.isEmpty repo.topics) <|
-                        Html.div [ class "topics" ]
-                            [ text "Topics: "
-                            , Html.ul [] <| List.map (\s -> Html.li [] [ text s ]) repo.topics
-                            ]
-                    ]
-            )
+    card (Html.a [ href link ] [ text repo.name ])
+        (Html.div [] <|
+            List.filterMap identity
+                [ Just <| text " "
+                , ifJust (link /= repo.url) <| Html.a [ href repo.url ] [ text "(source)" ]
+                , Just <| text <| " " ++ dateRange tz repo.createdAt repo.pushedAt
+                ]
+        )
+        (Html.div [] [ text <| Maybe.withDefault "" repo.description ])
+        (Html.div [] <|
+            List.filterMap identity
+                [ (\a -> Maybe.map a status) <|
+                    \s ->
+                        Html.div [ class "status" ] [ text <| "Status: " ++ s ]
+                , Just <|
+                    Html.div [ class "languages" ] <|
+                        [ text "Languages: "
+                        , Html.ul [] <|
+                            List.map
+                                (\s ->
+                                    Html.li
+                                        [ class <|
+                                            if Just s == repo.primaryLanguage then
+                                                "primary"
+
+                                            else
+                                                "secondary"
+                                        ]
+                                        [ text s ]
+                                )
+                                repo.languages
+                        ]
+                , ifJust (not <| List.isEmpty repo.topics) <|
+                    Html.div [ class "topics" ]
+                        [ text "Topics: "
+                        , Html.ul [] <| List.map (\s -> Html.li [] [ text s ]) repo.topics
+                        ]
+                ]
+        )
 
 
 
@@ -394,8 +428,8 @@ type alias Repo =
     , description : Maybe String
     , url : String
     , homepageUrl : Maybe String
-    , createdAt : Date
-    , pushedAt : Date
+    , createdAt : Time.Posix
+    , pushedAt : Time.Posix
     , isArchived : Bool
     , primaryLanguage : Maybe String
     , languages : List String
@@ -412,18 +446,18 @@ decodeRepo =
         required =
             Pipeline.required
     in
-        Pipeline.decode Repo
-            |> required "name" Decode.string
-            |> required "owner" (Decode.field "login" Decode.string)
-            |> optional "description" Decode.string
-            |> required "url" Decode.string
-            |> optional "homepageUrl" Decode.string
-            |> required "createdAt" Decode.date
-            |> required "pushedAt" Decode.date
-            |> required "isArchived" Decode.bool
-            |> optional "primaryLanguage" Decode.string
-            |> required "languages" (Decode.list Decode.string)
-            |> required "topics" (Decode.list Decode.string)
+    Decode.succeed Repo
+        |> required "name" Decode.string
+        |> required "owner" (Decode.field "login" Decode.string)
+        |> optional "description" Decode.string
+        |> required "url" Decode.string
+        |> optional "homepageUrl" Decode.string
+        |> required "createdAt" Iso8601.decoder
+        |> required "pushedAt" Iso8601.decoder
+        |> required "isArchived" Decode.bool
+        |> optional "primaryLanguage" Decode.string
+        |> required "languages" (Decode.list Decode.string)
+        |> required "topics" (Decode.list Decode.string)
 
 
 repoHasTopic : String -> Repo -> Bool
@@ -439,6 +473,7 @@ ifJust : Bool -> a -> Maybe a
 ifJust test a =
     if test then
         Just a
+
     else
         Nothing
 

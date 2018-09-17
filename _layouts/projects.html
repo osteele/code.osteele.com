@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.2/dist/semantic.min.css"
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.2/dist/semantic.min.css" />
     {% include head.html %}
-
+  </head>
   <body>
-
     {% include header.html %}
-
     <div class="page-content">
       <div class="wrapper">
         {{ content }}
         <div id="projects"/>
       </div>
     </div>
-
     {% include footer.html %}
-
   </body>
   <script src="./static/js/projects.js"></script>
-  <script type="text/javascript">Elm.Main.embed(document.getElementById('projects'))</script>
-
+  <script type="text/javascript">
+    Elm.Main.init({ node: document.getElementById('projects') })
+  </script>
 </html>
