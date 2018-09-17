@@ -50,7 +50,7 @@ init =
       , archived = False
       , underConstruction = False
       }
-    , Http.send SetRepos (Http.get "../data/repos.json" (Decode.list decodeRepo))
+    , Http.send SetRepos (Http.get "../data/repos.json?2018.09.17" (Decode.list decodeRepo))
     )
 
 
@@ -111,17 +111,23 @@ view model =
             , radio model "Updated" ByUpdate
             ]
         , case model.repos of
-            Just repos ->
+            Just _ ->
                 categoriesView model
 
             Nothing ->
-                Html.div [ class "loading" ] [ text "Loading…" ]
+                Html.div [ class "ui segment" ]
+                    [ Html.div [ class "ui active text loader" ]
+                        [ text "Loading…" ]
+                    , Html.p [] []
+                    ]
         ]
 
+slugifyRe : Regex.Regex
+slugifyRe = Regex.regex "[^a-zA-Z0-9]+"
 
 slugify : String -> String
 slugify =
-    String.toLower >> Regex.replace Regex.All (Regex.regex "[^a-zA-Z0-9]+") (\_ -> "-")
+    String.toLower >> Regex.replace Regex.All slugifyRe (\_ -> "-")
 
 
 categoryId : ( String, a ) -> String
@@ -197,7 +203,7 @@ radio model label order =
 modelFilter : Model -> Repo -> Bool
 modelFilter { archived, underConstruction } repo =
     List.all (\( flag, f ) -> not flag || f repo) <|
-        [ ( not archived, (not << .isArchived) )
+        [ ( not archived, not << .isArchived)
         , ( not underConstruction, not << repoHasTopic "under-construction" )
         ]
 
@@ -335,7 +341,7 @@ repoView repo =
             (Html.div [] [ text <| Maybe.withDefault "" repo.description ])
             (Html.div [] <|
                 List.filterMap identity
-                    [ (flip Maybe.map status) <|
+                    [ flip Maybe.map status <|
                         \s ->
                             Html.div [ class "status" ] [ text <| "Status: " ++ s ]
                     , Just <|
@@ -440,8 +446,3 @@ ifJust test a =
 emptyDiv : Html msg
 emptyDiv =
     Html.div [] []
-
-
-emptySpan : Html msg
-emptySpan =
-    Html.span [] []

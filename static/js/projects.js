@@ -10011,10 +10011,6 @@ var _mgold$elm_date_format$Date_Format$format = F2(
 	});
 var _mgold$elm_date_format$Date_Format$formatISO8601 = _mgold$elm_date_format$Date_Format$format('%Y-%m-%dT%H:%M:%SZ');
 
-var _osteele$code_osteele_com$Main$emptySpan = A2(
-	_elm_lang$html$Html$span,
-	{ctor: '[]'},
-	{ctor: '[]'});
 var _osteele$code_osteele_com$Main$emptyDiv = A2(
 	_elm_lang$html$Html$div,
 	{ctor: '[]'},
@@ -10622,11 +10618,12 @@ var _osteele$code_osteele_com$Main$checkbox = F2(
 				}
 			});
 	});
+var _osteele$code_osteele_com$Main$slugifyRe = _elm_lang$core$Regex$regex('[^a-zA-Z0-9]+');
 var _osteele$code_osteele_com$Main$slugify = function (_p17) {
 	return A4(
 		_elm_lang$core$Regex$replace,
 		_elm_lang$core$Regex$All,
-		_elm_lang$core$Regex$regex('[^a-zA-Z0-9]+'),
+		_osteele$code_osteele_com$Main$slugifyRe,
 		function (_p18) {
 			return '-';
 		},
@@ -11039,13 +11036,31 @@ var _osteele$code_osteele_com$Main$view = function (model) {
 										_elm_lang$html$Html$div,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('loading'),
+											_0: _elm_lang$html$Html_Attributes$class('ui segment'),
 											_1: {ctor: '[]'}
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('Loading…'),
-											_1: {ctor: '[]'}
+											_0: A2(
+												_elm_lang$html$Html$div,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$class('ui active text loader'),
+													_1: {ctor: '[]'}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Loading…'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$p,
+													{ctor: '[]'},
+													{ctor: '[]'}),
+												_1: {ctor: '[]'}
+											}
 										});
 								}
 							}(),
@@ -11067,7 +11082,7 @@ var _osteele$code_osteele_com$Main$init = {
 		_osteele$code_osteele_com$Main$SetRepos,
 		A2(
 			_elm_lang$http$Http$get,
-			'../data/repos.json',
+			'../data/repos.json?2018.09.17',
 			_elm_lang$core$Json_Decode$list(_osteele$code_osteele_com$Main$decodeRepo)))
 };
 var _osteele$code_osteele_com$Main$main = _elm_lang$html$Html$program(
