@@ -802,7 +802,7 @@
       "login": "osteele"
     },
     "createdAt": "2013-09-12T15:57:03Z",
-    "pushedAt": "2018-06-24T01:40:14Z",
+    "pushedAt": "2018-09-16T21:13:27Z",
     "description": null,
     "url": "https://github.com/osteele/code.osteele.com",
     "homepageUrl": "https://code.osteele.com",
@@ -884,25 +884,28 @@
     ]
   },
   {
-    "name": "schoen",
-    "nameWithOwner": "osteele/schoen",
+    "name": "tonic.ts",
+    "nameWithOwner": "osteele/tonic.ts",
     "owner": {
       "__typename": "User",
       "login": "osteele"
     },
     "createdAt": "2013-09-28T17:01:52Z",
-    "pushedAt": "2014-02-08T17:28:25Z",
-    "description": "Music theory and fretboard logic",
-    "url": "https://github.com/osteele/schoen",
-    "homepageUrl": null,
+    "pushedAt": "2018-09-16T14:56:21Z",
+    "description": "TypeScript music theory, pitch constellation diagram, and guitar chord calculator",
+    "url": "https://github.com/osteele/tonic.ts",
+    "homepageUrl": "http://osteele.github.io/tonic.ts",
     "isArchived": false,
-    "primaryLanguage": "CoffeeScript",
+    "primaryLanguage": "TypeScript",
     "languages": [
-      "CoffeeScript",
-      "JavaScript"
+      "JavaScript",
+      "TypeScript"
     ],
     "topics": [
-      "music-theory"
+      "music-theory",
+      "typescript",
+      "typescript-library",
+      "guitar-chords"
     ]
   },
   {
@@ -964,7 +967,7 @@
       "login": "osteele"
     },
     "createdAt": "2013-12-25T20:05:29Z",
-    "pushedAt": "2018-04-09T22:40:43Z",
+    "pushedAt": "2018-09-07T19:32:58Z",
     "description": "My historical blog",
     "url": "https://github.com/osteele/blog.osteele.com",
     "homepageUrl": "https://blog.osteele.com",
@@ -1025,7 +1028,7 @@
       "login": "osteele"
     },
     "createdAt": "2014-01-06T00:41:30Z",
-    "pushedAt": "2018-03-02T16:10:24Z",
+    "pushedAt": "2018-07-01T13:50:46Z",
     "description": "my https://dotfiles.github.io",
     "url": "https://github.com/osteele/dotfiles",
     "isArchived": false,
@@ -1047,14 +1050,15 @@
       "login": "osteele"
     },
     "createdAt": "2014-02-27T16:44:09Z",
-    "pushedAt": "2014-02-27T17:36:43Z",
+    "pushedAt": "2018-09-17T15:01:53Z",
     "description": "Music theory Dart package",
     "url": "https://github.com/osteele/dart-tonic",
     "homepageUrl": null,
     "isArchived": false,
     "primaryLanguage": "Dart",
     "languages": [
-      "Dart"
+      "Dart",
+      "Shell"
     ],
     "topics": [
       "music-theory"
@@ -1068,7 +1072,7 @@
       "login": "kenperlin"
     },
     "createdAt": "2014-05-30T20:14:39Z",
-    "pushedAt": "2018-06-04T01:18:11Z",
+    "pushedAt": "2018-09-15T03:16:57Z",
     "description": null,
     "url": "https://github.com/kenperlin/chalktalk",
     "homepageUrl": null,
@@ -1495,7 +1499,7 @@
       "login": "osteele"
     },
     "createdAt": "2017-06-26T14:39:52Z",
-    "pushedAt": "2018-06-05T20:42:24Z",
+    "pushedAt": "2018-07-31T15:47:51Z",
     "description": "A complete Liquid template engine in Go",
     "url": "https://github.com/osteele/liquid",
     "homepageUrl": "https://godoc.org/github.com/osteele/liquid",
@@ -1996,22 +2000,189 @@
       "login": "osteele"
     },
     "createdAt": "2018-06-19T21:15:40Z",
-    "pushedAt": "2018-06-23T20:52:53Z",
+    "pushedAt": "2018-08-24T19:57:39Z",
     "description": "A Chrome extension that adds star counts next to GitHub repo links",
     "url": "https://github.com/osteele/sneetches",
     "homepageUrl": "https://chrome.google.com/webstore/detail/sneetches/kcgocobceakfflhmbolpokembcmeljka",
     "isArchived": false,
-    "primaryLanguage": "JavaScript",
+    "primaryLanguage": "TypeScript",
     "languages": [
       "JavaScript",
       "HTML",
       "CSS",
-      "Makefile"
+      "Makefile",
+      "TypeScript"
     ],
     "topics": [
       "chrome-extension",
       "github",
-      "web-extension"
+      "web-extension",
+      "github-browser-extensions"
+    ]
+  },
+  {
+    "name": "matrix-photo-gallery",
+    "nameWithOwner": "osteele/matrix-photo-gallery",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-28T12:30:26Z",
+    "pushedAt": "2018-08-02T21:24:49Z",
+    "description": "A photo gallery for photos from a Matrix room.",
+    "url": "https://github.com/osteele/matrix-photo-gallery",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Python",
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "matrix-client",
+      "photo-gallery",
+      "dinacon"
+    ]
+  },
+  {
+    "name": "matrix-archive",
+    "nameWithOwner": "osteele/matrix-archive",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-30T03:39:19Z",
+    "pushedAt": "2018-06-30T05:49:26Z",
+    "description": "Export a Matrix room message archive",
+    "url": "https://github.com/osteele/matrix-archive",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Smarty"
+    ],
+    "topics": [
+      "matrix-client",
+      "dinacon"
+    ]
+  },
+  {
+    "name": "microbit-signal-meter",
+    "nameWithOwner": "osteele/microbit-signal-meter",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-30T12:12:49Z",
+    "pushedAt": "2018-07-24T14:36:14Z",
+    "description": "Bluetooth signal meter for BBC micro:bit",
+    "url": "https://github.com/osteele/microbit-signal-meter",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "TypeScript",
+    "languages": [
+      "TypeScript"
+    ],
+    "topics": [
+      "dinacon",
+      "microbit",
+      "microbit-ble"
+    ]
+  },
+  {
+    "name": "tidal-memories",
+    "nameWithOwner": "osteele/tidal-memories",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-07-08T09:48:53Z",
+    "pushedAt": "2018-08-02T21:23:51Z",
+    "description": "On-the-ground piece for Dinacon",
+    "url": "https://github.com/osteele/tidal-memories",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "CSS",
+      "Python",
+      "HTML"
+    ],
+    "topics": [
+      "matrix-client",
+      "dinacon"
+    ]
+  },
+  {
+    "name": "bootle",
+    "nameWithOwner": "osteele/bootle",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-07-23T15:38:18Z",
+    "pushedAt": "2018-07-24T13:43:15Z",
+    "description": "“Should array indices start at 0 or 1? My compromise of 0.5 was rejected without, I thought, proper consideration.” — Stan Kelly-Bootle",
+    "url": "https://github.com/osteele/bootle",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "vscode-jekyll",
+    "nameWithOwner": "osteele/vscode-jekyll",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-08-22T18:06:19Z",
+    "pushedAt": "2018-08-22T18:23:27Z",
+    "description": "Define VSCode problem matchers for Jekyll Liquid exceptions",
+    "url": "https://github.com/osteele/vscode-jekyll",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": null,
+    "languages": [
+
+    ],
+    "topics": [
+      "visual-studio-code",
+      "vscode",
+      "vscode-extension",
+      "jekyll",
+      "liquid",
+      "liquid-templating-engine"
+    ]
+  },
+  {
+    "name": "inventiveminds.xyz",
+    "nameWithOwner": "osteele/inventiveminds.xyz",
+    "owner": {
+      "__typename": "User",
+      "login": "osteele"
+    },
+    "createdAt": "2018-08-27T21:13:11Z",
+    "pushedAt": "2018-08-28T21:22:19Z",
+    "description": "Source to Inventive Minds web site",
+    "url": "https://github.com/osteele/inventiveminds.xyz",
+    "homepageUrl": "https://inventiveminds.xyz",
+    "isArchived": false,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby",
+      "HTML"
+    ],
+    "topics": [
+
     ]
   }
 ]
