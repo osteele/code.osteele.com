@@ -8,10 +8,18 @@ url: 'https://code.osteele.com' # the base hostname & protocol for your site
 github_username: osteele
 
 exclude:
+  - '*.lock'
+  - '*.log'
+  - '*.todo'
   - config
   - docker-compose.yml
+  - elm-package.json
+  - elm-stuff
+  - elm.json
   - Gemfile
-  - Gemfile.lock
+  - node_modules
+  - package.json
+  - Procfile
   - README.md
   - scripts
-  - node_modules
+  - src

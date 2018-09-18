@@ -6,4 +6,5 @@ _site
 /tmp/
 elm-stuff/
 node_modules/
+elm-package.json
 *.log
