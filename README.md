@@ -6,26 +6,23 @@ The source to [code.osteele.com](https://code.osteele.com).
 
 1. [Install Jekyll](https://jekyllrb.com/docs/installation/)
 2. `bundle install` to install Ruby gems.
-3. `yarn install` to install Yarn packages.
+3. `elm install` to install Elm packages.
+4. Install [foreman](https://github.com/ddollar/foreman) or one of its
+   [ports](https://github.com/ddollar/foreman#ports). On macOS: `brew install
+   forego`
+5. Install [entr](http://www.entrproject.org). On macOS: `brew install entr`.
 
 ## Develop
 
-1. `bundle exec jekyll serve --watch --livereload`
+1. Run foreman or a port. E.g. `foreman start` or `forego start`.
 2. Browse to [localhost:4000](http://localhost:4000)
-3. `ruby scripts/collect_repos.rb` to update the cached project info
-4. `npx elm make src/Main.elm --output static/js/projects.js` to re-build the Elm
-   app
 
-## Docker (alternative)
+Update project info:
 
-This just updates the Jekyll pages. It doesn't rebuild the project cache or
-the Elm app.
-
-1. Setup: Install [Docker Compose](https://docs.docker.com/compose/install/)
-2. Develop: `docker-compose up`
+* Run `ruby scripts/collect_repos.rb`
 
 ## Deploy
 
 ```bash
-git push
+./scripts/deploy
 ```

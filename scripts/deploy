@@ -1,0 +1,5 @@
+#!/usr/bin/env bash -eu
+
+npx elm make src/Main.elm --output static/js/projects.js
+bundle exec jekyll build
+netlify deploy
