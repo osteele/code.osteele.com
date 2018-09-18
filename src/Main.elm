@@ -112,11 +112,13 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.div [ class "projects" ] <|
-        [ text "Include:"
-        , checkbox "Archived" (Toggle .archived setArchived)
-        , checkbox "Under Construction" (Toggle .underConstruction setUnderConstruction)
-        , Html.fieldset []
-            [ text "Sort:"
+        [ Html.div [ class "ui buttons" ]
+            [ checkbox "Archived" (Toggle .archived setArchived)
+            , checkbox "Under Construction" (Toggle .underConstruction setUnderConstruction)
+            , Html.div [ class "ui left pointing label" ] [ text "Include" ]
+            ]
+        , Html.div [ class "ui right floated buttons" ]
+            [ Html.div [ class "ui right pointing label" ] [ text "Sort" ]
             , radio model "Name" ByName
             , radio model "Created" ByCreation
             , radio model "Updated" ByUpdate
@@ -132,17 +134,6 @@ view model =
                     , Html.p [] []
                     ]
         ]
-
-
-slugifyRe : Regex.Regex
-slugifyRe =
-    Regex.fromString "[^a-zA-Z0-9]+"
-        |> Maybe.withDefault Regex.never
-
-
-slugify : String -> String
-slugify =
-    String.toLower >> Regex.replace slugifyRe (\_ -> "-")
 
 
 categoryId : ( String, a ) -> String
@@ -177,21 +168,23 @@ categoriesView model =
                 |> List.sortBy ((\a -> categoryRepos a repos) >> List.head >> Maybe.map sortKey >> Maybe.withDefault 0)
     in
         Html.div [] <|
-            [ Html.ul [ class "toc" ]
-                ((\a -> List.map a cats) <|
-                    \cat ->
-                        Html.li []
-                            [ Html.a [ href <| "#" ++ categoryId cat ]
-                                [ text <| Tuple.first cat ]
-                            ]
-                )
+            [ Html.div [ class "ui basic segment" ]
+                [ Html.div [ class "ui horizontal list" ]
+                    ((\a -> List.map a cats) <|
+                        \cat ->
+                            Html.div [ class "ui label" ]
+                                [ Html.a [ href <| "#" ++ categoryId cat ]
+                                    [ text <| Tuple.first cat ]
+                                ]
+                    )
+                ]
             ]
                 ++ List.map (\a -> categoryView model.tz a repos) cats
 
 
 checkbox : String -> a -> Html a
 checkbox label cmd =
-    Html.label []
+    Html.label [ class "ui button" ]
         [ Html.input
             [ Html.Attributes.type_ "checkbox"
             , onClick cmd
@@ -203,7 +196,7 @@ checkbox label cmd =
 
 radio : Model -> String -> SortOrder -> Html Msg
 radio model label order =
-    Html.label []
+    Html.div [ class "ui button" ]
         [ Html.input
             [ Html.Attributes.type_ "radio"
             , Html.Attributes.name "sort-order"
@@ -287,8 +280,8 @@ categoryView tz ( name, filter ) repos =
         if List.isEmpty filtered then
             emptyDiv
         else
-            Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
-                [ Html.h2 [] [ text name ]
+            Html.div [ class "ui basic segment", Html.Attributes.id <| categoryId ( name, filter ) ]
+                [ Html.div [ class "ui medium header" ] [ text name ]
                 , Html.div [ class "ui five stackable cards" ] <|
                     List.map (repoView tz) filtered
                 ]
@@ -489,6 +482,11 @@ repoHasTopic name =
 -- UTILS
 
 
+emptyDiv : Html msg
+emptyDiv =
+    Html.div [] []
+
+
 ifJust : Bool -> a -> Maybe a
 ifJust test a =
     if test then
@@ -497,6 +495,12 @@ ifJust test a =
         Nothing
 
 
-emptyDiv : Html msg
-emptyDiv =
-    Html.div [] []
+slugifyRe : Regex.Regex
+slugifyRe =
+    Regex.fromString "[^a-zA-Z0-9]+"
+        |> Maybe.withDefault Regex.never
+
+
+slugify : String -> String
+slugify =
+    String.toLower >> Regex.replace slugifyRe (\_ -> "-")
