@@ -1,10 +1,9 @@
-.vagrant
-node_modules
-build
 .jekyll-metadata
 .sass-cache
 _site
+/build/
+/static/js/projects.js
 /tmp/
 elm-stuff/
-yarn-error.log
+node_modules/
 *.log
