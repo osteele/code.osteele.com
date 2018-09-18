@@ -7427,7 +7427,7 @@ var author$project$Main$categoryView = F3(
 					elm$html$Html$div,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('ui three stackable cards')
+							elm$html$Html$Attributes$class('ui five stackable cards')
 						]),
 					A2(
 						elm$core$List$map,

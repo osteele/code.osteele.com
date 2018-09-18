@@ -289,7 +289,7 @@ categoryView tz ( name, filter ) repos =
         else
             Html.div [ Html.Attributes.id <| categoryId ( name, filter ) ]
                 [ Html.h2 [] [ text name ]
-                , Html.div [ class "ui three stackable cards" ] <|
+                , Html.div [ class "ui five stackable cards" ] <|
                     List.map (repoView tz) filtered
                 ]
 
