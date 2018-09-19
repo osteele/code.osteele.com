@@ -1,4 +1,14 @@
 {% if page.layout == 'projects' %}
+  <div class="ui borderless main menu">
+    <div class="ui six column container">
+      <div class="ui header item">Oliver Steele</div>
+      <div class="ui borderless right secondary menu">
+        <a class="item" href="https://osteele.com">About</a>
+        <a class="active item" href="{{ page.url | prepend: site.baseurl }}">Code</a>
+        <a class="item" href="https://blog.osteele.com">Blog</a>
+      </div>
+    </div>
+  </div>
 {% else %}
 <header class="site-header">
 
