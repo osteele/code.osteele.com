@@ -111,21 +111,30 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.div [ class "projects" ] <|
-        [ Html.div [ class "ui buttons" ]
-            [ checkbox "Archived" (Toggle .archived setArchived)
-            , checkbox "Under Construction" (Toggle .underConstruction setUnderConstruction)
-            , Html.div [ class "ui left pointing label" ] [ text "Include" ]
-            ]
-        , Html.div [ class "ui right floated buttons" ]
-            [ Html.div [ class "ui right pointing label" ] [ text "Sort" ]
-            , radio model "Name" ByName
-            , radio model "Created" ByCreation
-            , radio model "Updated" ByUpdate
-            ]
-        , case model.repos of
+    let
+        toolbar =
+            Html.div [ class "ui container" ]
+                [ Html.div [ class "ui borderless main menu" ]
+                    [ Html.div [ class "ui buttons" ]
+                        [ Html.div [ class "ui label" ] [ text "Include" ]
+                        , filterToggle "Archived" (Toggle .archived setArchived)
+                        , filterToggle "Under Construction" (Toggle .underConstruction setUnderConstruction)
+                        ]
+                    , Html.div [ class "ui buttons" ]
+                        [ Html.div [ class "ui label" ] [ text "Sort by" ]
+                        , sortOrderButton model ByName "Name" "name"
+                        , sortOrderButton model ByCreation "Created" "repo creation date"
+                        , sortOrderButton model ByUpdate "Updated" "latest commit"
+                        ]
+                    ]
+                ]
+    in
+        case model.repos of
             Just _ ->
-                categoriesView model
+                Html.div [ class "projects" ]
+                    [ toolbar
+                    , Html.div [ class "ui vertical segment" ] [ categoriesView model ]
+                    ]
 
             Nothing ->
                 Html.div [ class "ui segment" ]
@@ -133,7 +142,6 @@ view model =
                         [ text "Loading…" ]
                     , Html.p [] []
                     ]
-        ]
 
 
 categoryId : ( String, a ) -> String
@@ -182,29 +190,26 @@ categoriesView model =
                 ++ List.map (\a -> categoryView model.tz a repos) cats
 
 
-checkbox : String -> a -> Html a
-checkbox label cmd =
-    Html.label [ class "ui button" ]
+filterToggle : String -> a -> Html a
+filterToggle label cmd =
+    Html.div [ class "ui checkbox" ]
         [ Html.input
             [ Html.Attributes.type_ "checkbox"
             , onClick cmd
             ]
             []
-        , text label
+        , Html.label [] [ text label ]
         ]
 
 
-radio : Model -> String -> SortOrder -> Html Msg
-radio model label order =
-    Html.div [ class "ui button" ]
-        [ Html.input
-            [ Html.Attributes.type_ "radio"
-            , Html.Attributes.name "sort-order"
-            , Html.Attributes.checked (model.order == order)
-            , onClick <| SetSortOrder order
-            ]
-            []
-        , text label
+sortOrderButton : Model -> SortOrder -> String -> String -> Html Msg
+sortOrderButton model order label description =
+    Html.button
+        [ class "ui button"
+        , activeClass <| model.order == order
+        , onClick <| SetSortOrder order
+        ]
+        [ text label
         ]
 
 
@@ -480,6 +485,15 @@ repoHasTopic name =
 
 
 -- UTILS
+
+
+activeClass : Bool -> Html.Attribute msg
+activeClass test =
+    class <|
+        if test then
+            "active"
+        else
+            ""
 
 
 emptyDiv : Html msg
