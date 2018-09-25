@@ -10,7 +10,16 @@ import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Extra as Decode
 import Json.Decode.Pipeline as Pipeline
 import Regex
-import Time exposing (Zone, toMonth, toYear, utc)
+import Time exposing (toMonth, toYear, utc)
+
+
+type alias Time =
+    Time.Posix
+
+
+type alias TimeZone =
+    Time.Zone
+
 
 
 -- MAIN
@@ -19,7 +28,7 @@ import Time exposing (Zone, toMonth, toYear, utc)
 main : Program Decode.Value Model Msg
 main =
     Browser.element
-        { init = \_ -> init
+        { init = \repos -> init repos
         , update = update
         , view = view
         , subscriptions = \_ -> Sub.none
@@ -31,7 +40,7 @@ main =
 
 
 type alias Model =
-    { tz : Zone
+    { tz : TimeZone
     , repos : Maybe (List Repo)
     , order : SortOrder
     , archived : Bool
@@ -45,16 +54,21 @@ type SortOrder
     | ByUpdate
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { tz = utc
-      , repos = Nothing
-      , order = ByName
-      , archived = False
-      , underConstruction = False
-      }
-    , Http.send SetRepos (Http.get "../data/repos.json?2018.09.17" (Decode.list decodeRepo))
-    )
+init : Decode.Value -> ( Model, Cmd Msg )
+init repoJson =
+    let
+        model =
+            { tz = utc
+            , repos = Nothing
+            , order = ByName
+            , archived = False
+            , underConstruction = False
+            }
+
+        msg =
+            SetRepos <| Decode.decodeValue (Decode.list decodeRepo) repoJson
+    in
+        update msg model
 
 
 setArchived : Model -> Bool -> Model
@@ -72,7 +86,7 @@ setUnderConstruction model value =
 
 
 type Msg
-    = SetRepos (Result Http.Error (List Repo))
+    = SetRepos (Result Decode.Error (List Repo))
     | SetSortOrder SortOrder
     | Toggle (Model -> Bool) (Model -> Bool -> Model)
 
@@ -276,7 +290,7 @@ categoryRepos ( _, filter ) repos =
     List.filter filter repos
 
 
-categoryView : Zone -> ( String, Repo -> Bool ) -> List Repo -> Html msg
+categoryView : TimeZone -> ( String, Repo -> Bool ) -> List Repo -> Html msg
 categoryView tz ( name, filter ) repos =
     let
         filtered =
@@ -288,11 +302,11 @@ categoryView tz ( name, filter ) repos =
             Html.div [ class "ui basic segment", Html.Attributes.id <| categoryId ( name, filter ) ]
                 [ Html.div [ class "ui medium header" ] [ text name ]
                 , Html.div [ class "ui five stackable cards" ] <|
-                    List.map (repoView tz) filtered
+                    List.map (repoCard tz) filtered
                 ]
 
 
-dateRange : Zone -> Time.Posix -> Time.Posix -> String
+dateRange : TimeZone -> Time -> Time -> String
 dateRange tz startDate endDate =
     let
         dateString date =
@@ -349,8 +363,8 @@ dateRange tz startDate endDate =
             from ++ "–" ++ to
 
 
-repoView : Zone -> Repo -> Html msg
-repoView tz repo =
+repoCard : TimeZone -> Repo -> Html msg
+repoCard tz repo =
     let
         link =
             Maybe.withDefault repo.url repo.homepageUrl
@@ -446,8 +460,8 @@ type alias Repo =
     , description : Maybe String
     , url : String
     , homepageUrl : Maybe String
-    , createdAt : Time.Posix
-    , pushedAt : Time.Posix
+    , createdAt : Time
+    , pushedAt : Time
     , isArchived : Bool
     , primaryLanguage : Maybe String
     , languages : List String

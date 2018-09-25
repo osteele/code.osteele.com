@@ -6,7 +6,7 @@ require 'graphql/client/http'
 require 'yaml'
 
 SCHEMA_PATH = '.cache/github-schema.json'
-OUTPUT_PATH = 'data/repos.json'
+OUTPUT_PATH = '_data/repos.json'
 REPO_OVERRIDE_PATH = 'data/repo-overrides.yaml'
 
 HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
@@ -94,7 +94,7 @@ loop do
       h = repo.to_h.dup
       h['languages'] = repo.languages.edges.map { |edge| edge.node.name }
       h['primaryLanguage'] = repo.primary_language.name if repo.primary_language
-      h['topics'] = repo.repository_topics.edges.map { |edge| edge.node.topic.name }
+      h['topics'] = repo.repository_topics.edge.map { |edge| edge.node.topic.name }
       h.delete 'homepageUrl' if h['homepageUrl']&.empty?
       h.delete 'isFork'
       h.delete 'isPrivate'
@@ -109,7 +109,7 @@ loop do
 end
 
 # Apply overrides
-overrides = YAML.load(File.read REPO_OVERRIDE_PATH)
+overrides = YAML.safe_load File.read(REPO_OVERRIDE_PATH)
 repos.each do |repo|
   over = overrides[repo['nameWithOwner']]
   next unless over

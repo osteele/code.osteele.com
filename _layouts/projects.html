@@ -13,6 +13,10 @@
   </body>
   <script src="./static/js/projects.js"></script>
   <script type="text/javascript">
-    Elm.Main.init({ node: document.getElementById('projects') })
+    var repos = {{ site.data.repos | jsonify }};
+    Elm.Main.init({
+      node: document.getElementById('projects'),
+      flags: repos
+    })
   </script>
 </html>
