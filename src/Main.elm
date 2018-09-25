@@ -42,6 +42,7 @@ main =
 type alias Model =
     { tz : TimeZone
     , repos : Maybe (List Repo)
+    , error : Maybe String
     , order : SortOrder
     , archived : Bool
     , underConstruction : Bool
@@ -60,6 +61,7 @@ init repoJson =
         model =
             { tz = utc
             , repos = Nothing
+            , error = Nothing
             , order = ByName
             , archived = False
             , underConstruction = False
@@ -95,13 +97,9 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         SetRepos (Result.Err err) ->
-            let
-                _ =
-                    Debug.log "error decoding JSON" err
-            in
-                ( model
-                , Cmd.none
-                )
+            ( { model | error = Just <| "error decoding JSON" ++ Decode.errorToString err }
+            , Cmd.none
+            )
 
         SetRepos (Result.Ok repos) ->
             ( { model | repos = Just repos }
@@ -154,7 +152,8 @@ view model =
                 Html.div [ class "ui segment" ]
                     [ Html.div [ class "ui active text loader" ]
                         [ text "Loading…" ]
-                    , Html.p [] []
+                    , Html.p []
+                        [ text <| Maybe.withDefault "" model.error ]
                     ]
 
 

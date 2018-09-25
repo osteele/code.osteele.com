@@ -1,5 +1,5 @@
 #!/usr/bin/env bash -eu
 
-npx elm make src/Main.elm --output static/js/projects.js
+npx elm make src/Main.elm --output static/js/projects.js --optimize
 bundle exec jekyll build -d build
 netlify deploy
