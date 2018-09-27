@@ -6,7 +6,7 @@ require 'open-uri'
 require 'pathname'
 require_relative 'utils'
 
-MD_IMAGE = /\!\[[^\]]*\]\((.+?)(\?.*)?\)/
+MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
 REPO_JSON_PATH = '_data/repos.json'
 
 # TODO: replace this by path relative to README URL
@@ -66,8 +66,11 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
 
   readme_name, readme_content = find_readme(nwo)
   metadata['readme_name'] = readme_name
-  m = readme_content && MD_IMAGE.match(readme_content)
-  unless m
+  matches = (readme_content ? readme_content.scan(MD_IMAGE_RE) : [])
+            .map(&:first)
+            .map { |s| s.sub(/\?.*/, '') }
+  matches = matches.reject { |s| s.match(/^https?:/) }
+  unless matches.any?
     puts(readme_name ? "no image in #{readme_name}" : 'no README')
     metadata['is_missing'] = true
     metadata['thumbnail_path'] = nil
@@ -76,7 +79,9 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
     next
   end
 
-  thumbnail_url = URI.join(raw_url_prefix, m[1]).to_s
+  thumbnail_rel_url = matches.first
+  metadata['thumbnail_url'] = thumbnail_rel_url
+  thumbnail_url = URI.join(raw_url_prefix, thumbnail_rel_url).to_s
   thumbnail_ext = File.extname(thumbnail_url)
   thumbnail_path = File.join(IMAGE_PREFIX, nwo, "thumbnail#{thumbnail_ext}")
 
