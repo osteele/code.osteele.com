@@ -12,7 +12,7 @@ REPO_JSON_PATH = '_data/repos.json'
 # TODO: replace this by path relative to README URL
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
 
-IMAGE_PREFIX = 'static/img/thumbnails'
+THUMBNAIL_DIR = 'static/img/thumbnails'
 
 repos = read_json(REPO_JSON_PATH)
 
@@ -20,7 +20,7 @@ repos = read_json(REPO_JSON_PATH)
 # add much time and makes the next run faster if we're stopped in the middle.
 def update_thumbnail_path(repos, nwo, thumbnail_path)
   relpath = thumbnail_path && Pathname.new(thumbnail_path).relative_path_from(
-    Pathname.new(IMAGE_PREFIX)
+    Pathname.new(THUMBNAIL_DIR)
   ).to_s
   repo = repos.find { |r| r['nameWithOwner'] == nwo }
   return if repo['thumbnailPath'] == relpath
@@ -47,7 +47,7 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   print "#{nwo}: "
   STDOUT.flush
   raw_url_prefix = RAW_URL_TPL.sub('${nameWithOwner}', nwo)
-  metadata_path = File.join(IMAGE_PREFIX, nwo, 'metadata.json')
+  metadata_path = File.join(THUMBNAIL_DIR, nwo, 'metadata.json')
   FileUtils.mkdir_p File.dirname(metadata_path)
   metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
 
@@ -59,7 +59,10 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
       update_thumbnail_path(repos, nwo, nil)
     else
       puts "#{thumbnail_path} (cached)"
-      update_thumbnail_path(repos, nwo, thumbnail_path)
+      update_thumbnail_path(
+        repos, nwo,
+        File.join(THUMBNAIL_DIR, nwo, thumbnail_path)
+        )
     end
     next
   end
@@ -83,7 +86,7 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   metadata['thumbnail_url'] = thumbnail_rel_url
   thumbnail_url = URI.join(raw_url_prefix, thumbnail_rel_url).to_s
   thumbnail_ext = File.extname(thumbnail_url)
-  thumbnail_path = File.join(IMAGE_PREFIX, nwo, "thumbnail#{thumbnail_ext}")
+  thumbnail_path = File.join(THUMBNAIL_DIR, nwo, "thumbnail#{thumbnail_ext}")
 
   puts "#{thumbnail_url} -> #{thumbnail_path}"
   FileUtils.mkdir_p File.dirname(thumbnail_path)
