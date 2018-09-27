@@ -6,11 +6,14 @@
   "author": "Oliver Steele <steele@osteele.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "forego start",
-    "dev:jekyll": "bundle exec jekyll serve --watch --livereload",
+    "build": "yarn build:elm && yarn build:jekyll",
+    "build:yarn": "elm make src/Main.elm --output static/js/projects.js --optimize",
+    "build:jekyll": "bundle exec jekyll build -d distr",
+    "serve": "forego start",
+    "serve:jekyll": "bundle exec jekyll serve --watch --livereload",
     "deploy": "./scripts/deploy",
     "update:repos": "./scripts/create_repo_index && yarn update:images",
-    "update:images": "ruby ./scripts/download_thumbnails.rb"
+    "update:thumbnails": "ruby ./scripts/update_thumbnails.rb"
   },
   "devDependencies": {
     "elm": "^0.19.0",
