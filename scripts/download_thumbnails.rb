@@ -4,6 +4,7 @@ require 'fileutils'
 require 'json'
 require 'open-uri'
 require 'pathname'
+require_relative 'utils'
 
 MD_IMAGE = /\!\[[^\]]*\]\((.+?)(\?.*)?\)/
 REPO_JSON_PATH = '_data/repos.json'
@@ -12,24 +13,19 @@ REPO_JSON_PATH = '_data/repos.json'
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
 
 IMAGE_PREFIX = 'static/img/thumbnails'
-JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
-               .freeze
 
-repos = JSON.parse File.open(REPO_JSON_PATH).read
+repos = read_json(REPO_JSON_PATH)
 
 # Update nwo's thumbnail path. Write the file immediately, since this doesn't
 # add much time and makes the next run faster if we're stopped in the middle.
-def commit(repos, nwo, thumbnail_path)
+def update_thumbnail_path(repos, nwo, thumbnail_path)
   relpath = thumbnail_path && Pathname.new(thumbnail_path).relative_path_from(
     Pathname.new(IMAGE_PREFIX)
   ).to_s
   repo = repos.find { |r| r['nameWithOwner'] == nwo }
   return if repo['thumbnailPath'] == relpath
   repo['thumbnailPath'] = relpath
-  # TODO: use atomic_write
-  File.open(REPO_JSON_PATH, 'w') do |f|
-    f << JSON.generate(repos, **JSON_OPTIONS)
-  end
+  write_json(REPO_JSON_PATH, repos)
 end
 
 def find_readme(nwo)
@@ -38,49 +34,60 @@ def find_readme(nwo)
   if (token = ENV['JEKYLL_GITHUB_TOKEN'])
     headers['Authorization'] = "Bearer #{token}"
   end
-  download_url = JSON.parse(uri.open(headers).read)['download_url']
+  begin
+    download_url = JSON.parse(uri.open(headers).read)['download_url']
+  rescue OpenURI::HTTPError
+    return nil
+  end
   return [File.basename(download_url), URI.parse(download_url).read]
 end
 
-repos.reverse.each do |repo|
+repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   nwo = repo['nameWithOwner']
   print "#{nwo}: "
   STDOUT.flush
   raw_url_prefix = RAW_URL_TPL.sub('${nameWithOwner}', nwo)
-  image_path = File.join(IMAGE_PREFIX, nwo, 'screenshot.*')
-  thumbnail_path = Dir.glob(image_path).first
-  if thumbnail_path
-    if /\.missing$/.match?(thumbnail_path)
+  metadata_path = File.join(IMAGE_PREFIX, nwo, 'metadata.json')
+  FileUtils.mkdir_p File.dirname(metadata_path)
+  metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
+
+  is_missing = metadata['is_missing'] == true
+  thumbnail_path = metadata['thumbnail_path']
+  if is_missing or thumbnail_path
+    if is_missing
       puts 'no image (cached)'
-      commit(repos, nwo, nil)
+      update_thumbnail_path(repos, nwo, nil)
     else
       puts "#{thumbnail_path} (cached)"
-      commit(repos, nwo, thumbnail_path)
+      update_thumbnail_path(repos, nwo, thumbnail_path)
     end
     next
   end
 
   readme_name, readme_content = find_readme(nwo)
+  metadata['readme_name'] = readme_name
   m = readme_content && MD_IMAGE.match(readme_content)
   unless m
     puts(readme_name ? "no image in #{readme_name}" : 'no README')
-    image_path = File.join(IMAGE_PREFIX, nwo, 'screenshot.missing')
-    FileUtils.mkdir_p File.dirname(image_path)
-    open(image_path, 'w') do |f|
-      f.write('')
-    end
-    commit(repos, nwo, nil)
+    metadata['is_missing'] = true
+    metadata['thumbnail_path'] = nil
+    write_json(metadata_path, metadata)
+    update_thumbnail_path(repos, nwo, nil)
     next
   end
 
-  image_url = URI.join(raw_url_prefix, m[1]).to_s
-  image_ext = File.extname(image_url)
-  image_path = File.join(IMAGE_PREFIX, nwo, "screenshot#{image_ext}")
+  thumbnail_url = URI.join(raw_url_prefix, m[1]).to_s
+  thumbnail_ext = File.extname(thumbnail_url)
+  thumbnail_path = File.join(IMAGE_PREFIX, nwo, "thumbnail#{thumbnail_ext}")
 
-  puts "#{image_url} -> #{image_path}"
-  FileUtils.mkdir_p File.dirname(image_path)
-  URI.parse(image_url).open do |f|
-    IO.copy_stream(f, image_path)
+  puts "#{thumbnail_url} -> #{thumbnail_path}"
+  FileUtils.mkdir_p File.dirname(thumbnail_path)
+  URI.parse(thumbnail_url).open do |f|
+    IO.copy_stream(f, thumbnail_path)
   end
-  commit(repos, nwo, thumbnail_path)
+  update_thumbnail_path(repos, nwo, thumbnail_path)
+  metadata['is_missing'] = false
+  metadata['thumbnail_path'] = File.basename(thumbnail_path)
+  write_json(metadata_path, metadata)
+  update_thumbnail_path(repos, nwo, nil)
 end
