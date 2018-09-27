@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build:elm && yarn build:jekyll",
-    "build:yarn": "elm make src/Main.elm --output static/js/projects.js --optimize",
-    "build:jekyll": "bundle exec jekyll build -d distr",
+    "build:elm": "elm make src/Main.elm --output static/js/projects.js --optimize",
+    "build:jekyll": "bundle exec jekyll build -d _distr",
     "serve": "forego start",
     "serve:jekyll": "bundle exec jekyll serve --watch --livereload",
     "deploy": "./scripts/deploy",

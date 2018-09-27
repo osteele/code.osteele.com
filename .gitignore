@@ -2,9 +2,9 @@
 .jekyll-metadata
 .sass-cache
 /_data/repos.json
+/_distr/
 /_site/
 /build/
-/distr/
 /static/js/projects.js
 /static/img/thumbnails/**/metadata.json
 /static/img/thumbnails/**/thumbnail.*

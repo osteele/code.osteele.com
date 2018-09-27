@@ -14,8 +14,8 @@ exclude:
   - '*.lock'
   - '*.log'
   - '*.todo'
+  - _distr
   - config
-  - distr
   - docker-compose.yml
   - elm-package.json
   - elm-stuff
