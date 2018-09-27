@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
 require 'fileutils'
@@ -119,8 +121,10 @@ end
 
 # Apply overrides
 repo_hashes.each do |repo|
-  owner = REPO_OVERRIDES[repo['nameWithOwner']]
-  repo['tags'] = owner['tags'] if owner&.key? 'tags'
+  nwo = repo['nameWithOwner']
+  next unless nwo == 'mlsteele/xmas-lights'
+  overrides = REPO_OVERRIDES[nwo]
+  repo['topics'] = [overrides['topics']].flatten if overrides&.key? 'topics'
 end
 
 puts "Writing #{repo_hashes.length} public source repos / #{repo_count} total"

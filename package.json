@@ -9,7 +9,7 @@
     "dev": "forego start",
     "dev:jekyll": "bundle exec jekyll serve --watch --livereload",
     "deploy": "./scripts/deploy",
-    "update:repos": "ruby ./scripts/collect_repos.rb && yarn update:images",
+    "update:repos": "./scripts/create_repo_index && yarn update:images",
     "update:images": "ruby ./scripts/download_thumbnails.rb"
   },
   "devDependencies": {
