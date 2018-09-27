@@ -4,14 +4,14 @@ require 'fileutils'
 require 'json'
 require 'open-uri'
 require 'pathname'
-require_relative 'utils'
 
-MD_IMAGE = /\!\[[^\]]*\]\((.+?)\)/
+MD_IMAGE = /\!\[[^\]]*\]\((.+?)(\?.*)?\)/
 REPO_JSON_PATH = '_data/repos.json'
+
+# TODO: replace this by path relative to README URL
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
 
 IMAGE_PREFIX = 'static/img/thumbnails'
-README_NAMES = case_combinations('README.md') #+ case_combinations('README.rst')
 JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
                .freeze
 
@@ -32,16 +32,14 @@ def commit(repos, nwo, thumbnail_path)
   end
 end
 
-def find_readme(url_prefix)
-  README_NAMES.each do |name|
-    readme_url = URI.join(url_prefix, name)
-    begin
-      return [name, readme_url.read]
-    rescue OpenURI::HTTPError
-      next
-    end
+def find_readme(nwo)
+  uri = URI.join("https://api.github.com/repos/#{nwo}/readme")
+  headers = {"User-Agent" => "osteele/code.osteele.com"}
+  if (token = ENV['JEKYLL_GITHUB_TOKEN'])
+    headers['Authorization'] = "Bearer #{token}"
   end
-  nil
+  download_url = JSON.parse(uri.open(headers).read)['download_url']
+  return [File.basename(download_url), URI.parse(download_url).read]
 end
 
 repos.reverse.each do |repo|
@@ -62,7 +60,7 @@ repos.reverse.each do |repo|
     next
   end
 
-  readme_name, readme_content = find_readme(raw_url_prefix)
+  readme_name, readme_content = find_readme(nwo)
   m = readme_content && MD_IMAGE.match(readme_content)
   unless m
     puts(readme_name ? "no image in #{readme_name}" : 'no README')

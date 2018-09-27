@@ -6,7 +6,8 @@
   "author": "Oliver Steele <steele@osteele.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "forego start"
+    "dev": "forego start",
+    "deploy": "./scripts/deploy"
   },
   "devDependencies": {
     "elm": "^0.19.0",
