@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "forego start",
-    "deploy": "./scripts/deploy"
+    "dev:jekyll": "bundle exec jekyll serve --watch --livereload",
+    "deploy": "./scripts/deploy",
+    "update:repos": "ruby ./scripts/collect_repos.rb && yarn update:images",
+    "update:images": "ruby ./scripts/download_thumbnails.rb"
   },
   "devDependencies": {
     "elm": "^0.19.0",
