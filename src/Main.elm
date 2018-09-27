@@ -385,25 +385,33 @@ repoCard tz repo =
         projectClass =
             "project ui card " ++ Maybe.withDefault "" (Maybe.map Tuple.second statusInfo)
 
-        card header meta description extraContent =
-            Html.div [ class projectClass ]
-                [ Html.div [ class "content" ]
-                    [ Html.div [ class "header" ] [ header ]
-                    , Html.div [ class "meta" ] [ meta ]
-                    , Html.div [ class "description" ] [ description ]
-                    ]
-                , Html.div [ class "extra content" ] [ extraContent ]
-                ]
-    in
-        card (Html.a [ href link ] [ text repo.name ])
-            (Html.div [] <|
+        header =
+            Html.a [ href link ] [ text repo.name ]
+
+        meta =
+            Html.div [] <|
                 List.filterMap identity
                     [ Just <| text " "
                     , ifJust (link /= repo.url) <| Html.a [ href repo.url ] [ text "(source)" ]
                     , Just <| text <| " " ++ dateRange tz repo.createdAt repo.pushedAt
                     ]
-            )
-            (Html.div [] [ text <| Maybe.withDefault "" repo.description ])
+
+        maybeImage =
+            repo.thumbnailPath
+                |> Maybe.map
+                    (\path ->
+                        Html.div [ class "image" ]
+                            [ Html.img [ Html.Attributes.src <| "static/img/thumbnails/" ++ path ]
+                                []
+                            ]
+                    )
+
+        description =
+            Html.div []
+                [ text <| Maybe.withDefault "" repo.description
+                ]
+
+        extraContent =
             (Html.div [] <|
                 List.filterMap identity
                     [ (\a -> Maybe.map a status) <|
@@ -433,6 +441,20 @@ repoCard tz repo =
                             ]
                     ]
             )
+    in
+        Html.div [ class projectClass ] <|
+            List.filterMap identity
+                [ Just <|
+                    Html.div [ class "content" ]
+                        [ Html.div [ class "header" ] [ header ]
+                        , Html.div [ class "meta" ] [ meta ]
+                        , Html.div [ class "description" ]
+                            [ description
+                            ]
+                        ]
+                , maybeImage
+                , Just <| Html.div [ class "extra content" ] [ extraContent ]
+                ]
 
 
 
@@ -465,6 +487,7 @@ type alias Repo =
     , primaryLanguage : Maybe String
     , languages : List String
     , topics : List String
+    , thumbnailPath : Maybe String
     }
 
 
@@ -489,6 +512,7 @@ decodeRepo =
             |> optional "primaryLanguage" Decode.string
             |> required "languages" (Decode.list Decode.string)
             |> required "topics" (Decode.list Decode.string)
+            |> optional "thumbnailPath" Decode.string
 
 
 repoHasTopic : String -> Repo -> Bool

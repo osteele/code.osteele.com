@@ -126,13 +126,9 @@ end
 puts "Writing #{repo_hashes.length} public source repos / #{repo_count} total"
 
 FileUtils.mkdir_p File.dirname(REPO_JSON_PATH)
-json_options = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
+JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
+               .freeze
 
 File.open(REPO_JSON_PATH, 'w') do |f|
-  f << JSON.generate(repo_hashes, **json_options)
+  f << JSON.generate(repo_hashes, **JSON_OPTIONS)
 end
-
-# File.open('data/owner.json', 'w') do |f|
-#   owner = { login: viewer.login }
-#   f << JSON.generate(owner.to_h, **json_options)
-# end

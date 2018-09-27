@@ -9,3 +9,4 @@ node_modules/
 elm-package.json
 *.log
 _data/repos.json
+static/img/thumbnails/**/screenshot.*
