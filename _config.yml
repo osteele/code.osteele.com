@@ -7,6 +7,9 @@ email: steele@osteele.com
 url: 'https://code.osteele.com' # the base hostname & protocol for your site
 github_username: osteele
 
+# Project viewer config
+repo_owners: mlsteele
+
 exclude:
   - '*.lock'
   - '*.log'

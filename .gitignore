@@ -8,3 +8,4 @@ elm-stuff/
 node_modules/
 elm-package.json
 *.log
+_data/repos.json

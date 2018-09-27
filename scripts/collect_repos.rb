@@ -6,8 +6,14 @@ require 'graphql/client/http'
 require 'yaml'
 
 SCHEMA_PATH = '.cache/github-schema.json'
-OUTPUT_PATH = '_data/repos.json'
+REPO_JSON_PATH = '_data/repos.json'
 REPO_OVERRIDE_PATH = 'data/repo-overrides.yaml'
+
+JEKYLL_CONFIG = YAML.safe_load File.read('_config.yml')
+REPO_OVERRIDES = YAML.safe_load File.read(REPO_OVERRIDE_PATH)
+
+# in addition to viewer
+REPO_OWNERS = [JEKYLL_CONFIG['repo_owners'] || []].flatten
 
 HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
   def headers(_context)
@@ -86,43 +92,44 @@ loop do
   result = Client.query(IndexQuery, variables: { count: 100, cursor: cursor })
   viewer = result.data.viewer
   repo_count += viewer.repositories.edges.length
-  repos += viewer.repositories.edges
+  repos +=
+    viewer
+    .repositories.edges
     .map(&:node)
-    .reject do |repo|
-      repo.is_fork || repo.is_private
-    end.map do |repo|
-      h = repo.to_h.dup
-      h['languages'] = repo.languages.edges.map { |edge| edge.node.name }
-      h['primaryLanguage'] = repo.primary_language.name if repo.primary_language
-      h['topics'] = repo.repository_topics.edge.map { |edge| edge.node.topic.name }
-      h.delete 'homepageUrl' if h['homepageUrl']&.empty?
-      h.delete 'isFork'
-      h.delete 'isPrivate'
-      h.delete 'repositoryTopics'
-      h['owner'] = h['owner'].dup
-      h['owner'].delete '__typename'
-      h
-    end
+    .reject { |repo| repo.is_fork || repo.is_private }
+    .select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
   page_info = viewer.repositories.page_info
   break unless page_info.has_next_page
   cursor = page_info.end_cursor
 end
 
-# Apply overrides
-overrides = YAML.safe_load File.read(REPO_OVERRIDE_PATH)
-repos.each do |repo|
-  over = overrides[repo['nameWithOwner']]
-  next unless over
-  repo['tags'] = over['tags'] if over.key? 'tags'
+repo_hashes = repos.map do |repo|
+  h = repo.to_h.dup
+  h['languages'] = repo.languages.edges.map { |edge| edge.node.name }
+  h['primaryLanguage'] = repo.primary_language.name if repo.primary_language
+  h['topics'] = repo.repository_topics.edges.map { |edge| edge.node.topic.name }
+  h.delete 'homepageUrl' if h['homepageUrl']&.empty?
+  h.delete 'isFork'
+  h.delete 'isPrivate'
+  h.delete 'repositoryTopics'
+  h['owner'] = h['owner'].dup
+  h['owner'].delete '__typename'
+  h
 end
 
-puts "Writing #{repos.length} public source repos / #{repo_count} total"
+# Apply overrides
+repo_hashes.each do |repo|
+  owner = REPO_OVERRIDES[repo['nameWithOwner']]
+  repo['tags'] = owner['tags'] if owner&.key? 'tags'
+end
 
-FileUtils.mkdir_p File.dirname(OUTPUT_PATH)
+puts "Writing #{repo_hashes.length} public source repos / #{repo_count} total"
+
+FileUtils.mkdir_p File.dirname(REPO_JSON_PATH)
 json_options = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
 
-File.open(OUTPUT_PATH, 'w') do |f|
-  f << JSON.generate(repos, **json_options)
+File.open(REPO_JSON_PATH, 'w') do |f|
+  f << JSON.generate(repo_hashes, **json_options)
 end
 
 # File.open('data/owner.json', 'w') do |f|
