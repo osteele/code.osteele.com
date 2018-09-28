@@ -8,7 +8,8 @@ url: 'https://code.osteele.com' # the base hostname & protocol for your site
 github_username: osteele
 
 # Project viewer config
-repo_owners: mlsteele
+github_repos_metadata:
+  additional_repo_owners: mlsteele
 
 exclude:
   - '*.lock'
@@ -26,4 +27,5 @@ exclude:
   - Procfile
   - README.md
   - scripts
+  - spec
   - src

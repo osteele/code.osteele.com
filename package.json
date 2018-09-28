@@ -12,7 +12,7 @@
     "serve": "forego start",
     "serve:jekyll": "bundle exec jekyll serve --watch --livereload",
     "deploy": "./scripts/deploy",
-    "update:repos": "./scripts/create_repo_index && yarn update:thumbnails",
+    "update:repos": "./scripts/get_github_metadata && yarn update:thumbnails",
     "update:thumbnails": "ruby ./scripts/update_thumbnails"
   },
   "devDependencies": {
