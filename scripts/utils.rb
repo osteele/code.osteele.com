@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }

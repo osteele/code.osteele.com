@@ -117,6 +117,7 @@ loop do
   repos = repos.select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
   page_info = viewer.repositories.page_info
   break unless page_info.has_next_page
+
   cursor = page_info.end_cursor
 end
 
@@ -138,6 +139,7 @@ end
 repo_hashes.each do |repo|
   nwo = repo['nameWithOwner']
   next unless nwo == 'mlsteele/xmas-lights'
+
   overrides = REPO_OVERRIDES[nwo]
   repo['topics'] = [overrides['topics']].flatten if overrides&.key? 'topics'
 end

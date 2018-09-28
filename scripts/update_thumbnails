@@ -31,6 +31,7 @@ def update_thumbnail_path(repos, nwo, thumbnail_path)
   ).to_s
   repo = repos.find { |r| r['nameWithOwner'] == nwo }
   return if repo['thumbnailPath'] == relpath
+
   repo['thumbnailPath'] = relpath
   write_json(REPO_JSON_PATH, repos)
 end
@@ -50,6 +51,7 @@ def find_readme(nwo)
   [File.basename(download_url), URI.parse(download_url).read]
 end
 
+# rubocop:disable BlockLength
 repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   nwo = repo['nameWithOwner']
   print "#{nwo}: "
@@ -107,6 +109,7 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   write_json(metadata_path, metadata)
   update_thumbnail_path(repos, nwo, nil)
 end
+# rubocop:enable BlockLength
 
 puts "\nCopy #{THUMBNAIL_CACHE} -> #{THUMBNAIL_IMG_DIR}"
 FileUtils.mkdir_p File.dirname(THUMBNAIL_IMG_DIR)

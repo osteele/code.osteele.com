@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a configuration file for mdl.
 
 all
