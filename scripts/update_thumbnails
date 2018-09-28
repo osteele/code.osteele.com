@@ -7,16 +7,13 @@ require 'json'
 require 'open-uri'
 require 'pathname'
 require 'shellwords'
+require_relative 'repo_thumbnail'
 require_relative 'utils'
 
 CACHE_DIR = '.cache'
 REPO_JSON_PATH = '_data/repos.json'
 THUMBNAIL_CACHE = File.join(CACHE_DIR, 'thumbnails')
 THUMBNAIL_IMG_DIR = 'static/img/thumbnails'
-
-# Match an image path in Markdown
-# TODO: look for <img src=…> too
-MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
 
 # TODO: replace this by path relative to README URL
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
@@ -38,16 +35,8 @@ end
 
 # Returns [basename, content] or nil
 def find_readme(nwo)
-  uri = URI.join("https://api.github.com/repos/#{nwo}/readme")
-  headers = { 'User-Agent' => 'osteele/code.osteele.com' }
-  if (token = ENV['JEKYLL_GITHUB_TOKEN'])
-    headers['Authorization'] = "Bearer #{token}"
-  end
-  begin
-    download_url = JSON.parse(uri.open(headers).read)['download_url']
-  rescue OpenURI::HTTPError
-    return nil
-  end
+  return unless (download_url = get_repo_readme_url(nwo))
+
   [File.basename(download_url), URI.parse(download_url).read]
 end
 
@@ -79,9 +68,10 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
 
   readme_name, readme_content = find_readme(nwo)
   metadata['readme_name'] = readme_name
-  matches = (readme_content ? readme_content.scan(MD_IMAGE_RE) : [])
+  matches = get_markdown_images(readme_content || '')
             .map(&:first)
             .map { |s| s.sub(/\?.*/, '') }
+  # For now, only consider on-site images
   matches = matches.reject { |s| s.match(/^https?:/) }
   unless matches.any?
     puts(readme_name ? "no image in #{readme_name}" : 'no README')

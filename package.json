@@ -14,6 +14,7 @@
     "lint:markdown": "mdlint **/*.md",
     "lint:html": "./scripts/check-html",
     "lint:ruby": "bundle exec rubocop",
+    "test:ruby": "rspec",
     "serve": "forego start",
     "serve:jekyll": "bundle exec jekyll serve --watch --livereload",
     "update:repos": "./scripts/get_github_metadata && yarn update:thumbnails",
@@ -27,8 +28,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint",
-      "pre-push": "yarn lint"
+      "pre-commit": "yarn lint && yarn test:ruby",
+      "pre-push": "yarn lint && yarn test:ruby"
     }
   }
 }

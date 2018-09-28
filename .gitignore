@@ -1,3 +1,6 @@
+# General
+*.log
+
 # Jekyll
 .jekyll-metadata
 .sass-cache
@@ -13,9 +16,11 @@ elm-package.json
 /_data/repos.json
 /static/img/thumbnails/**/thumbnail.*
 
-# General
-*.log
+# Build
 /_distr/
 
 # htmlproofer
 /tmp/
+
+# rspec
+spec/examples.txt
