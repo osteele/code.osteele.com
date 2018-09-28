@@ -1,14 +1,21 @@
-*.log
+# Jekyll
 .jekyll-metadata
 .sass-cache
-/_data/repos.json
-/_distr/
 /_site/
-/build/
-/static/js/projects.js
-/static/img/thumbnails/**/metadata.json
-/static/img/thumbnails/**/thumbnail.*
-/tmp/
+
+# Elm
 elm-stuff/
 node_modules/
 elm-package.json
+/static/js/projects.js
+
+# Portfolio generator
+/_data/repos.json
+/static/img/thumbnails/**/thumbnail.*
+
+# General
+*.log
+/_distr/
+
+# htmlproofer
+/tmp/

@@ -6,15 +6,20 @@ require 'fileutils'
 require 'json'
 require 'open-uri'
 require 'pathname'
+require 'shellwords'
 require_relative 'utils'
 
-MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
+CACHE_DIR = '.cache'
 REPO_JSON_PATH = '_data/repos.json'
+THUMBNAIL_CACHE = File.join(CACHE_DIR, 'thumbnails')
+THUMBNAIL_IMG_DIR = 'static/img/thumbnails'
+
+# Match an image path in Markdown
+# TODO: look for <img src=…> too
+MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
 
 # TODO: replace this by path relative to README URL
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
-
-THUMBNAIL_DIR = 'static/img/thumbnails'
 
 repos = read_json(REPO_JSON_PATH)
 
@@ -22,7 +27,7 @@ repos = read_json(REPO_JSON_PATH)
 # add much time and makes the next run faster if we're stopped in the middle.
 def update_thumbnail_path(repos, nwo, thumbnail_path)
   relpath = thumbnail_path && Pathname.new(thumbnail_path).relative_path_from(
-    Pathname.new(THUMBNAIL_DIR)
+    Pathname.new(THUMBNAIL_CACHE)
   ).to_s
   repo = repos.find { |r| r['nameWithOwner'] == nwo }
   return if repo['thumbnailPath'] == relpath
@@ -30,9 +35,10 @@ def update_thumbnail_path(repos, nwo, thumbnail_path)
   write_json(REPO_JSON_PATH, repos)
 end
 
+# Returns [basename, content] or nil
 def find_readme(nwo)
   uri = URI.join("https://api.github.com/repos/#{nwo}/readme")
-  headers = {"User-Agent" => "osteele/code.osteele.com"}
+  headers = { 'User-Agent' => 'osteele/code.osteele.com' }
   if (token = ENV['JEKYLL_GITHUB_TOKEN'])
     headers['Authorization'] = "Bearer #{token}"
   end
@@ -41,7 +47,7 @@ def find_readme(nwo)
   rescue OpenURI::HTTPError
     return nil
   end
-  return [File.basename(download_url), URI.parse(download_url).read]
+  [File.basename(download_url), URI.parse(download_url).read]
 end
 
 repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
@@ -49,13 +55,13 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   print "#{nwo}: "
   STDOUT.flush
   raw_url_prefix = RAW_URL_TPL.sub('${nameWithOwner}', nwo)
-  metadata_path = File.join(THUMBNAIL_DIR, nwo, 'metadata.json')
+  metadata_path = File.join(THUMBNAIL_CACHE, nwo, 'metadata.json')
   FileUtils.mkdir_p File.dirname(metadata_path)
   metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
 
   is_missing = metadata['is_missing'] == true
   thumbnail_path = metadata['thumbnail_path']
-  if is_missing or thumbnail_path
+  if is_missing || thumbnail_path
     if is_missing
       puts 'no image (cached)'
       update_thumbnail_path(repos, nwo, nil)
@@ -63,8 +69,8 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
       puts "#{thumbnail_path} (cached)"
       update_thumbnail_path(
         repos, nwo,
-        File.join(THUMBNAIL_DIR, nwo, thumbnail_path)
-        )
+        File.join(THUMBNAIL_CACHE, nwo, thumbnail_path)
+      )
     end
     next
   end
@@ -88,7 +94,7 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   metadata['thumbnail_url'] = thumbnail_rel_url
   thumbnail_url = URI.join(raw_url_prefix, thumbnail_rel_url).to_s
   thumbnail_ext = File.extname(thumbnail_url)
-  thumbnail_path = File.join(THUMBNAIL_DIR, nwo, "thumbnail#{thumbnail_ext}")
+  thumbnail_path = File.join(THUMBNAIL_CACHE, nwo, "thumbnail#{thumbnail_ext}")
 
   puts "#{thumbnail_url} -> #{thumbnail_path}"
   FileUtils.mkdir_p File.dirname(thumbnail_path)
@@ -101,3 +107,15 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   write_json(metadata_path, metadata)
   update_thumbnail_path(repos, nwo, nil)
 end
+
+puts "\nCopy #{THUMBNAIL_CACHE} -> #{THUMBNAIL_IMG_DIR}"
+FileUtils.mkdir_p File.dirname(THUMBNAIL_IMG_DIR)
+system <<~"SHELL"
+  rsync \
+    #{Shellwords.escape THUMBNAIL_CACHE}/ \
+    #{Shellwords.escape THUMBNAIL_IMG_DIR} \
+    -r -v \
+    --exclude metadata.json \
+    --exclude .DS_Store \
+    --prune-empty-dirs
+SHELL
