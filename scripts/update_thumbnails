@@ -19,6 +19,9 @@ THUMBNAIL_IMG_DIR = 'static/img/thumbnails'
 RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
 
 repos = read_json(REPO_JSON_PATH)
+verbose = false
+force = false
+pattern = nil
 
 # Update nwo's thumbnail path. Write the file immediately, since this doesn't
 # add much time and makes the next run faster if we're stopped in the middle.
@@ -33,18 +36,11 @@ def update_thumbnail_path(repos, nwo, thumbnail_path)
   write_json(REPO_JSON_PATH, repos)
 end
 
-# Returns [basename, content] or nil
-def find_readme(nwo)
-  return unless (download_url = get_repo_readme_url(nwo))
-
-  [File.basename(download_url), URI.parse(download_url).read]
-end
-
 # rubocop:disable BlockLength
 repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   nwo = repo['nameWithOwner']
-  print "#{nwo}: "
-  STDOUT.flush
+  next if pattern && nwo != pattern
+
   raw_url_prefix = RAW_URL_TPL.sub('${nameWithOwner}', nwo)
   metadata_path = File.join(THUMBNAIL_CACHE, nwo, 'metadata.json')
   FileUtils.mkdir_p File.dirname(metadata_path)
@@ -52,12 +48,12 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
 
   is_missing = metadata['is_missing'] == true
   thumbnail_path = metadata['thumbnail_path']
-  if is_missing || thumbnail_path
+  if !force && (is_missing || thumbnail_path)
     if is_missing
-      puts 'no image (cached)'
+      puts "#{nwo}: no image (cached)" if verbose
       update_thumbnail_path(repos, nwo, nil)
     else
-      puts "#{thumbnail_path} (cached)"
+      puts "#{nwo}: #{thumbnail_path} (cached)" if verbose
       update_thumbnail_path(
         repos, nwo,
         File.join(THUMBNAIL_CACHE, nwo, thumbnail_path)
@@ -66,10 +62,12 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
     next
   end
 
-  readme_name, readme_content = find_readme(nwo)
+  print "#{nwo}: "
+  STDOUT.flush
+  readme_data = get_repo_readme_data(nwo) || {}
+  readme_name = readme_data['name']
   metadata['readme_name'] = readme_name
-  matches = get_markdown_images(readme_content || '')
-            .map(&:first)
+  matches = get_markdown_images(readme_data['content'] || '')
             .map { |s| s.sub(/\?.*/, '') }
   # For now, only consider on-site images
   matches = matches.reject { |s| s.match(/^https?:/) }
@@ -107,7 +105,7 @@ system <<~"SHELL"
   rsync \
     #{Shellwords.escape THUMBNAIL_CACHE}/ \
     #{Shellwords.escape THUMBNAIL_IMG_DIR} \
-    -r -v \
+    -r -v #{verbose ? '' : '-q'} \
     --exclude metadata.json \
     --exclude .DS_Store \
     --prune-empty-dirs
