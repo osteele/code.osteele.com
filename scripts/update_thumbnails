@@ -2,21 +2,21 @@
 
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'json'
-require 'open-uri'
-require 'pathname'
-require 'shellwords'
-require_relative 'repo_thumbnail'
-require_relative 'utils'
+require "fileutils"
+require "json"
+require "open-uri"
+require "pathname"
+require "shellwords"
+require_relative "repo_thumbnail"
+require_relative "utils"
 
-CACHE_DIR = '.cache'
-REPO_JSON_PATH = '_data/repos.json'
-THUMBNAIL_CACHE = File.join(CACHE_DIR, 'thumbnails')
-THUMBNAIL_IMG_DIR = 'static/img/thumbnails'
+CACHE_DIR = ".cache"
+REPO_JSON_PATH = "_data/repos.json"
+THUMBNAIL_CACHE = File.join(CACHE_DIR, "thumbnails")
+THUMBNAIL_IMG_DIR = "static/img/thumbnails"
 
 # TODO: replace this by path relative to README URL
-RAW_URL_TPL = 'https://raw.githubusercontent.com/${nameWithOwner}/master/'
+RAW_URL_TPL = "https://raw.githubusercontent.com/${nameWithOwner}/master/"
 
 repos = read_json(REPO_JSON_PATH)
 verbose = false
@@ -29,25 +29,25 @@ def update_thumbnail_path(repos, nwo, thumbnail_path)
   relpath = thumbnail_path && Pathname.new(thumbnail_path).relative_path_from(
     Pathname.new(THUMBNAIL_CACHE)
   ).to_s
-  repo = repos.find { |r| r['nameWithOwner'] == nwo }
-  return if repo['thumbnailPath'] == relpath
+  repo = repos.find { |r| r["nameWithOwner"] == nwo }
+  return if repo["thumbnailPath"] == relpath
 
-  repo['thumbnailPath'] = relpath
+  repo["thumbnailPath"] = relpath
   write_json(REPO_JSON_PATH, repos)
 end
 
 # rubocop:disable BlockLength
-repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
-  nwo = repo['nameWithOwner']
+repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
+  nwo = repo["nameWithOwner"]
   next if pattern && nwo != pattern
 
-  raw_url_prefix = RAW_URL_TPL.sub('${nameWithOwner}', nwo)
-  metadata_path = File.join(THUMBNAIL_CACHE, nwo, 'metadata.json')
+  raw_url_prefix = RAW_URL_TPL.sub("${nameWithOwner}", nwo)
+  metadata_path = File.join(THUMBNAIL_CACHE, nwo, "metadata.json")
   FileUtils.mkdir_p File.dirname(metadata_path)
   metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
 
-  is_missing = metadata['is_missing'] == true
-  thumbnail_path = metadata['thumbnail_path']
+  is_missing = metadata["is_missing"] == true
+  thumbnail_path = metadata["thumbnail_path"]
   if !force && (is_missing || thumbnail_path)
     if is_missing
       puts "#{nwo}: no image (cached)" if verbose
@@ -65,23 +65,23 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
   print "#{nwo}: "
   STDOUT.flush
   readme_data = get_repo_readme_data(nwo) || {}
-  readme_name = readme_data['name']
-  metadata['readme_name'] = readme_name
-  matches = get_markdown_images(readme_data['content'] || '')
-            .map { |s| s.sub(/\?.*/, '') }
+  readme_name = readme_data["name"]
+  metadata["readme_name"] = readme_name
+  matches = get_markdown_images(readme_data["content"] || "")
+            .map { |s| s.sub(/\?.*/, "") }
   # For now, only consider on-site images
   matches = matches.reject { |s| s.match(/^https?:/) }
   unless matches.any?
-    puts(readme_name ? "no image in #{readme_name}" : 'no README')
-    metadata['is_missing'] = true
-    metadata['thumbnail_path'] = nil
+    puts(readme_name ? "no image in #{readme_name}" : "no README")
+    metadata["is_missing"] = true
+    metadata["thumbnail_path"] = nil
     write_json(metadata_path, metadata)
     update_thumbnail_path(repos, nwo, nil)
     next
   end
 
   thumbnail_rel_url = matches.first
-  metadata['thumbnail_url'] = thumbnail_rel_url
+  metadata["thumbnail_url"] = thumbnail_rel_url
   thumbnail_url = URI.join(raw_url_prefix, thumbnail_rel_url).to_s
   thumbnail_ext = File.extname(thumbnail_url)
   thumbnail_path = File.join(THUMBNAIL_CACHE, nwo, "thumbnail#{thumbnail_ext}")
@@ -92,8 +92,8 @@ repos.sort_by { |r| r['nameWithOwner'] }.each do |repo|
     IO.copy_stream(f, thumbnail_path)
   end
   update_thumbnail_path(repos, nwo, thumbnail_path)
-  metadata['is_missing'] = false
-  metadata['thumbnail_path'] = File.basename(thumbnail_path)
+  metadata["is_missing"] = false
+  metadata["thumbnail_path"] = File.basename(thumbnail_path)
   write_json(metadata_path, metadata)
   update_thumbnail_path(repos, nwo, nil)
 end

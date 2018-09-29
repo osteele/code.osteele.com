@@ -2,18 +2,18 @@
 
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'graphql/client'
-require 'graphql/client/http'
-require 'yaml'
+require "fileutils"
+require "graphql/client"
+require "graphql/client/http"
+require "yaml"
 
-CACHE_DIR = '.cache'
-SCHEMA_PATH = File.join(CACHE_DIR, 'github-schema.json')
-REPO_JSON_PATH = '_data/repos.json'
-REPO_OVERRIDE_PATH = 'config/repo-overrides.yaml'
+CACHE_DIR = ".cache"
+SCHEMA_PATH = File.join(CACHE_DIR, "github-schema.json")
+REPO_JSON_PATH = "_data/repos.json"
+REPO_OVERRIDE_PATH = "config/repo-overrides.yaml"
 
 JEKYLL_CONFIG = begin
-                  YAML.safe_load(File.read('_config.yml'))
+                  YAML.safe_load(File.read("_config.yml"))
                 rescue StandardError
                   {}
                 end
@@ -22,14 +22,14 @@ REPO_OVERRIDES = begin
                  rescue StandardError
                    {}
                  end
-PLUGIN_CONFIG = JEKYLL_CONFIG['github_repos_metadata'] || {}
+PLUGIN_CONFIG = JEKYLL_CONFIG["github_repos_metadata"] || {}
 
 # in addition to viewer
-REPO_OWNERS = [PLUGIN_CONFIG['additional_repo_owners'] || []].flatten
+REPO_OWNERS = [PLUGIN_CONFIG["additional_repo_owners"] || []].flatten
 
-HTTP = GraphQL::Client::HTTP.new('https://api.github.com/graphql') do
+HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
   def headers(_context)
-    if (token = ENV['JEKYLL_GITHUB_TOKEN'])
+    if (token = ENV["JEKYLL_GITHUB_TOKEN"])
       { Authorization: "Bearer #{token}" }
     else
       STDERR.puts <<~MSG
@@ -112,8 +112,8 @@ loop do
     viewer
     .repositories.edges
     .map(&:node)
-  repos = repos.reject(&:is_fork) unless PLUGIN_CONFIG['include_forks']
-  repos = repos.reject(&:is_private) unless PLUGIN_CONFIG['include_private']
+  repos = repos.reject(&:is_fork) unless PLUGIN_CONFIG["include_forks"]
+  repos = repos.reject(&:is_private) unless PLUGIN_CONFIG["include_private"]
   repos = repos.select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
   page_info = viewer.repositories.page_info
   break unless page_info.has_next_page
@@ -123,38 +123,38 @@ end
 
 repo_hashes = repos.map do |repo|
   h = repo.to_h.dup
-  h['languages'] = repo.languages.edges.map { |edge| edge.node.name }
-  h['primaryLanguage'] = repo.primary_language.name if repo.primary_language
-  h['topics'] = repo.repository_topics.edges.map { |edge| edge.node.topic.name }
-  h.delete 'homepageUrl' if h['homepageUrl']&.empty?
-  h.delete 'isFork'
-  h.delete 'isPrivate'
-  h.delete 'repositoryTopics'
-  h['owner'] = h['owner'].dup
-  h['owner'].delete '__typename'
+  h["languages"] = repo.languages.edges.map { |edge| edge.node.name }
+  h["primaryLanguage"] = repo.primary_language.name if repo.primary_language
+  h["topics"] = repo.repository_topics.edges.map { |edge| edge.node.topic.name }
+  h.delete "homepageUrl" if h["homepageUrl"]&.empty?
+  h.delete "isFork"
+  h.delete "isPrivate"
+  h.delete "repositoryTopics"
+  h["owner"] = h["owner"].dup
+  h["owner"].delete "__typename"
   h
 end
 
 # Apply overrides
 repo_hashes.each do |repo|
-  nwo = repo['nameWithOwner']
-  next unless nwo == 'mlsteele/xmas-lights'
+  nwo = repo["nameWithOwner"]
+  next unless nwo == "mlsteele/xmas-lights"
 
   overrides = REPO_OVERRIDES[nwo]
-  repo['topics'] = [overrides['topics']].flatten if overrides&.key? 'topics'
+  repo["topics"] = [overrides["topics"]].flatten if overrides&.key? "topics"
 end
 
 repo_description = ([
-  PLUGIN_CONFIG['include_private'] && 'public',
-  PLUGIN_CONFIG['include_forks'] && 'source',
-  repo_hashes.length == 1 ? 'repo' : 'repos'
-] - [nil, false]).join(' ')
+  PLUGIN_CONFIG["include_private"] && "public",
+  PLUGIN_CONFIG["include_forks"] && "source",
+  repo_hashes.length == 1 ? "repo" : "repos"
+] - [nil, false]).join(" ")
 puts "Writing #{repo_hashes.length} #{repo_description} out of #{repo_count}"
 
 FileUtils.mkdir_p File.dirname(REPO_JSON_PATH)
-JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
+JSON_OPTIONS = { indent: "  ", space: " ", array_nl: "\n", object_nl: "\n" }
                .freeze
 
-File.open(REPO_JSON_PATH, 'w') do |f|
+File.open(REPO_JSON_PATH, "w") do |f|
   f << JSON.generate(repo_hashes, **JSON_OPTIONS)
 end

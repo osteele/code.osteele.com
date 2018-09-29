@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'json'
+require "json"
 
-JSON_OPTIONS = { indent: '  ', space: ' ', array_nl: "\n", object_nl: "\n" }
+JSON_OPTIONS = { indent: "  ", space: " ", array_nl: "\n", object_nl: "\n" }
                .freeze
 
 def read_json(fname)
@@ -11,7 +11,7 @@ end
 
 # TODO: use atomic_write
 def write_json(fname, json)
-  File.open(fname, 'w') do |f|
+  File.open(fname, "w") do |f|
     f << JSON.generate(json, **JSON_OPTIONS)
   end
 end
