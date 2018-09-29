@@ -5,6 +5,7 @@
 require "fileutils"
 require "json"
 require "open-uri"
+require "optparse"
 require "pathname"
 require "shellwords"
 require_relative "repo_thumbnail"
@@ -18,10 +19,23 @@ THUMBNAIL_IMG_DIR = "static/img/thumbnails"
 # TODO: replace this by path relative to README URL
 RAW_URL_TPL = "https://raw.githubusercontent.com/${nameWithOwner}/master/"
 
+options = {}
+OptionParser.new do |opts|
+  # opts.banner = "Usage: update_thumbnails [options]"
+
+  opts.on("-P", "--pattern PATTERN", "Update repos matching pattern") do |p|
+    options[:pattern] = p
+  end
+  opts.on("-f", "--force", "Force updates") do |f|
+    options[:force] = f
+  end
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    options[:verbose] = v
+  end
+end.parse!
+verbose = options[:verbose]
+
 repos = read_json(REPO_JSON_PATH)
-verbose = false
-force = false
-pattern = nil
 
 # Update nwo's thumbnail path. Write the file immediately, since this doesn't
 # add much time and makes the next run faster if we're stopped in the middle.
@@ -39,7 +53,7 @@ end
 # rubocop:disable BlockLength
 repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   nwo = repo["nameWithOwner"]
-  next if pattern && nwo != pattern
+  next if options[:pattern] && nwo != options[:pattern]
 
   raw_url_prefix = RAW_URL_TPL.sub("${nameWithOwner}", nwo)
   metadata_path = File.join(THUMBNAIL_CACHE, nwo, "metadata.json")
@@ -48,7 +62,7 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
 
   is_missing = metadata["is_missing"] == true
   thumbnail_path = metadata["thumbnail_path"]
-  if !force && (is_missing || thumbnail_path)
+  if !options[:force] && (is_missing || thumbnail_path)
     if is_missing
       puts "#{nwo}: no image (cached)" if verbose
       update_thumbnail_path(repos, nwo, nil)
@@ -65,9 +79,9 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   print "#{nwo}: "
   STDOUT.flush
   readme_data = get_repo_readme_data(nwo) || {}
-  readme_name = readme_data["name"]
-  metadata["readme_name"] = readme_name
-  matches = get_markdown_images(readme_data["content"] || "")
+  readme_name = readme_data[:name]
+  metadata[:readme_name] = readme_name
+  matches = get_markdown_images(readme_data[:content] || "")
             .map { |s| s.sub(/\?.*/, "") }
   # For now, only consider on-site images
   matches = matches.reject { |s| s.match(/^https?:/) }
@@ -99,7 +113,7 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
 end
 # rubocop:enable BlockLength
 
-puts "\nCopy #{THUMBNAIL_CACHE} -> #{THUMBNAIL_IMG_DIR}"
+puts "\nCopy #{THUMBNAIL_CACHE} -> #{THUMBNAIL_IMG_DIR}" if verbose
 FileUtils.mkdir_p File.dirname(THUMBNAIL_IMG_DIR)
 system <<~"SHELL"
   rsync \
