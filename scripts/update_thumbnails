@@ -81,16 +81,19 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   readme_data = get_repo_readme_data(nwo) || {}
   readme_name = readme_data[:name]
   metadata[:readme_name] = readme_name
-  matches = get_markdown_images(readme_data[:content] || "")
+  matches = get_markdown_images(remove_initial_badges(readme_data[:content] || ""))
             .map { |s| s.sub(/\?.*/, "") }
   # For now, only consider on-site images
   matches = matches.reject { |s| s.match(/^https?:/) }
   unless matches.any?
     puts(readme_name ? "no image in #{readme_name}" : "no README")
+    Dir.glob(File.join(THUMBNAIL_CACHE, nwo, "thumbnail.*")).each do |path|
+      FileUtils.rm path
+    end
     metadata["is_missing"] = true
     metadata["thumbnail_path"] = nil
-    write_json(metadata_path, metadata)
     update_thumbnail_path(repos, nwo, nil)
+    write_json(metadata_path, metadata)
     next
   end
 
@@ -108,8 +111,8 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   update_thumbnail_path(repos, nwo, thumbnail_path)
   metadata["is_missing"] = false
   metadata["thumbnail_path"] = File.basename(thumbnail_path)
-  write_json(metadata_path, metadata)
   update_thumbnail_path(repos, nwo, nil)
+  write_json(metadata_path, metadata)
 end
 # rubocop:enable BlockLength
 
@@ -119,8 +122,11 @@ system <<~"SHELL"
   rsync \
     #{Shellwords.escape THUMBNAIL_CACHE}/ \
     #{Shellwords.escape THUMBNAIL_IMG_DIR} \
-    -r -v #{verbose ? '' : '-q'} \
+    #{verbose ? '--verbose' : '--quiet'} \
+    --checksum \
+    --delete \
     --exclude metadata.json \
     --exclude .DS_Store \
-    --prune-empty-dirs
+    --prune-empty-dirs \
+    --recursive
 SHELL

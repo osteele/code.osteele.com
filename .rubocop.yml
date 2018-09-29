@@ -4,6 +4,8 @@ Metrics/LineLength:
   Max: 88
 Metrics/MethodLength:
   Max: 20
+Naming/HeredocDelimiterNaming:
+  Enabled: false
 Style/AsciiComments:
   Enabled: false
 Style/FrozenStringLiteralComment:

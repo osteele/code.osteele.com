@@ -32,8 +32,8 @@ end
 # Give a the Markdown source of a README (or other file), return its content —
 # skipping over an initial header, and any initial images (which tend to
 # be badges instead of logos or screenshots).
-def get_markdown_content(markdown)
-  return markdown
+def remove_initial_badges(markdown)
+  return markdown.sub(/(#.*\s*)(\s*\[!.+?\]\(.+?\)\n)*/, '\1')
 end
 
 def get_markdown_images(markdown)

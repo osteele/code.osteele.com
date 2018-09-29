@@ -8,8 +8,18 @@ RSpec.describe :get_repo_readme_data do
   it "passes non-404 exceptions"
 end
 
-RSpec.describe :get_markdown_content do
-  it "skips the badges at the top of a file"
+RSpec.describe :remove_initial_badges do
+  it "skips the badges at the top of a file" do
+    src = <<~EOF
+      # Title
+
+      [![Build Status](https://travis-ci.org/osteele/repo.svg?branch=master)](https://travis-ci.org/osteele/repo)
+      [![Docs](./docs/docs-badge.svg)](http://osteele.github.io/repo/)
+
+      And now it begins.
+    EOF
+    expect(remove_initial_badges(src)).to eq "# Title\n\n\nAnd now it begins.\n"
+  end
 end
 
 RSpec.describe :get_markdown_images do
