@@ -1,2 +1,6 @@
-mlsteele/xmas-lights:
-  topics: home-automation
+exclude:
+  - fingerboard
+
+repos:
+  mlsteele/xmas-lights:
+    topics: home-automation

@@ -5,27 +5,20 @@
 require "fileutils"
 require "graphql/client"
 require "graphql/client/http"
-require "yaml"
+require_relative "./utils"
 
 CACHE_DIR = ".cache"
 SCHEMA_PATH = File.join(CACHE_DIR, "github-schema.json")
 REPO_JSON_PATH = "_data/repos.json"
 REPO_OVERRIDE_PATH = "config/repo-overrides.yaml"
 
-JEKYLL_CONFIG = begin
-                  YAML.safe_load(File.read("_config.yml"))
-                rescue StandardError
-                  {}
-                end
-REPO_OVERRIDES = begin
-                   YAML.safe_load(File.read(REPO_OVERRIDE_PATH))
-                 rescue StandardError
-                   {}
-                 end
-PLUGIN_CONFIG = JEKYLL_CONFIG["github_repos_metadata"] || {}
+JEKYLL_CONFIG = load_yaml("_config.yml")
+CONFIG = JEKYLL_CONFIG["github_repos_metadata"] || {}
+CONFIG.update load_yaml(REPO_OVERRIDE_PATH)
+REPO_OVERRIDES = CONFIG["repos"] || {}
 
 # in addition to viewer
-REPO_OWNERS = [PLUGIN_CONFIG["additional_repo_owners"] || []].flatten
+REPO_OWNERS = [CONFIG["additional_repo_owners"] || []].flatten
 
 HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
   def headers(_context)
@@ -112,14 +105,19 @@ loop do
     viewer
     .repositories.edges
     .map(&:node)
-  repos = repos.reject(&:is_fork) unless PLUGIN_CONFIG["include_forks"]
-  repos = repos.reject(&:is_private) unless PLUGIN_CONFIG["include_private"]
-  repos = repos.select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
   page_info = viewer.repositories.page_info
   break unless page_info.has_next_page
 
   cursor = page_info.end_cursor
 end
+
+# Filter according to config
+repos = repos.reject(&:is_fork) unless CONFIG["include_forks"]
+repos = repos.reject(&:is_private) unless CONFIG["include_private"]
+exclusions = CONFIG["exclude"] || []
+exclusions = exclusions.map { |n| n.include?("/") ? n : "#{viewer.login}/#{n}" }
+repos = repos.reject { |r| exclusions.include?(r.name_with_owner) }
+repos = repos.select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
 
 repo_hashes = repos.map do |repo|
   h = repo.to_h.dup
@@ -145,16 +143,13 @@ repo_hashes.each do |repo|
 end
 
 repo_description = ([
-  PLUGIN_CONFIG["include_private"] && "public",
-  PLUGIN_CONFIG["include_forks"] && "source",
+  CONFIG["include_private"] && "public",
+  CONFIG["include_forks"] && "source",
   repo_hashes.length == 1 ? "repo" : "repos"
 ] - [nil, false]).join(" ")
 puts "Writing #{repo_hashes.length} #{repo_description} out of #{repo_count}"
 
 FileUtils.mkdir_p File.dirname(REPO_JSON_PATH)
-JSON_OPTIONS = { indent: "  ", space: " ", array_nl: "\n", object_nl: "\n" }
-               .freeze
-
 File.open(REPO_JSON_PATH, "w") do |f|
   f << JSON.generate(repo_hashes, **JSON_OPTIONS)
 end
