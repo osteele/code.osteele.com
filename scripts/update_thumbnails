@@ -8,7 +8,7 @@ require "open-uri"
 require "optparse"
 require "pathname"
 require "shellwords"
-require_relative "repo_thumbnail"
+require_relative "readme"
 require_relative "utils"
 
 CACHE_DIR = ".cache"
@@ -23,6 +23,9 @@ options = {}
 OptionParser.new do |opts|
   # opts.banner = "Usage: update_thumbnails [options]"
 
+  opts.on("--from PATTERN", "Update repos matching pattern and beyond") do |p|
+    options[:from_pattern] = p
+  end
   opts.on("-P", "--pattern PATTERN", "Update repos matching pattern") do |p|
     options[:pattern] = p
   end
@@ -39,7 +42,7 @@ repos = read_json(REPO_JSON_PATH)
 
 # Update nwo's thumbnail path. Write the file immediately, since this doesn't
 # add much time and makes the next run faster if we're stopped in the middle.
-def update_thumbnail_path(repos, nwo, thumbnail_path)
+def update_thumbnail_path!(repos, nwo, thumbnail_path)
   relpath = thumbnail_path && Pathname.new(thumbnail_path).relative_path_from(
     Pathname.new(THUMBNAIL_CACHE)
   ).to_s
@@ -47,59 +50,50 @@ def update_thumbnail_path(repos, nwo, thumbnail_path)
   return if repo["thumbnailPath"] == relpath
 
   repo["thumbnailPath"] = relpath
-  write_json(REPO_JSON_PATH, repos)
+  write_json! REPO_JSON_PATH, repos
 end
 
-# rubocop:disable BlockLength
-repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
+# Returns local relative path
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/PerceivedComplexity
+def update_thumbnail!(repo, options)
   nwo = repo["nameWithOwner"]
-  next if options[:pattern] && nwo != options[:pattern]
+  verbose = options[:verbose]
 
   raw_url_prefix = RAW_URL_TPL.sub("${nameWithOwner}", nwo)
   metadata_path = File.join(THUMBNAIL_CACHE, nwo, "metadata.json")
   FileUtils.mkdir_p File.dirname(metadata_path)
   metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
 
-  is_missing = metadata["is_missing"] == true
   thumbnail_path = metadata["thumbnail_path"]
-  if !options[:force] && (is_missing || thumbnail_path)
-    if is_missing
+  if metadata.include?("thumbnail_path") && !options[:force]
+    if !thumbnail_path
       puts "#{nwo}: no image (cached)" if verbose
-      update_thumbnail_path(repos, nwo, nil)
+      return nil
     else
       puts "#{nwo}: #{thumbnail_path} (cached)" if verbose
-      update_thumbnail_path(
-        repos, nwo,
-        File.join(THUMBNAIL_CACHE, nwo, thumbnail_path)
-      )
+      return File.join(THUMBNAIL_CACHE, nwo, thumbnail_path)
     end
-    next
   end
 
   print "#{nwo}: "
   STDOUT.flush
-  readme_data = get_repo_readme_data(nwo) || {}
-  readme_name = readme_data[:name]
-  metadata[:readme_name] = readme_name
-  matches = get_markdown_images(remove_initial_badges(readme_data[:content] || ""))
-            .map { |s| s.sub(/\?.*/, "") }
-  # For now, only consider on-site images
-  matches = matches.reject { |s| s.match(/^https?:/) }
-  unless matches.any?
-    puts(readme_name ? "no image in #{readme_name}" : "no README")
+  readme = Readme.from_nwo(nwo)
+  metadata[:readme_name] = readme&.name
+  thumbnail_url = readme&.thumbnail_url
+  unless thumbnail_url
+    puts(readme ? "#{readme.name} doesn't contain a thumbnail" : "no README")
     Dir.glob(File.join(THUMBNAIL_CACHE, nwo, "thumbnail.*")).each do |path|
       FileUtils.rm path
     end
-    metadata["is_missing"] = true
     metadata["thumbnail_path"] = nil
-    update_thumbnail_path(repos, nwo, nil)
-    write_json(metadata_path, metadata)
-    next
+    return nil
   end
 
-  thumbnail_rel_url = matches.first
-  metadata["thumbnail_url"] = thumbnail_rel_url
-  thumbnail_url = URI.join(raw_url_prefix, thumbnail_rel_url).to_s
+  metadata["thumbnail_url"] = thumbnail_url
+  thumbnail_url = URI.join(raw_url_prefix, thumbnail_url).to_s
   thumbnail_ext = File.extname(thumbnail_url)
   thumbnail_path = File.join(THUMBNAIL_CACHE, nwo, "thumbnail#{thumbnail_ext}")
 
@@ -108,13 +102,26 @@ repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   URI.parse(thumbnail_url).open do |f|
     IO.copy_stream(f, thumbnail_path)
   end
-  update_thumbnail_path(repos, nwo, thumbnail_path)
-  metadata["is_missing"] = false
   metadata["thumbnail_path"] = File.basename(thumbnail_path)
-  update_thumbnail_path(repos, nwo, nil)
-  write_json(metadata_path, metadata)
+  return thumbnail_path
+ensure
+  write_json! metadata_path, metadata if metadata
 end
-# rubocop:enable BlockLength
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/PerceivedComplexity
+
+repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
+  nwo = repo["nameWithOwner"]
+  # FIXME: match pattern instead of require equality
+  next if options[:pattern] && nwo != options[:pattern]
+  next if options[:from_pattern] && nwo != options[:from_pattern]
+
+  options[:from_pattern] = nil
+  path = update_thumbnail!(repo, options)
+  update_thumbnail_path! repos, nwo, path
+end
 
 puts "\nCopy #{THUMBNAIL_CACHE} -> #{THUMBNAIL_IMG_DIR}" if verbose
 FileUtils.mkdir_p File.dirname(THUMBNAIL_IMG_DIR)

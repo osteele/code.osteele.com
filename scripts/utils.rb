@@ -16,7 +16,7 @@ def read_json(fname)
 end
 
 # TODO: use atomic_write
-def write_json(fname, json)
+def write_json!(fname, json)
   File.open(fname, "w") do |f|
     f << JSON.generate(json, **JSON_OPTIONS)
   end

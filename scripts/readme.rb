@@ -5,8 +5,49 @@ require "base64"
 # Match an image path in Markdown
 # TODO: look for <img src=…> too
 MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
+MARKDOWN_EXTS = %w[.markdown .mdown .mkdn .md].freeze
 
 GITHUB_USER_AGENT = "osteele/code.osteele.com"
+
+class Readme
+  def self.from_nwo(nwo)
+    data = get_repo_readme_data(nwo)
+    return nil unless data
+
+    return Readme.new(data)
+  end
+
+  def self.from_markdown(content)
+    return Readme.new(content: content, name: "string.markdown")
+  end
+
+  def initialize(data)
+    @data = data
+  end
+
+  def name
+    return @data[:name]
+  end
+
+  # ignores initial badges
+  def images
+    return [] unless MARKDOWN_EXTS.include?(File.extname(name).downcase)
+
+    matches = get_markdown_images(without_initial_badges)
+              .map { |s| s.sub(/\?.*/, "") }
+    # For now, only consider on-site images
+    matches = matches.reject { |s| s.match(/^https?:/) }
+    return matches
+  end
+
+  def thumbnail_url
+    return images.first
+  end
+
+  def without_initial_badges
+    return remove_initial_badges(@data[:content])
+  end
+end
 
 # Given a GitHub nameWithOwner, return its README info or nil
 def get_repo_readme_data(nwo)

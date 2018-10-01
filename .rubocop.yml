@@ -1,5 +1,8 @@
 Metrics/AbcSize:
   Max: 20
+Metrics/BlockLength:
+  Exclude:
+    - spec/*_spec.rb
 Metrics/LineLength:
   Max: 88
 Metrics/MethodLength:
@@ -7,6 +10,8 @@ Metrics/MethodLength:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Style/AsciiComments:
+  Enabled: false
+Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Exclude:
