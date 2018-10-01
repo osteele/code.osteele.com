@@ -4,21 +4,31 @@ require "base64"
 
 # Match an image path in Markdown
 # TODO: look for <img src=…> too
-MD_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
+MARKDOWN_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
+
 MARKDOWN_EXTS = %w[.markdown .mdown .mkdn .md].freeze
 
+# rubocop:disable Style/PercentLiteralDelimiters
+BADGE_URL_PATTERN = %r[
+  https://codeclimate.com/repos/.*/badges/.*
+  | https://www.codeship.io/projects/.*
+  | https://travis-ci.org/.*
+]x
+# rubocop:enable Style/PercentLiteralDelimiters
+
 GITHUB_USER_AGENT = "osteele/code.osteele.com"
+JEKYLL_GITHUB_TOKEN = ENV["JEKYLL_GITHUB_TOKEN"]
 
 class Readme
-  def self.from_nwo(nwo)
+  def self.from_github_nwo(nwo)
     data = get_repo_readme_data(nwo)
     return nil unless data
 
-    return Readme.new(data)
+    Readme.new(data)
   end
 
   def self.from_markdown(content)
-    return Readme.new(content: content, name: "string.markdown")
+    Readme.new(content: content, name: "string.markdown")
   end
 
   def initialize(data)
@@ -26,26 +36,32 @@ class Readme
   end
 
   def name
-    return @data[:name]
+    @data[:name]
+  end
+
+  def markdown
+    return nil unless MARKDOWN_EXTS.include?(File.extname(name).downcase)
+
+    return @data[:content]
   end
 
   # ignores initial badges
   def images
-    return [] unless MARKDOWN_EXTS.include?(File.extname(name).downcase)
+    # FIXME: don't strip query parameters; handle upstream instead
+    return get_markdown_images(markdown_without_badges)
+           .map { |s| s.sub(/\?.*/, "") }
+  end
 
-    matches = get_markdown_images(without_initial_badges)
-              .map { |s| s.sub(/\?.*/, "") }
-    # For now, only consider on-site images
-    matches = matches.reject { |s| s.match(/^https?:/) }
-    return matches
+  def badge_images
+    images.select { |url| url.match(BADGE_URL_PATTERN) }
   end
 
   def thumbnail_url
-    return images.first
+    (images - badge_images).first
   end
 
-  def without_initial_badges
-    return remove_initial_badges(@data[:content])
+  def markdown_without_badges
+    remove_initial_badges(markdown || "")
   end
 end
 
@@ -53,8 +69,7 @@ end
 def get_repo_readme_data(nwo)
   uri = URI.join("https://api.github.com/repos/#{nwo}/readme")
   headers = { "User-Agent" => GITHUB_USER_AGENT }
-  token = ENV["JEKYLL_GITHUB_TOKEN"]
-  headers["Authorization"] = "Bearer #{token}" if token
+  headers["Authorization"] = "Bearer #{JEKYLL_GITHUB_TOKEN}" if JEKYLL_GITHUB_TOKEN
   begin
     data = JSON.parse(uri.open(headers).read)
   rescue OpenURI::HTTPError
@@ -74,9 +89,9 @@ end
 # skipping over an initial header, and any initial images (which tend to
 # be badges instead of logos or screenshots).
 def remove_initial_badges(markdown)
-  return markdown.sub(/(#.*\s*)(\s*\[!.+?\]\(.+?\)\n)*/, '\1')
+  markdown.sub(/(#.*\s*)(\s*\[!.+?\]\(.+?\)\n)*/, '\1')
 end
 
 def get_markdown_images(markdown)
-  return markdown.scan(MD_IMAGE_RE).map(&:first)
+  markdown.scan(MARKDOWN_IMAGE_RE).map(&:first)
 end

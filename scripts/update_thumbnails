@@ -78,7 +78,7 @@ def update_thumbnail!(repo, options)
 
   print "#{nwo}: "
   STDOUT.flush
-  readme = Readme.from_nwo(nwo)
+  readme = Readme.from_github_nwo(nwo)
   metadata[:readme_name] = readme&.name
   thumbnail_url = readme&.thumbnail_url
   unless thumbnail_url
@@ -97,6 +97,7 @@ def update_thumbnail!(repo, options)
 
   puts "#{thumbnail_url} -> #{thumbnail_path}"
   FileUtils.mkdir_p File.dirname(thumbnail_path)
+  # TODO: use etag to skip download
   URI.parse(thumbnail_url).open do |f|
     IO.copy_stream(f, thumbnail_path)
   end
@@ -112,7 +113,6 @@ end
 
 repos.sort_by { |r| r["nameWithOwner"] }.each do |repo|
   nwo = repo["nameWithOwner"]
-  # FIXME: match pattern instead of require equality
   next if options[:pattern] && !File.fnmatch(options[:pattern], nwo)
   next if options[:from_pattern] && !File.fnmatch(options[:from_pattern], nwo)
 
