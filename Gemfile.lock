@@ -121,7 +121,7 @@ PLATFORMS
 DEPENDENCIES
   graphql-client
   html-proofer
-  jekyll
+  jekyll (~> 3.8.4)
   rspec
   rubocop
 
