@@ -9,7 +9,7 @@ github_username: osteele
 
 # Project viewer config
 github_repos_metadata:
-  additional_repo_owners: mlsteele
+  inherit_from: config/repo_metadata.yml
 
 exclude:
   - '*.lock'

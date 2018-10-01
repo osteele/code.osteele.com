@@ -1,6 +1,9 @@
 exclude:
   - fingerboard
 
+include:
+  - mlsteele/*
+
 repos:
   mlsteele/xmas-lights:
     topics: home-automation
