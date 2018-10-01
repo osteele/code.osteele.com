@@ -114,11 +114,11 @@ end
 # Filter according to config
 repos = repos.reject(&:is_fork) unless CONFIG["include_forks"]
 repos = repos.reject(&:is_private) unless CONFIG["include_private"]
-exclusions = CONFIG["exclude"] || []
-exclusions = exclusions.map { |n| n.include?("/") ? n : "#{viewer.login}/#{n}" }
-repos = repos.reject { |r| exclusions.include?(r.name_with_owner) }
+exclusions = (CONFIG["exclude"] || []).map { |s| s.include?("/") ? s : "*/#{s}" }
+repos = repos.reject { |r| exclusions.any? { |s| File.fnmatch(s, r.name_with_owner) } }
 repos = repos.select { |r| (REPO_OWNERS + [viewer.login]).include? r.owner.login }
 
+# Convert to hashes
 repo_hashes = repos.map do |repo|
   h = repo.to_h.dup
   h["languages"] = repo.languages.edges.map { |edge| edge.node.name }
@@ -136,10 +136,11 @@ end
 # Apply overrides
 repo_hashes.each do |repo|
   nwo = repo["nameWithOwner"]
-  next unless nwo == "mlsteele/xmas-lights"
+  REPO_OVERRIDES.each do |pattern, fields|
+    next unless File.fnmatch(pattern, nwo)
 
-  overrides = REPO_OVERRIDES[nwo]
-  repo["topics"] = [overrides["topics"]].flatten if overrides&.key? "topics"
+    repo["topics"] = [fields["topics"]].flatten if fields&.key? "topics"
+  end
 end
 
 repo_description = ([
