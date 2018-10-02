@@ -122,6 +122,7 @@ DEPENDENCIES
   graphql-client
   html-proofer
   jekyll (~> 3.8.4)
+  nokogiri
   rspec
   rubocop
 

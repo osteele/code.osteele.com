@@ -8,16 +8,18 @@ RSpec.describe :Readme do
     it "handles repos that don't have READMEs"
     it "passes non-404 exceptions"
   end
+end
 
-  describe :images do
+RSpec.describe :MarkdownReadme do
+  describe :image_urls do
     it "recognizes Markdown image markup" do
       readme = Readme.from_markdown('line 1\npre ![](path/to/image.png) post')
-      expect(readme.images).to eq ["path/to/image.png"]
+      expect(readme.image_urls).to eq ["path/to/image.png"]
     end
 
     it "recognizes images with alt text" do
       readme = Readme.from_markdown('line 1\npre ![alt text](path/to/image.png) post')
-      expect(readme.images).to eq ["path/to/image.png"]
+      expect(readme.image_urls).to eq ["path/to/image.png"]
     end
 
     it "recognizes HTML image markup"
@@ -45,6 +47,15 @@ RSpec.describe :Readme do
         ![alt text](path/to/image.png)
       EOF
       expect(readme.thumbnail_url).to eq "path/to/image.png"
+    end
+  end
+end
+
+RSpec.describe :HtmlReadme do
+  describe :image_urls do
+    it "recognizes Markdown image markup" do
+      readme = Readme.from_html('line 1\npre <img src="path/to/image.png"> post')
+      expect(readme.image_urls).to eq ["path/to/image.png"]
     end
   end
 end

@@ -27,3 +27,10 @@ def load_yaml(fname)
 rescue Errno::ENOENT
   return {}
 end
+
+def http_request_headers
+  headers = { "User-Agent" => GITHUB_USER_AGENT }
+  headers["Authorization"] = "Bearer #{JEKYLL_GITHUB_TOKEN}" \
+    if JEKYLL_GITHUB_TOKEN
+  headers
+end

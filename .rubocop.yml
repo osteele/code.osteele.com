@@ -17,6 +17,10 @@ Style/FrozenStringLiteralComment:
   Exclude:
     - Gemfile
     - config/mdl_style.rb
+Style/IfUnlessModifier:
+  Enabled: false
+Style/PerlBackrefs:
+  Enabled: false
 Style/RedundantReturn:
   Enabled: false
 Style/StringLiterals:

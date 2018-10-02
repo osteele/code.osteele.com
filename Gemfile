@@ -11,6 +11,10 @@ group :metadata_plugin do
   gem "graphql-client"
 end
 
-group :metadata_plugin_dev do
+group :repo_thumbnail_plugin do
+  gem "nokogiri"
+end
+
+group :repo_thumbnail_plugin_dev do
   gem "rspec"
 end

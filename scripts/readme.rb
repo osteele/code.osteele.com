@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "base64"
+require "nokogiri"
+require_relative "./utils"
 
 # Match an image path in Markdown
 # TODO: look for <img src=…> too
@@ -24,11 +26,18 @@ class Readme
     data = get_repo_readme_data(nwo)
     return nil unless data
 
-    Readme.new(data)
+    return MarkdownReadme.new(data) \
+      if MARKDOWN_EXTS.include?(File.extname(name).downcase)
+
+    return HtmlReadme.from_github_html_url(data)
   end
 
   def self.from_markdown(content)
-    Readme.new(content: content, name: "string.markdown")
+    MarkdownReadme.new(content: content)
+  end
+
+  def self.from_html(content)
+    HtmlReadme.from_html(content)
   end
 
   def initialize(data)
@@ -39,53 +48,79 @@ class Readme
     @data[:name]
   end
 
-  def markdown
-    return nil unless MARKDOWN_EXTS.include?(File.extname(name).downcase)
-
-    return @data[:content]
-  end
-
-  # ignores initial badges
-  def images
-    # FIXME: don't strip query parameters; handle upstream instead
-    return get_markdown_images(markdown_without_badges)
-           .map { |s| s.sub(/\?.*/, "") }
-  end
-
-  def badge_images
-    images.select { |url| url.match(BADGE_URL_PATTERN) }
+  def badge_image_urls
+    image_urls.select { |url| url.match(BADGE_URL_PATTERN) }
   end
 
   def thumbnail_url
-    (images - badge_images).first
+    (image_urls - badge_image_urls).first
+  end
+end
+
+class MarkdownReadme < Readme
+  def markdown
+    @data[:content]
   end
 
   def markdown_without_badges
     remove_initial_badges(markdown || "")
+  end
+
+  # ignores initial badges
+  def image_urls
+    get_markdown_images(markdown_without_badges)
+  end
+end
+
+class HtmlReadme < Readme
+  def self.from_github_html_url(data)
+    html_src = URI.parse(data[:html_url]).open(http_request_headers).read
+    doc = Nokogiri::HTML(html_src)
+    doc = doc.at("#readme article.markdown-body")
+    doc.search("a svg.octicon-link").map(&:parent).each(&:remove)
+
+    data = data.dup.update(html_document: doc)
+    HtmlReadme.new(data)
+  end
+
+  def self.from_html(content)
+    HtmlReadme.new(html_document: Nokogiri::HTML.fragment(content))
+  end
+
+  def html_document
+    @data[:html_document]
+  end
+
+  def image_urls
+    html_document.search("img").map { |e| e.attr("src") }.compact
+  end
+
+  def badge_image_urls
+    super + image_urls.grep(%r{^https://camo.githubusercontent.com})
   end
 end
 
 # Given a GitHub nameWithOwner, return its README info or nil
 def get_repo_readme_data(nwo)
   uri = URI.join("https://api.github.com/repos/#{nwo}/readme")
-  headers = { "User-Agent" => GITHUB_USER_AGENT }
-  headers["Authorization"] = "Bearer #{JEKYLL_GITHUB_TOKEN}" if JEKYLL_GITHUB_TOKEN
   begin
-    data = JSON.parse(uri.open(headers).read)
+    data = JSON.parse(uri.open(http_request_headers).read)
   rescue OpenURI::HTTPError
     return nil
   end
+
   raise EncodingError("Unknown encoding: #{data['encoding']}") \
     unless data["encoding"] == "base64"
 
   return {
     content: Base64.decode64(data["content"]),
     download_url: data["download_url"],
+    html_url: data["html_url"],
     name: data["name"]
   }
 end
 
-# Give a the Markdown source of a README (or other file), return its content —
+# Give the Markdown source of a README (or other file), return its content —
 # skipping over an initial header, and any initial images (which tend to
 # be badges instead of logos or screenshots).
 def remove_initial_badges(markdown)

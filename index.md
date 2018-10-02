@@ -19,7 +19,7 @@ Notable files:
 * [config/repo_metadata.yml](https://github.com/osteele/code.osteele.com/blob/master/config/repo_metadata.yml)
   configures the repository metadata query.
 * [scripts/update_thumbnails](https://github.com/osteele/code.osteele.com/blob/master/scripts/update_thumbnails)
-  scans the READMEs for candidate thumbnail images.
+  scans repo README files for candidate thumbnail images.
 * [src/Main.elm](https://github.com/osteele/code.osteele.com/blob/master/src/Main.elm)
   is the Elm code that presents the metadata.
 

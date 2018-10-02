@@ -2,6 +2,7 @@
 
 # frozen_string_literal: true
 
+require "base64"
 require "fileutils"
 require "json"
 require "open-uri"
@@ -18,6 +19,10 @@ THUMBNAIL_IMG_DIR = "static/img/thumbnails"
 
 # TODO: replace this by path relative to README URL
 RAW_URL_TPL = "https://raw.githubusercontent.com/${nameWithOwner}/master/"
+
+GITHUB_DOUBLE_RAW_URI_RE = %r{
+  (https://raw.githubusercontent.com/[^/]+/[^/]+/)raw/(master/.+)(\?[^/]*)$
+}x
 
 options = {}
 OptionParser.new do |opts|
@@ -92,7 +97,10 @@ def update_thumbnail!(repo, options)
 
   metadata["thumbnail_url"] = thumbnail_url
   thumbnail_url = URI.join(raw_url_prefix, thumbnail_url).to_s
-  thumbnail_ext = File.extname(thumbnail_url)
+  if thumbnail_url =~ GITHUB_DOUBLE_RAW_URI_RE
+    thumbnail_url = "#{$1}#{$2}"
+  end
+  thumbnail_ext = File.extname(thumbnail_url).sub(/\?.*/, "")
   thumbnail_path = File.join(THUMBNAIL_CACHE, nwo, "thumbnail#{thumbnail_ext}")
 
   puts "#{thumbnail_url} -> #{thumbnail_path}"
