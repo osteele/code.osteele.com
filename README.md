@@ -19,10 +19,13 @@ The source to [code.osteele.com](https://code.osteele.com).
 
 Update project info:
 
-* Run `ruby scripts/collect_repos.rb`
+```shell
+./scripts/get_github_metadata
+```
 
 ## Deploy
 
-```bash
-./scripts/deploy
+```shell
+bundle exec jekyll build
+netlify deploy
 ```

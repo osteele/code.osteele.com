@@ -22,7 +22,7 @@ RAW_URL_TPL = "https://raw.githubusercontent.com/${nameWithOwner}/master/"
 
 GITHUB_DOUBLE_RAW_URI_RE = %r{
   (https://raw.githubusercontent.com/[^/]+/[^/]+/)raw/(master/.+)(\?[^/]*)$
-}x
+}x.freeze
 
 options = {}
 OptionParser.new do |opts|

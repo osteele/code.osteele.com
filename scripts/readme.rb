@@ -6,7 +6,7 @@ require_relative "./utils"
 
 # Match an image path in Markdown
 # TODO: look for <img src=…> too
-MARKDOWN_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/
+MARKDOWN_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/.freeze
 
 MARKDOWN_EXTS = %w[.markdown .mdown .mkdn .md].freeze
 
@@ -15,7 +15,7 @@ BADGE_URL_PATTERN = %r[
   https://codeclimate.com/repos/.*/badges/.*
   | https://www.codeship.io/projects/.*
   | https://travis-ci.org/.*
-]x
+]x.freeze
 # rubocop:enable Style/PercentLiteralDelimiters
 
 GITHUB_USER_AGENT = "osteele/code.osteele.com"
