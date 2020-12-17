@@ -25,3 +25,6 @@ elm-package.json
 
 # rspec
 spec/examples.txt
+
+# Local Netlify folder
+.netlify
