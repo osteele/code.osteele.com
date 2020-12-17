@@ -5,6 +5,10 @@ title: Oliver Steele | Code
 
 ## Topic Pages
 
+These are the areas I'm currently working on.
+
+You can see a list of commercial projects [here](https://osteele.com/products).
+
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
 - Examples
