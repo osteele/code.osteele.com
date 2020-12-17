@@ -5,5 +5,11 @@ include:
   - mlsteele/*
 
 repos:
+  osteele/grunt-autowatch:
+    topics: grunt
+  osteele/grunt-contextualize:
+    topics: grunt
+  osteele/grunt-update:
+    topics: grunt
   mlsteele/xmas-lights:
     topics: home-automation

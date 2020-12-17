@@ -115,9 +115,18 @@ end
 def include_repo?(repo, includes, excludes, viewer)
   return true if includes.any? { |s| File.fnmatch(s, repo.name_with_owner) }
   return false if excludes.any? { |s| File.fnmatch(s, repo.name_with_owner) }
+
+  # TODO: search REPO_OVERRIDES for repo.name_with_owner
+
   return false if repo.is_fork && !CONFIG["include_forks"]
   return false if repo.is_private && !CONFIG["include_private"]
   return false if repo.owner.login != viewer.login
+
+  if repo.repository_topics.edges.empty?
+    puts "Skipping https://github.com/#{repo.name_with_owner}: empty topic list"
+    return false
+  end
+
   return true
 end
 # rubocop:enable Metrics/AbcSize
