@@ -15,7 +15,7 @@ exclude:
   - '*.lock'
   - '*.log'
   - '*.todo'
-  - _distr
+  - _site
   - 2017-index.md
   - config
   - docker-compose.yml
