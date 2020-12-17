@@ -13,7 +13,7 @@
     "dev": "forego start",
     "dev:jekyll": "bundle exec jekyll serve --watch --livereload",
     "lint": "yarn lint:markdown && yarn lint:html && yarn lint:ruby",
-    "lint:markdown": "mdlint **/*.md",
+    "lint:markdown": "markdownlint **/*.md --ignore 'node_modules/**/*.md' --ignore 'elm-stuff/packages/**/*.md' --ignore 2017-index.md",
     "lint:html": "./scripts/check-html",
     "lint:ruby": "bundle exec rubocop",
     "test:ruby": "rspec",
@@ -24,7 +24,8 @@
     "elm": "^0.19.0",
     "elm-analyse": "^0.15.0",
     "elm-format": "^0.8.0",
-    "husky": "^1.0.1"
+    "husky": "^1.0.1",
+    "markdownlint-cli": "^0.26.0"
   },
   "husky": {
     "hooks": {
