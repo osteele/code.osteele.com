@@ -18,8 +18,13 @@ REPO_OVERRIDES = CONFIG["repos"] || {}
 
 HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
   def headers(_context)
-    if (token = ENV["JEKYLL_GITHUB_TOKEN"])
-      { Authorization: "Bearer #{token}" }
+    token = ENV["JEKYLL_GITHUB_TOKEN"]
+    unless token
+      if File.exist? ".envrc"
+        data = File.open(".envrc").read
+        token = $1 if data =~ /\bJEKYLL_GITHUB_TOKEN=(\S+)/
+    end
+    return { Authorization: "Bearer #{token}" } if token
     else
       warn <<~MSG
         Missing GitHub access token. Rate-limiting may cause errors.
