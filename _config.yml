@@ -16,6 +16,7 @@ exclude:
   - '*.log'
   - '*.todo'
   - _distr
+  - 2017-index.md
   - config
   - docker-compose.yml
   - elm-package.json

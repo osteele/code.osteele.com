@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    {% include head.html %}
-  </head>
-  <body>
-    {% include header.html %}
-    <div class="ui container">
-      {{ content }}
-      <div id="projects"/>
-    </div>
-    {% include footer.html %}
-  </body>
-  <script src="./static/js/projects.js"></script>
-  <script type="text/javascript">
-    var repos = {{ site.data.repos | jsonify }};
-    Elm.Main.init({
-      node: document.getElementById('projects'),
-      flags: repos
-    })
-  </script>
+
+<head>
+  {% include head.html %}
+</head>
+
+<body>
+  {% include header.html %}
+  <div class="ui container">
+    {{ content }}
+    <div id="projects"></div>
+  </div>
+  {% include footer.html %}
+</body>
+<script src="./static/js/projects.js"></script>
+<script type="text/javascript">
+  let repos = {{ site.data.repos | jsonify }};
+  Elm.Main.init({
+    node: document.getElementById('projects'),
+    flags: repos
+  })
+</script>
+
 </html>

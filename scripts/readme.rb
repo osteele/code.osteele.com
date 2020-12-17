@@ -6,7 +6,7 @@ require_relative "./utils"
 
 # Match an image path in Markdown
 # TODO: look for <img src=…> too
-MARKDOWN_IMAGE_RE = /\!\[[^\]]*\]\((.+?)\)/.freeze
+MARKDOWN_IMAGE_RE = /!\[[^\]]*\]\((.+?)\)/.freeze
 
 MARKDOWN_EXTS = %w[.markdown .mdown .mkdn .md].freeze
 

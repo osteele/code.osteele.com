@@ -82,7 +82,7 @@ def update_thumbnail!(repo, options)
   end
 
   print "#{nwo}: "
-  STDOUT.flush
+  $stdout.flush
   readme = Readme.from_github_nwo(nwo)
   metadata[:readme_name] = readme&.name
   thumbnail_url = readme&.thumbnail_url
