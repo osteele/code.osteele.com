@@ -4,7 +4,7 @@ timezone: America/New_York
 # Theme settings
 title: 'Oliver Steele | Code'
 email: steele@osteele.com
-url: 'https://code.osteele.com' # the base hostname & protocol for your site
+url: 'https://code.osteele.com'
 github_username: osteele
 
 # Project viewer config
