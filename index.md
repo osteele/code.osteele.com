@@ -12,7 +12,7 @@ You can see a list of commercial projects [here](https://osteele.com/products).
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
 - Examples
-- Step-by-step tutorials
+- [Step-by-step tutorials](https://www.notion.so/55581dbef83f40e3a386ddc6be1bbee8?v=692f92adea66460c8d8c4997af88431d)
 - Starter templates for GitHub and Glitch
 - React integration
 
