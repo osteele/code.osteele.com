@@ -109,9 +109,9 @@ loop do
 end
 
 # Filter according to config
+# rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Layout/EmptyLineAfterGuardClause
 def include_repo?(repo, includes, excludes, viewer)
   return true if includes.any? { |s| File.fnmatch(s, repo.name_with_owner) }
   return false if excludes.any? { |s| File.fnmatch(s, repo.name_with_owner) }
@@ -120,9 +120,9 @@ def include_repo?(repo, includes, excludes, viewer)
   return false if repo.owner.login != viewer.login
   return true
 end
+# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
-# rubocop:enable Layout/EmptyLineAfterGuardClause
 
 includes = (CONFIG["include"] || []).map { |s| s.include?("/") ? s : "*/#{s}" }
 excludes = (CONFIG["exclude"] || []).map { |s| s.include?("/") ? s : "*/#{s}" }
