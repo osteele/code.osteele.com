@@ -23,16 +23,15 @@ HTTP = GraphQL::Client::HTTP.new("https://api.github.com/graphql") do
       if File.exist? ".envrc"
         data = File.open(".envrc").read
         token = $1 if data =~ /\bJEKYLL_GITHUB_TOKEN=(\S+)/
+      end
     end
     return { Authorization: "Bearer #{token}" } if token
-    else
-      warn <<~MSG
-        Missing GitHub access token. Rate-limiting may cause errors.
-        To fix this, set JEKYLL_GITHUB_TOKEN to an access token created at
-        https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
-      MSG
-      {}
-    end
+    warn <<~MSG
+      Error: Missing GitHub access token.
+      To fix this, set JEKYLL_GITHUB_TOKEN to an access token created at
+      https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
+    MSG
+    exit 1
   end
 end
 
