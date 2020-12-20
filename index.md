@@ -1,7 +1,8 @@
 ---
 layout: projects
-title: Oliver Steele | Code
 ---
+
+# Code
 
 ## Topic Pages
 
