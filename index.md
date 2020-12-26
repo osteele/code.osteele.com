@@ -13,10 +13,22 @@ This is my code site. My main page is [here](https://osteele.com).
 
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
-- [Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
-- [Step-by-step tutorials](https://www.notion.so/55581dbef83f40e3a386ddc6be1bbee8?v=692f92adea66460c8d8c4997af88431d)
-- Starter templates for [GitHub](https://github.com/osteele/p5-template) and [Glitch](https://code.osteele.com/385707291d5f4a6db4a590f95f8c5a94#45ee9a6876904ef89bbc28fb4b9bb62a)
-- React integration
+[Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
+of topics that have come up during student projects: controlling gif animation,
+cross-fading audio, slicing sketches, etc.
+
+[Step-by-step
+tutorials](https://www.notion.so/55581dbef83f40e3a386ddc6be1bbee8?v=692f92adea66460c8d8c4997af88431d).
+These differ from the examples in that they take several steps to build up to a
+solution. They are intended to teach an understanding of various concepts along
+the way to the solution, rather than to present it whole sale.
+
+Starter templates for [GitHub](https://github.com/osteele/p5-template) and
+[Glitch](https://code.osteele.com/385707291d5f4a6db4a590f95f8c5a94#45ee9a6876904ef89bbc28fb4b9bb62a).
+These use a CDN.
+
+[React integration](https://github.com/osteele/p5-react) defines a React
+component that renders a p5 sketch. One application can include multiple sketches.
 
 ### [PoseNet](https://www.notion.so/PoseNet-ded646bc5c1a4b99bf2885ad891937d2)
 
@@ -67,13 +79,15 @@ one or more Stanford bunnies, and to graph the data.
 
 ### [Education Tools](https://www.notion.so/Education-Tools-and-Materials-7c62990392284aab934c32b45ec9a99c)
 
+#### For Students
+
 [Map Explorer](https://osteele.github.io/map-explorer/)
 ([source](https://github.com/osteele/map-explorer)) is an interactive
 visualization of the `map` function in Arduino, Processing, and p5.js.
 
 [PWM Explorer](https://osteele.github.io/pwm-explorer/)
 ([source](https://github.com/osteele/pwm-explorer)) is an interactive
-visualization of Pulse Width Modulation (PWM)
+visualization of Pulse Width Modulation (PWM).
 
 #### For Educators
 
