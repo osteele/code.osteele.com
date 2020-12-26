@@ -5,7 +5,13 @@ The source to [code.osteele.com](https://code.osteele.com).
 ## Setup
 
 1. [Install Jekyll](https://jekyllrb.com/docs/installation/)
-2. `bundle install` to install Ruby gems.
+2. Install yarn: `npm install -g yarn`
+3. `bundle install` to install Ruby gems.
+
+## Run
+
+1. `npm run build` updates the list of repos
+2. `bundle exec jekyll serve`
 
 ## Elm Development
 
