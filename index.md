@@ -4,9 +4,12 @@ layout: projects
 
 # Code
 
+This is my code site. My main page is [here](https://osteele.com).
+
 ## Topic Pages
 
-These are the areas I'm currently working on.
+<div class="ui grid">
+<div class="eight wide column" markdown=1>
 
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
@@ -42,6 +45,9 @@ OptiTrack data by changing a line of code.
 In some circumstances, PoseNet runs faster when the sketch that is running
 PoseNet is different from the page that is running the animation. [Here's
 how](https://github.com/osteele/posenet-pubsub).
+
+</div>
+<div class="eight wide column" markdown=1>
 
 ### [Physical Computing](https://www.notion.so/Physical-Computing-6eeee0efa9354212b76f501b3fbc972d)
 
@@ -102,6 +108,9 @@ situations where students submit their assignments as Jupyter notebooks on
 GitHub. It shows a table of which students have submitted which notebooks on
 which dates. You can drill in to see a table of which students have answered
 which questions.
+
+</div>
+</div>
 
 ## GitHub Repository Browser
 
