@@ -13,7 +13,7 @@ This is my code site. My main page is [here](https://osteele.com).
 
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
-- Examples
+- [Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
 - [Step-by-step tutorials](https://www.notion.so/55581dbef83f40e3a386ddc6be1bbee8?v=692f92adea66460c8d8c4997af88431d)
 - Starter templates for [GitHub](https://github.com/osteele/p5-template) and [Glitch](https://code.osteele.com/385707291d5f4a6db4a590f95f8c5a94#45ee9a6876904ef89bbc28fb4b9bb62a)
 - React integration
