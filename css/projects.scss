@@ -1,6 +1,11 @@
 ---
 ---
 
+.ui.menu.borderless {
+  border: none;
+  box-shadow: none;
+}
+
 $grey-color: #828282;
 .icon {
   > svg {
@@ -66,7 +71,7 @@ $grey-color: #828282;
         }
       }
       li:not(:last-child):after {
-        content: ', ';
+        content: ", ";
         color: inherit;
       }
     }

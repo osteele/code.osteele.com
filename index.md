@@ -4,9 +4,7 @@ layout: projects
 
 # Code
 
-This is my code site. My main page is [here](https://osteele.com).
-
-## Topic Pages
+## Topics
 
 <div class="ui grid">
 <div class="eight wide column" markdown=1>
