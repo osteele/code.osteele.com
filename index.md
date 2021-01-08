@@ -22,7 +22,7 @@ solution. They are intended to teach an understanding of various concepts along
 the way to the solution, rather than to present it whole sale.
 
 Starter templates for [GitHub](https://github.com/osteele/p5-template) and
-[Glitch](https://code.osteele.com/385707291d5f4a6db4a590f95f8c5a94#45ee9a6876904ef89bbc28fb4b9bb62a).
+[Glitch](https://glitch.com/edit/#!/cclab-p5js-template?path=README.md%3A1%3A0).
 These use a CDN.
 
 [React integration](https://github.com/osteele/p5-react) defines a React
