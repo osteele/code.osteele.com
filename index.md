@@ -1,8 +1,7 @@
 ---
 layout: projects
+title: Code
 ---
-
-# Code
 
 ## Topics
 
