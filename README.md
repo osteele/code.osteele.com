@@ -10,8 +10,13 @@ The source to [code.osteele.com](https://code.osteele.com).
 
 ## Run
 
-1. `npm run build` updates the list of repos
-2. `bundle exec jekyll serve`
+`yarn build` updates the list of repos, builds the Elm app, and runs Jekyll.
+
+`yarn dev` runs the jekyll server.
+
+## Deploy
+
+`yarn deploy` deploys to Netlify.
 
 ## Elm Development
 

@@ -10,6 +10,7 @@
     "build:elm": "elm make src/Main.elm --output static/js/projects.js --optimize",
     "build:jekyll": "bundle exec jekyll build",
     "deploy": "yarn build && netlify deploy --prod",
+    "deploy:only": "netlify deploy --prod",
     "dev": "forego start",
     "dev:jekyll": "bundle exec jekyll serve --watch --livereload",
     "lint": "yarn lint:markdown && yarn lint:html && yarn lint:ruby",
