@@ -1,14 +1,17 @@
 {% if page.layout == 'projects' %}
 <div class="ui main borderless menu">
-  <div class="ui six column container">
+  <div class="ui container">
     <div class="ui header item">
-      <a class="item" href="https://osteele.com/">
-        <h1>Oliver Steele</h1>
-      </a>
+      <h1>
+        <a href="https://osteele.com/">
+          Oliver Steele
+        </a>
+      </h1>
     </div>
     <div class="ui borderless right secondary menu">
       <a class="item" href="https://osteele.com/about">About</a>
       <a class="active item" href="{{ page.url | prepend: site.baseurl }}">Code</a>
+      <a class="item" href="https://notes.osteele.com">Notes</a>
       <a class="item" href="https://blog.osteele.com">Blog</a>
     </div>
   </div>
