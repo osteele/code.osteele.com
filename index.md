@@ -3,6 +3,12 @@ layout: projects
 title: Code
 ---
 
+## Places
+
+* [GitHub repository](https://github.com/osteele)
+* [OpenProcessing sketches](https://openprocessing.org/user/201396/?view=sketches)
+* [Observable notebooks](https://observablehq.com/@osteele)
+
 ## Topics
 
 <div class="ui grid">
@@ -23,6 +29,8 @@ the way to the solution, rather than to present it whole sale.
 Starter templates for [GitHub](https://github.com/osteele/p5-template) and
 [Glitch](https://glitch.com/edit/#!/cclab-p5js-template?path=README.md%3A1%3A0).
 These use a CDN.
+
+[p5.js sketches](https://openprocessing.org/user/201396/?view=sketches) on OpenProcessing.org
 
 [React integration](https://github.com/osteele/p5-react) defines a React
 component that renders a p5 sketch. One application can include multiple sketches.
@@ -56,6 +64,7 @@ PoseNet is different from the page that is running the animation. [Here's
 how](https://github.com/osteele/posenet-pubsub).
 
 </div>
+
 <div class="eight wide column" markdown=1>
 
 ### [Physical Computing](https://www.notion.so/Physical-Computing-6eeee0efa9354212b76f501b3fbc972d)
