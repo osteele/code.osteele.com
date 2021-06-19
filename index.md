@@ -13,6 +13,11 @@ title: Code
 
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
+[p5.layers](https://osteele.github.io/p5.layers/) is a library that adds
+`beginLayer()` and `endLayer()` functions, that simplify the use of p5.js
+Graphics objects and redirect `fill()`, `rect()` etc. to the current "layer"
+(Graphics). See [these examples](https://osteele.github.io/p5.layers/examples/).
+
 [Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
 of topics that have come up during student projects: controlling gif animation,
 cross-fading audio, slicing sketches, etc.
