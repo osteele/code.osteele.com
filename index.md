@@ -11,9 +11,6 @@ title: Code
 
 ## Topics
 
-<div class="ui grid">
-<div class="eight wide column" markdown=1>
-
 ### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
 
 [Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
@@ -62,10 +59,6 @@ OptiTrack data by changing a line of code.
 In some circumstances, PoseNet runs faster when the sketch that is running
 PoseNet is different from the page that is running the animation. [Here's
 how](https://github.com/osteele/posenet-pubsub).
-
-</div>
-
-<div class="eight wide column" markdown=1>
 
 ### [Physical Computing](https://www.notion.so/Physical-Computing-6eeee0efa9354212b76f501b3fbc972d)
 
@@ -128,9 +121,6 @@ situations where students submit their assignments as Jupyter notebooks on
 GitHub. It shows a table of which students have submitted which notebooks on
 which dates. You can drill in to see a table of which students have answered
 which questions.
-
-</div>
-</div>
 
 ## GitHub Repository Browser
 

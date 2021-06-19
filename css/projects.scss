@@ -6,6 +6,19 @@
   box-shadow: none;
 }
 
+#topics {
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  h2 {width:100%;}
+  >section {
+    width: 40%;
+    h3, h4 {
+      margin-top: 10px;
+    }
+  }
+}
+
 $grey-color: #828282;
 .icon {
   > svg {
