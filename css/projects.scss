@@ -6,6 +6,15 @@
   box-shadow: none;
 }
 
+#other-places {
+  ul li {
+    list-style-type:none;
+    display:inline-block;
+    padding-right: 10px;
+    font-size: larger;
+  }
+}
+
 #topics {
   display:flex;
   flex-flow: row wrap;

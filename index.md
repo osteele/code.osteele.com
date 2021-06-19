@@ -1,11 +1,14 @@
 ---
 layout: projects
-title: Code
 ---
 
-## Places
+# Code
 
-* [GitHub repository](https://github.com/osteele)
+## Other Places
+
+Code in other places:
+
+* [GitHub repositories](https://github.com/osteele)
 * [OpenProcessing sketches](https://openprocessing.org/user/201396/?view=sketches)
 * [Observable notebooks](https://observablehq.com/@osteele)
 

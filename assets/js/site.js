@@ -44,4 +44,5 @@ function createSections(elt) {
     }
 }
 
+createSections(document.getElementById('other-places'));
 createSections(document.getElementById('topics'));
