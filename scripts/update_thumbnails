@@ -17,13 +17,6 @@ REPO_JSON_PATH = "_data/repos.json"
 THUMBNAIL_CACHE = File.join(CACHE_DIR, "thumbnails")
 THUMBNAIL_IMG_DIR = "static/img/thumbnails"
 
-# TODO: replace this by path relative to README URL
-RAW_URL_TPL = "https://raw.githubusercontent.com/${nameWithOwner}/(master|main)/"
-
-GITHUB_DOUBLE_RAW_URI_RE = %r{
-  (https://raw.githubusercontent.com/[^/]+/[^/]+/)raw/((?:main|master)/.+)(\?[^/]*)?$
-}x.freeze
-
 options = {}
 OptionParser.new do |opts|
   opts.on("--from PATTERN", "Update repos matching pattern and beyond") do |p|
@@ -65,7 +58,7 @@ def update_thumbnail!(repo, options)
   nwo = repo["nameWithOwner"]
   verbose = options[:verbose]
 
-  raw_url_prefix = RAW_URL_TPL.sub("${nameWithOwner}", nwo)
+  # raw_url_prefix = RAW_URL_TPL.sub("${nameWithOwner}", nwo)
   metadata_path = File.join(THUMBNAIL_CACHE, nwo, "metadata.json")
   FileUtils.mkdir_p File.dirname(metadata_path)
   metadata = File.exist?(metadata_path) ? read_json(metadata_path) : {}
@@ -95,11 +88,8 @@ def update_thumbnail!(repo, options)
     return nil
   end
 
+  thumbnail_url = URI.join("https://github.com", thumbnail_url.sub("/blob/", "/raw/")).to_s
   metadata["thumbnail_url"] = thumbnail_url
-  thumbnail_url = URI.join(raw_url_prefix, thumbnail_url).to_s
-  if thumbnail_url =~ GITHUB_DOUBLE_RAW_URI_RE
-    thumbnail_url = "#{$1}#{$2}"
-  end
   thumbnail_ext = File.extname(thumbnail_url).sub(/\?.*/, "")
   thumbnail_path = File.join(THUMBNAIL_CACHE, nwo, "thumbnail#{thumbnail_ext}")
 
