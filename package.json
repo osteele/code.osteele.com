@@ -17,7 +17,7 @@
     "lint:markdown": "markdownlint **/*.md --ignore 'node_modules/**/*.md' --ignore 'elm-stuff/packages/**/*.md' --ignore 2017-index.md",
     "lint:html": "./scripts/check-html",
     "lint:ruby": "bundle exec rubocop",
-    "test:ruby": "rspec",
+    "test:ruby": "bundle exec rspec",
     "update:repos": "./scripts/get_github_metadata && npm run update:thumbnails",
     "update:thumbnails": "ruby ./scripts/update_thumbnails"
   },
