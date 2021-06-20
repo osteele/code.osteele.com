@@ -65,12 +65,12 @@ def update_thumbnail!(repo, options)
 
   thumbnail_path = metadata["thumbnail_path"]
   if metadata.include?("thumbnail_path") && !options[:force]
-    if !thumbnail_path
-      puts "#{nwo}: no image (cached)" if verbose
-      return nil
-    else
+    if thumbnail_path
       puts "#{nwo}: #{thumbnail_path} (cached)" if verbose
       return File.join(THUMBNAIL_CACHE, nwo, thumbnail_path)
+    else
+      puts "#{nwo}: no image (cached)" if verbose
+      return nil
     end
   end
 

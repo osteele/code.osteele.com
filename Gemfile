@@ -17,4 +17,5 @@ end
 
 group :repo_thumbnail_plugin_dev do
   gem "rspec"
+  gem "rubocop-rspec"
 end
