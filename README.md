@@ -5,18 +5,17 @@ The source to [code.osteele.com](https://code.osteele.com).
 ## Setup
 
 1. [Install Jekyll](https://jekyllrb.com/docs/installation/)
-2. Install yarn: `npm install -g yarn`
-3. `bundle install` to install Ruby gems.
+2. `bundle install` to install Ruby gems.
 
 ## Run
 
-`yarn build` updates the list of repos, builds the Elm app, and runs Jekyll.
+`npm run build` updates the list of repos, builds the Elm app, and runs Jekyll.
 
-`yarn dev` runs the jekyll server.
+`npm run dev` runs the jekyll server.
 
 ## Deploy
 
-`yarn deploy` deploys to Netlify.
+`npm run deploy` deploys to Netlify.
 
 ## Elm Development
 

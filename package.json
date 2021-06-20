@@ -6,32 +6,32 @@
   "author": "Oliver Steele <steele@osteele.com>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn update:repos && yarn build:elm && yarn build:jekyll",
+    "build": "npm run update:repos && npm run build:elm && npm run build:jekyll",
     "build:elm": "elm make src/Main.elm --output static/js/projects.js --optimize",
     "build:jekyll": "gojekyll build",
-    "deploy": "yarn build && netlify deploy --prod",
+    "deploy": "npm run build && netlify deploy --prod",
     "deploy:only": "netlify deploy --prod",
     "dev": "forego start",
     "dev:jekyll": "gojekyll serve --watch",
-    "lint": "yarn lint:markdown && yarn lint:html && yarn lint:ruby",
+    "lint": "npm run lint:markdown && npm run lint:html && npm run lint:ruby",
     "lint:markdown": "markdownlint **/*.md --ignore 'node_modules/**/*.md' --ignore 'elm-stuff/packages/**/*.md' --ignore 2017-index.md",
     "lint:html": "./scripts/check-html",
     "lint:ruby": "bundle exec rubocop",
     "test:ruby": "rspec",
-    "update:repos": "./scripts/get_github_metadata && yarn update:thumbnails",
+    "update:repos": "./scripts/get_github_metadata && npm run update:thumbnails",
     "update:thumbnails": "ruby ./scripts/update_thumbnails"
   },
   "devDependencies": {
     "elm": "^0.19.0",
     "elm-analyse": "^0.15.0",
-    "elm-format": "^0.8.0",
+    "elm-format": "^0.8.5",
     "husky": "^1.0.1",
     "markdownlint-cli": "^0.26.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn test:ruby",
-      "pre-push": "yarn lint && yarn test:ruby"
+      "pre-commit": "npm run lint && npm run test:ruby",
+      "pre-push": "npm run lint && npm run test:ruby"
     }
   }
 }
