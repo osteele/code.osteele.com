@@ -32,8 +32,7 @@ solution. They are intended to teach an understanding of various concepts along
 the way to the solution, rather than to present it whole sale.
 
 Starter templates for [GitHub](https://github.com/osteele/p5-template) and
-[Glitch](https://glitch.com/edit/#!/cclab-p5js-template?path=README.md%3A1%3A0).
-These use a CDN.
+[Glitch](https://glitch.com/edit/#!/cclab-p5js-template). These use a CDN.
 
 [p5.js sketches](https://openprocessing.org/user/201396/?view=sketches) on OpenProcessing.org
 
@@ -104,7 +103,7 @@ are distributed as Jupyter notebooks:
 [Callgraph](https://github.com/osteele/callgraph) runs in a Jupyter notebook. It
 adds call graphs to functions.
 
-[Section Wheel](http://selection-wheel.osteele.com/)
+[Section Wheel](http://selection-wheel.underconstruction.fun/)
 ([source](https://github.com/osteele/selection-wheel)) spins a wheel to select a
 student (or team) name from a list of names. Repeat until all the names have
 been chosen. I use it to select presentation order.
