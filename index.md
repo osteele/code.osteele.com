@@ -9,17 +9,43 @@ layout: projects
 Code in other places:
 
 * [GitHub repositories](https://github.com/osteele)
-* [OpenProcessing sketches](https://openprocessing.org/user/201396/?view=sketches)
 * [Observable notebooks](https://observablehq.com/@osteele)
 
 ## Topics
 
-### [p5.js](https://www.notion.so/Oliver-s-p5-js-Resources-385707291d5f4a6db4a590f95f8c5a94)
+### p5.js
 
-[p5.layers](https://osteele.github.io/p5.layers/) is a library that adds
-`beginLayer()` and `endLayer()` functions, that simplify the use of p5.js
-Graphics objects and redirect `fill()`, `rect()` etc. to the current "layer"
-(Graphics). See [these examples](https://osteele.github.io/p5.layers/examples/).
+#### Tools
+
+[p5 server](https://osteele.github.io/p5-server/) is a command-line tool that
+runs p5.js sketches. It is a development server with live reload, that can run
+JavaScript-only sketches and figure out which libraries to include based on the
+functions and classes that they use. It can also create sketch templates, and
+create a static sketch froma  collection of sites.
+
+The [P5 Server Visual Studio Code
+extension](https://marketplace.visualstudio.com/items?itemName=osteele.p5-server)
+creates and runs p5.js sketches within Visual Studio code. It includes an
+integrated development server, an integrated browser and output console, a
+sketch explorer (for listing all the sketches in a collection), and commands to
+create sketch files.
+
+#### Libraries
+
+[p5.js Libraries](https://osteele.github.io/p5.libs/):
+
+* [p5.layers](https://osteele.github.io/p5.libs/p5.layers) is a library that
+  adds `beginLayer()` and `endLayer()` functions, that simplify the use of p5.js
+  Graphics objects and redirect `fill()`, `rect()` etc. to the current "layer"
+  (Graphics). See [these
+  examples](https://osteele.github.io/p5.layers/examples/).
+
+* [p5.vector-arguments](https://osteele.github.io/p5.libs/p5.vector-arguments/)
+  modifies the [p5.js Shape functions](https://p5js.org/reference/#group-Shape)
+  to accept instances of
+  [p5.Vector](https://p5js.org/reference/#/p5/createVector) as arguments.
+
+#### Examples and Tutorials
 
 [Examples](https://www.notion.so/p5-js-Examples-18214cd693bd43919d9d0c4cded0b05f)
 of topics that have come up during student projects: controlling gif animation,
@@ -31,15 +57,26 @@ These differ from the examples in that they take several steps to build up to a
 solution. They are intended to teach an understanding of various concepts along
 the way to the solution, rather than to present it whole sale.
 
-Starter templates for [GitHub](https://github.com/osteele/p5-template) and
-[Glitch](https://glitch.com/edit/#!/cclab-p5js-template). These use a CDN.
-
-[p5.js sketches](https://openprocessing.org/user/201396/?view=sketches) on OpenProcessing.org
-
 [React integration](https://github.com/osteele/p5-react) defines a React
 component that renders a p5 sketch. One application can include multiple sketches.
 
-### [PoseNet](https://www.notion.so/PoseNet-ded646bc5c1a4b99bf2885ad891937d2)
+#### Education Resources
+
+Some of my p5.js instructional materials are on [my notes site](https://notes.osteele.com/p5js).
+
+Starter templates for [GitHub](https://github.com/osteele/p5-template) and
+[Glitch](https://glitch.com/edit/#!/cclab-p5js-template). These use a CDN.
+
+#### Sketches & Other
+
+[p5.js sketches](https://openprocessing.org/user/201396/?view=sketches) on OpenProcessing.org
+
+[P5.js Pixel Manipulation
+Timings](https://observablehq.com/@osteele/p5-js-pixel-manipulation-timings)
+compares the performance of `image()`, `get()/set()`, and `pixels/image.pixels`
+to each other, and between Processing and p5.js.
+
+### PoseNet
 
 [p5pose](https://github.com/osteele/p5pose) is a starter template for p5.js +
 [ml5.js](https://learn.ml5js.org/#/reference/posenet). I prefer it to the
@@ -67,7 +104,10 @@ In some circumstances, PoseNet runs faster when the sketch that is running
 PoseNet is different from the page that is running the animation. [Here's
 how](https://github.com/osteele/posenet-pubsub).
 
-### [Physical Computing](https://www.notion.so/Physical-Computing-6eeee0efa9354212b76f501b3fbc972d)
+Course notes are
+[here](https://notes.osteele.com/posenet).
+
+### Physical Computing
 
 [imu-tools](https://github.com/osteele/imu-tools) is a set of tools for
 sending IMU data from an ESP32 and receiving it on a command-line program or in
@@ -82,6 +122,8 @@ MQTT (over WiFi) and/or Bluetooth.
 [imu-client-examples](https://github.com/osteele/imu-client-examples) is
 a set of examples that use relayed wireless IMU data in various ways: to animate
 one or more Stanford bunnies, and to graph the data.
+
+Notes are [here](https://notes.osteele.com/physical-computing).
 
 ### [Education Tools](https://www.notion.so/Education-Tools-and-Materials-7c62990392284aab934c32b45ec9a99c)
 

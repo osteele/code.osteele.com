@@ -1,3 +1,4 @@
+// Add class names to elements, so that Semantic UI will style them.
 Object.entries({
     h1: "ui header",
     h2: "ui huge header",
@@ -5,6 +6,6 @@ Object.entries({
     h4: "ui header",
     h5: "ui header",
     h6: "ui header",
-}).forEach(([tagName, className]) =>
-    [...document.getElementsByTagName(tagName)].forEach(elt =>
-        elt.className += `${elt.className} ${className}`.trim()))
+}).forEach(([tagName, classNames]) =>
+    Array.from(document.getElementsByTagName(tagName)).forEach(elt =>
+        elt.className += `${elt.className} ${classNames}`.trim()))
