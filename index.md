@@ -34,11 +34,18 @@ create sketch files.
 
 [p5.js Libraries](https://osteele.github.io/p5.libs/):
 
-* [p5.layers](https://osteele.github.io/p5.libs/p5.layers) is a library that
-  adds `beginLayer()` and `endLayer()` functions, that simplify the use of p5.js
-  Graphics objects and redirect `fill()`, `rect()` etc. to the current "layer"
-  (Graphics). See [these
+* [p5.layers](https://osteele.github.io/p5.libs/p5.layers) adds functions that
+  simplify the use of
+  [createGraphics](https://p5js.org/reference/#/p5/createGraphics) and [p5.js
+  Renders](https://p5js.org/reference/#/p5.Renderer) objects. It makes it
+easier to use Graphics objects to implement drawing layers, and it removes the
+need to add or remove the "`g.`" prefix from draw calls in order to change them
+between drawing on the canvas, versus drawing on a instance of `Graphics`. See [these
   examples](https://osteele.github.io/p5.layers/examples/).
+
+* [p5.rotate-about](https://osteele.github.io/p5.libs/p5.rotate-about/) adds
+  `rotateAbout()` and `scaleAbout()` functions, that rotate and scale around a
+  point.
 
 * [p5.vector-arguments](https://osteele.github.io/p5.libs/p5.vector-arguments/)
   modifies the [p5.js Shape functions](https://p5js.org/reference/#group-Shape)
