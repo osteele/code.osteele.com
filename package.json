@@ -6,14 +6,14 @@
   "author": "Oliver Steele <steele@osteele.com>",
   "license": "MIT",
   "scripts": {
-    "build": "npm run update:repos && npm run build:elm && npm run build:jekyll",
+    "build": "run-s update:repos build:elm build:jekyll",
     "build:elm": "elm make src/Main.elm --output static/js/projects.js --optimize",
     "build:jekyll": "gojekyll build",
-    "deploy": "npm run build && netlify deploy --prod",
+    "deploy": "run-s build deploy:only",
     "deploy:only": "netlify deploy --prod",
     "dev": "forego start",
     "dev:jekyll": "gojekyll serve --watch",
-    "lint": "npm run lint:markdown && npm run lint:html && npm run lint:ruby",
+    "lint": "run-s lint:markdown lint:html lint:ruby",
     "lint:markdown": "markdownlint **/*.md --ignore 'node_modules/**/*.md' --ignore 'elm-stuff/packages/**/*.md' --ignore 2017-index.md",
     "lint:html": "./scripts/check-html",
     "lint:ruby": "bundle exec rubocop",
@@ -26,7 +26,8 @@
     "elm-analyse": "^0.16.5",
     "elm-format": "^0.8.5",
     "husky": "^7.0.2",
-    "markdownlint-cli": "^0.28.1"
+    "markdownlint-cli": "^0.28.1",
+    "npm-run-all": "^4.1.5"
   },
   "husky": {
     "hooks": {
